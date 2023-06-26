@@ -1,0 +1,6 @@
+small.ng-invalid{
+    color: red;
+}
+:host ::ng-deep .p-dialog-content{
+    overflow: inherit;
+}
