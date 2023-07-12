@@ -11,11 +11,7 @@ export abstract class ApiBaseService {
         }
         return `${this.apiBasePath}${environment.apiVersion}/${this.baseUrl}`;
     }
-    constructor(
-        protected httpClient: HttpClient,
-        protected apiBasePath: string = environment.defaultApiBasePath,
-        protected baseUrl = ''
-    ) {}
+    constructor(protected httpClient: HttpClient, protected apiBasePath: string = environment.defaultApiBasePath, protected baseUrl = '') {}
 }
 
 export class CrudBaseService extends ApiBaseService {
@@ -28,15 +24,11 @@ export class CrudBaseService extends ApiBaseService {
     }
 
     get(id: string): Observable<any> {
-        return this.httpClient
-            .get<any>(`${this.basePath}/${id}`)
-            .pipe(map((res: any) => res && res.data));
+        return this.httpClient.get<any>(`${this.basePath}/${id}`).pipe(map((res: any) => res && res));
     }
 
     list(): Observable<any> {
-        return this.httpClient
-            .get<any>(`${this.basePath}`)
-            .pipe(map((res: any) => res));
+        return this.httpClient.get<any>(`${this.basePath}`).pipe(map((res: any) => res));
     }
 
     filter(filterParams: any): Observable<any[]> {
