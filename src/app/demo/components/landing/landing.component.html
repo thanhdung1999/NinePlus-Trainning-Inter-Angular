@@ -1,205 +1,1141 @@
-<div class="surface-ground min-h-screen w-screen">
+<div class="surface-ground min-h-screen full-screen-preview">
     <div class="landing-wrapper">
-        <div [ngStyle]="backgroundStyle" class="bg-no-repeat bg-cover bg-bottom">
-            <div class="flex align-items-center justify-content-between px-5 sm:px-8 py-6">
-                <a [routerLink]="['/']">
-                    <span class="text-2xl font-bold text-color">VERONA</span>
+        <div class="bg-no-repeat bg-cover bg-bottom">
+            <div
+                class="navbarr flex align-items-center justify-content-between"
+                style="
+                    position: fixed;
+                    width: 100%;
+                    height: 15%;
+                    top: 0;
+                    z-index: 999;
+                "
+            >
+                <a
+                    style="height: inherit"
+                    class="app-logo"
+                    [routerLink]="['/']"
+                >
+                <img alt="app logo" [src]="logo" />
+                    <span class="typewriter text-color">
+                        <h1>Natural Spa</h1>
+                    </span>
                 </a>
                 <div class="relative">
-                    <button pRipple class="cursor-pointer block lg:hidden select-none p-link w-3rem h-3rem inline-flex align-items-center justify-content-center border-circle" pStyleClass="@next" enterClass="hidden" enterActiveClass="scalein" leaveActiveClass="fadeout" leaveToClass="hidden" [hideOnOutsideClick]="true">
-                        <i class="pi pi-bars text-4xl"></i>
+                    <nav class="navbar navbar-expand-md">
+                        <div class="navbar-top">
+                            <a
+                                class="navbar-brand font-bold text-color-secondary"
+                            >
+                                <!-- <i  class="pi pi-bars"></i> -->
+                            </a>
+                            <button
+                                class="navbar-toggler"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#navbarNav"
+                                aria-controls="navbarNav"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                            >
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div
+                                class="collapse navbar-collapse"
+                                id="navbarNav"
+                            >
+                                <ul
+                                    class="flex flex-column lg:flex-row m-0 p-0 list-none text-2xl lg:text-base"
+                                    style="justify-content: space-between"
+                                >
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color"
+                                            (click)="scrollTo(stats)"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >HOME</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >ABOUT US</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            (click)="scrollTo(features)"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >SERVICE</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >THERAPITS</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >BOOK NOW</a
+                                        >
+                                    </li>
+
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            pStyleClass="#landing-menu"
+                                            leaveActiveClass="fadeout"
+                                            leaveToClass="hidden"
+                                            >SHORTCODES</a
+                                        >
+                                    </li>
+
+                                    <li>
+                                        <a
+                                            class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
+                                            [routerLink]="['/auth/login']"
+                                            >SIGN IN</a
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div id="carousel" class="carousel" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="4000">
+                    <img
+                        src=" http://www.theimperiaspa.com/wp-content/themes/natural-spa/images/slide3.jpg"
+                        class="slide image-container d-block w-100"
+                        style="height: 80vh"
+                    />
+                    <h1 class="text-effect">PURE FROM OF NATURE</h1>
+                </div>
+                <div class="carousel-item" data-bs-interval="4000">
+                    <img
+                        src="http://www.theimperiaspa.com/wp-content/themes/natural-spa/images/slide2.jpg"
+                        class="slide image-container d-block w-100"
+                        style="height: 80vh"
+                    />
+                    <p style="font-family: Courier" class="text-effectt">
+                        Come, rejoice in Natural hand
+                    </p>
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img
+                        src="https://www.kempinski.com/var/site/storage/images/9/4/7/5/1315749-1-eng-GB/f521304a40be-74743181_4K.jpg"
+                        class="slide d-block w-100"
+                        style="height: 80vh"
+                    />
+                </div>
+            </div>
+            <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carousel"
+                data-bs-slide="prev"
+            >
+                <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carousel"
+                data-bs-slide="next"
+            >
+                <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div #stats>
+            <div #features class="px-5 sm:px-8 py-8 surface-card">
+                <div
+                    class="flex flex-column lg:flex-row justify-content-center gap-5"
+                >
+                    <div class="hover-zoom">
+                        <div
+                            class="bg-orange-50 p-6 flex align-items-center justify-content-center mb-5"
+                            style="
+                                border-radius: 14px;
+                                border-top-left-radius: 5rem;
+                            "
+                        >
+                            <img
+                                alt="intro image"
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure4.jpg"
+                                class="h-20rem sm:h-25rem"
+                            />
+                        </div>
+                        <div style="text-align: center">
+                            <h3 class="mt-0 mb-3 font-bold">Massage Therapy</h3>
+                            <p class="line-height-3 text-color-secondary">
+                                For Deep Relaxation
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hover-zoom">
+                        <div
+                            class="bg-green-50 p-6 flex align-items-center justify-content-center mb-5"
+                            style="border-radius: 14px"
+                        >
+                            <img
+                                alt="intro image"
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure5.jpg"
+                                class="h-20rem sm:h-25rem hover-zoom"
+                            />
+                        </div>
+                        <div style="text-align: center">
+                            <h3 class="mt-0 mb-3 font-bold">Body Scrub</h3>
+                            <p class="line-height-3 text-color-secondary">
+                                A blissful solution
+                            </p>
+                        </div>
+                    </div>
+                    <div class="hover-zoom">
+                        <div
+                            class="bg-red-50 p-6 flex align-items-center justify-content-center mb-5"
+                            style="
+                                border-radius: 14px;
+                                border-bottom-right-radius: 5rem;
+                            "
+                        >
+                            <img
+                                alt="intro image"
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure6.jpg"
+                                class="h-20rem sm:h-25rem"
+                            />
+                        </div>
+                        <div style="text-align: center">
+                            <h3 class="mt-0 mb-3 font-bold">
+                                Skin & Beauty Care
+                            </h3>
+                            <p class="line-height-3 text-color-secondary">
+                                Where nature meets bliss
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="thumb mb-0 col-12 md:col-12 lg:col-12">
+                <img
+                    src="http://www.theimperiaspa.com/wp-content/uploads/2016/04/floral-decorated-floor-wall-blue.png"
+                    class="responsive-image"
+                />
+                <div class="image-overlay text-color-secondary">
+                    <h2 style="size: 12px">
+                        Treat Yourself for Rejuvenating Your Body & Soul
+                    </h2>
+                    <div class="line"></div>
+
+                    <p class="text-align:center">Where nature meets bliss</p>
+                    <br />
+                    <div class="flex">
+                        <p
+                            style="justify-content: center; flex-wrap: wrap"
+                            class="text-color-secondary"
+                        >
+                            At The Imperia Spa, we take a holistic approachs to
+                            treating our clients. We know that there are as many
+                            different types of bodies and mind as there are
+                            people and nobody is exactly like the other even if
+                            other similarities exist. Your body, mind, and soul
+                            are all interconnected and if the body is in pain,
+                            the mind and spirit react and vice versa.
+                        </p>
+                    </div>
+                    <button
+                        class="hover-button btn btn-primary btn-lg mt-5 mb-5"
+                    >
+                        MAKE AN APPOINTMENT
                     </button>
-                    <div id="landing-menu" class="hidden lg:block absolute right-0 top-auto lg:static z-1 shadow-2 lg:shadow-none w-15rem lg:w-auto surface-overlay lg:surface-ground origin-top p-3 lg:p-0" style="border-radius:14px">
-                        <ul class="flex flex-column lg:flex-row m-0 p-0 list-none text-2xl lg:text-base">
-                            <li>
-                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(stats)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">STATS</a>
-                            </li>
-                            <li>
-                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(features)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">FEATURES</a>
-                            </li>
-                            <li>
-                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" (click)="scrollTo(pricing)" pStyleClass="#landing-menu" leaveActiveClass="fadeout" leaveToClass="hidden">PRICING</a>
-                            </li>
-                            <li>
-                                <a class="block p-3 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300" [routerLink]="['/auth/login']">SIGN IN</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
-            <div class="flex flex-column lg:flex-row gap-5 align-items-center justify-content-between px-5 sm:px-8 py-8 overflow-hidden">
-                <div class="flex-1 fadein animation-duration-1000">
-                    <h1 class="font-bold text-7xl mt-0 mb-5">PrimeTek Presents Verona</h1>
-                    <p class="text-3xl mb-5 line-height-3">Minimal layout inspired by a beautiful city</p>
-                    <button pButton pRipple label="TRY NOW"></button>
+
+            <div class="grid mt-3 mb-3 col-12 md:col-12 lg:col-12">
+                <div class="col-6 bg-green-50">
+                    <img
+                        class="mt-3 mb-3"
+                        src="http://www.theimperiaspa.com/wp-content/uploads/2016/04/lady-active-on-spa-session.jpg"
+                        width="100%"
+                    />
                 </div>
-                <div class="flex-1">
-                    <img alt="intro image" src="assets/demo/images/landing/screen.jpg" class="fadeinright animation-ease-in-out animation-duration-1000 w-full border-round-2xl shadow-2">
-                </div>
-            </div>
-            <div #stats class="p-8">
-                <div class="flex flex-column align-items-center mb-7">
-                    <span class="font-bold text-color-secondary text-2xl mb-3">Ecosystem</span>
-                    <h2 class="font-bold text-6xl my-0">All You Need Is Here</h2>
-                </div>
-                <div class="flex flex-column xl:flex-row justify-content-center gap-5">
-                    <div class="surface-card text-center py-7 px-5 shadow-2" style="border-radius: 14px">
-                        <div class="text-xl text-color-secondary mb-3">Easy to use</div>
-                        <h3 class="mt-0 mb-3 font-bold text-4xl">Play like a toy</h3>
-                        <p class="line-height-3 mb-5 text-color-secondary">More than <strong>80</strong> UI components.</p>
-                        <button pButton icon="pi pi-arrow-right" label="Get Started" class="p-button-text" iconPos="right"></button>
-                        <div class="mt-8 xl:pt-8">
-                            <img alt="intro image" src="assets/demo/images/landing/feature-components.svg" class="w-9 md:w-4 xl:w-9">
+                <div class="col-6 auto bg-teal-100">
+                    <div class="grid mt-5" style="margin-left: -100px">
+                        <div
+                            class="aaa col-4 bg-orange-500 border-3 border-teal-100 transition-delay-100 transition-colors transition-duration-300 hover:bg-pink-500"
+                        >
+                            <img
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2016/04/icon-lotus-white.png"
+                            />
+                        </div>
+                        <div class="col-8" style="margin-left: 100px">
+                            <h4>Best Herbal Treatments</h4>
+                            <div class="lineV"></div>
+                            <p>
+                                Herbal treatment is nontoxic and safe. Extend
+                                the benefits of the herbs to your body for a
+                                healing touch.
+                            </p>
                         </div>
                     </div>
-                    <div class="flex flex-column md:flex-row xl:flex-column gap-5">
-                        <div class="flex-1 surface-card flex flex-column xl:flex-row xl:align-items-center justify-content-between py-7 px-5 shadow-2 gap-5" style="border-radius: 14px">
-                            <div class="flex-1 flex-order-1 xl:flex-order-0 text-center xl:text-left">
-                                <img alt="intro image" src="assets/demo/images/landing/feature-blocks.svg" class="w-9">
-                            </div>
-                            <div class="text-center xl:text-right flex-1">
-                                <div class="text-xl text-color-secondary mb-3">PrimeBlocks</div>
-                                <h3 class="mt-0 mb-3 font-bold text-4xl">Save your time</h3>
-                                <p class="line-height-3 mb-5 text-color-secondary">PrimeBlocks have <strong>370+</strong> blocks: hero sections, pricing, footers and more....</p>
-                                <button pButton icon="pi pi-arrow-right" label="Browse Blocks" class="p-button-text" iconPos="right"></button>
-                            </div>
+
+                    <div class="grid mt-5 mb-3" style="margin-left: -100px">
+                        <div
+                            class="aaa col-4 bg-purple-500 border-3 border-teal-100 transition-colors transition-duration-300 hover:bg-pink-500"
+                        >
+                            <img
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2016/04/icon-lamp-firepot-white.png"
+                            />
                         </div>
-                        <div class="flex-1 surface-card flex flex-column xl:flex-row xl:align-items-center justify-content-between py-7 px-5 shadow-2 gap-5" style="border-radius: 14px">
-                            <div class="text-center xl:text-left flex-1">
-                                <div class="text-xl text-color-secondary mb-3">PrimeIcons</div>
-                                <h3 class="mt-0 mb-3 font-bold text-4xl">Enjoy 300+ Icons</h3>
-                                <p class="line-height-3 mb-5 text-color-secondary">What you need in your app, you find any icon in PrimeIcons.</p>
-                                <button pButton icon="pi pi-arrow-right" label="Explore Icons" class="p-button-text" iconPos="right"></button>
-                            </div>
-                            <div class="flex-1 text-center xl:text-right">
-                                <img alt="intro image" src="assets/demo/images/landing/feature-icons.svg" class="w-9">
-                            </div>
+                        <div class="col-8" style="margin-left: 100px">
+                            <h4>Mystic Aromatherapy</h4>
+                            <div class="lineV"></div>
+                            <p>
+                                Aromatherapy makes use of plant materials and
+                                aromatic plant oils as a form of alternative
+                                medicine.
+                            </p>
                         </div>
                     </div>
-                    <div class="surface-card text-center py-7 px-5 shadow-2" style="border-radius: 14px">
-                        <div class="text-xl text-color-secondary mb-3">Theme Designer</div>
-                        <h3 class="mt-0 mb-3 font-bold text-4xl">Design Your Own</h3>
-                        <p class="line-height-3 mb-5 text-color-secondary">Limitless customization.</p>
-                        <button pButton icon="pi pi-arrow-right" label="View Designer" class="p-button-text" iconPos="right"></button>
-                        <div class="mt-8 xl:pt-8">
-                            <img alt="intro image" src="assets/demo/images/landing/feature-designer.svg" class="w-9 md:w-4 xl:w-9">
+
+                    <div class="grid mt-5 mb-3" style="margin-left: -100px">
+                        <div
+                            class="aaa col-4 bg-green-600 border-3 border-teal-100 transition-colors transition-duration-300 hover:bg-pink-500"
+                        >
+                            <img
+                                src="https://naturespa.wpengine.com/wp-content/uploads/2016/04/icon-trivia-leaves-white.png"
+                            />
+                        </div>
+                        <div class="col-8" style="margin-left: 100px">
+                            <h4>Combination of Nature</h4>
+                            <div class="lineV"></div>
+                            <p>
+                                Our treatments take into account the natural
+                                surroundings that are provided in our Spa. The
+                                healing touch of the environment does the rest.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div #features class="px-5 sm:px-8 py-8 surface-card">
-            <div class="flex flex-column lg:flex-row justify-content-center gap-5">
-                <div>
-                    <div class="bg-orange-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px; border-top-left-radius: 5rem">
-                        <img alt="intro image" src="assets/demo/images/landing/icon-modern-responsive.svg" class="h-6rem sm:h-12rem">
+    </div>
+    <div>
+        <div>
+            <div style="text-align: center">
+                <h1>Popular Procedures</h1>
+                <div class="linevv"></div>
+                <p>Where nature meets bliss</p>
+            </div>
+            <div class="mt-5">
+                <nav>
+                    <input type="radio" id="home" name="content" checked />
+                    <label for="home"><h4>Skin</h4></label>
+                    <input type="radio" id="about" name="content" />
+                    <label for="about"><h4>Massage</h4></label>
+                    <input type="radio" id="services" name="content" />
+                    <label for="services"><h4>Body</h4></label>
+                    <input type="radio" id="contact" name="content" />
+                    <label for="contact"><h4>Aroma</h4></label>
+
+                    <div class="content" id="home-content">
+                        <div class="gird flex p-5">
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure1.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Traditional Vedic Massage
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Sit dictum ac vestibulum id
+                                            parturient faucibus elit vestibulum
+                                            a vestibulum ameture vestibulum
+                                            seminasue suspendisse.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure6.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body1">
+                                        <h3 class="card-title">
+                                            Skin & Beauty Care
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            A senectus mus dolor nam mi
+                                            vestibulum condimentum parturient
+                                            arcu orci sem parturient laoreet
+                                            litorane.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure3.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body2">
+                                        <h3 class="card-title">
+                                            Executive Reflexology
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Parturient nisi adipiscing faucibus
+                                            facilisis scelerisque pharetra lacus
+                                            et vestibulum iaculis fames rhoncus
+                                            hendrerit raece.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mt-0 mb-5 font-bold text-4xl">Responsive Design</h3>
-                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
-                </div>
-                <div>
-                    <div class="bg-green-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px">
-                        <img alt="intro image" src="assets/demo/images/landing/icon-modern-design.svg" class="h-6rem sm:h-12rem">
+                    <div class="content" id="about-content">
+                        <div class="gird flex p-5">
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure10.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body2">
+                                        <h3 class="card-title">
+                                            Hot Stone Massage
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Ridiculus enim tortor nullam metus
+                                            nullam fermentum sapien a sit
+                                            sociosqu ultricies a quam metusure.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure4.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body1">
+                                        <h3 class="card-title">
+                                            Massage Therapy
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Condimentum augue diam a pretium
+                                            tellus a vestibulum nullam a pretium
+                                            ultrices consectetur congue erose.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure1.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Traditional Vedic Massage
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Sit dictum ac vestibulum id
+                                            parturient faucibus elit vestibulum
+                                            a vestibulum ameture vestibulum
+                                            seminasue suspendisse.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mt-0 mb-5 font-bold text-4xl">Modern Design</h3>
-                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
-                </div>
-                <div>
-                    <div class="bg-red-50 p-6 flex align-items-center justify-content-center mb-5" style="border-radius: 14px; border-bottom-right-radius: 5rem">
-                        <img alt="intro image" src="assets/demo/images/landing/icon-clean-code.svg" class="h-6rem sm:h-12rem">
+                    <div class="content" id="services-content">
+                        <div class="gird flex p-5">
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure2.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body1">
+                                        <h3 class="card-title">
+                                            Deep Tissue Massage
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Ridiculus enim tortor nullam metus
+                                            nullam fermentum sapien a sit
+                                            sociosqu ultricies a quam metusure.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure10.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Hot Stone Massage
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Condimentum augue diam a pretium
+                                            tellus a vestibulum nullam a pretium
+                                            ultrices consectetur congue erose.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure3.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body2">
+                                        <h3 class="card-title">
+                                            Full Body Tan Treatments
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Sit dictum ac vestibulum id
+                                            parturient faucibus elit vestibulum
+                                            a vestibulum ameture vestibulum
+                                            seminasue suspendisse.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="mt-0 mb-5 font-bold text-4xl">Clean Code</h3>
-                    <p class="line-height-3 text-color-secondary">Nam non ligula sed urna malesuada lacinia. Aliquam sed viverra ipsum.</p>
-                </div>
+                    <div class="content" id="contact-content">
+                        <div class="gird flex p-5">
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure11.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title">
+                                            Aroma & Jet Hydro Therapy
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Ridiculus enim tortor nullam metus
+                                            nullam fermentum sapien a sit
+                                            sociosqu ultricies a quam metusure.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure5.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body1">
+                                        <h3 class="card-title">
+                                            Jacuzzi @ Natural Spa
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Condimentum augue diam a pretium
+                                            tellus a vestibulum nullam a pretium
+                                            ultrices consectetur congue erose.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card p-0 mb-0">
+                                    <div class="overflow-image">
+                                        <img
+                                            src="https://naturespa.wpengine.com/wp-content/uploads/2017/06/procedure7.jpg"
+                                            alt="Card Image"
+                                        />
+                                    </div>
+                                    <div class="card-body2">
+                                        <h3 class="card-title">
+                                            Metaphysical Spa Treatments
+                                        </h3>
+                                        <div
+                                            class="line"
+                                            style="text-align: left"
+                                        ></div>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 55 mins Hot Stone Massage
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            style="text-align: left"
+                                        >
+                                            * 15 mins Head Oil Massage
+                                        </p>
+                                        <p class="card-text">
+                                            Sit dictum ac vestibulum id
+                                            parturient faucibus elit vestibulum
+                                            a vestibulum ameture vestibulum
+                                            seminasue suspendisse.
+                                        </p>
+                                        <div class="lineee"></div>
+                                        <div
+                                            class="flex justify-content-between"
+                                        >
+                                            <p
+                                                style="
+                                                    font-size: 30px;
+                                                    color: aliceblue;
+                                                "
+                                            >
+                                                $30.00
+                                            </p>
+                                            <a href="#" style="color: aliceblue"
+                                                >VIEW DETAILS
+                                                <i
+                                                    class="pi pi-arrow-right"
+                                                    style="
+                                                        color: aliceblue;
+                                                        font-size: 0.7rem;
+                                                    "
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
             </div>
         </div>
-        <div class="px-5 sm:px-8 py-8 surface-ground flex flex-wrap gap-5 align-items-center justify-content-between">
-            <div class="text-4xl font-bold">Join the Prime Community</div>
-            <button pButton pRipple label="Join Now" class="p-button-raised"></button>
-        </div>
-        <div #pricing class="px-5 sm:px-8 py-8 surface-card flex flex-column lg:flex-row justify-content-center gap-5">
-            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
-                <img alt="intro image" src="assets/demo/images/landing/asset-free.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
-                <div class="text-2xl font-bold mb-3">Free</div>
-                <div class="mb-5">
-                    <span class="text-6xl font-bold">$0 </span>
-                    <span class="text-xl text-color-secondary">/month</span>
-                </div>
-                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
-                <ul class="list-none p-0 m-0">
-                    <li class="flex align-items-center">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Responsive Layout</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
-                <img alt="intro image" src="assets/demo/images/landing/asset-premium.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
-                <div class="text-2xl font-bold mb-3">Premium</div>
-                <div class="mb-5">
-                    <span class="text-6xl font-bold">$9 </span>
-                    <span class="text-xl text-color-secondary">/month</span>
-                </div>
-                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
-                <ul class="list-none p-0 m-0">
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Responsive Layout</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>10000 Push Messages</span>
-                    </li>
-                    <li class="flex align-items-center">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>50 Support Tickets</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="shadow-2 surface-card p-5 text-center border-round-2xl">
-                <img alt="intro image" src="assets/demo/images/landing/asset-enterprise.svg" class="w-full sm:w-6 lg:w-full block mx-auto mb-5">
-                <div class="text-2xl font-bold mb-3">Enterprise</div>
-                <div class="mb-5">
-                    <span class="text-6xl font-bold">$19 </span>
-                    <span class="text-xl text-color-secondary">/month</span>
-                </div>
-                <a class="p-2 mb-5 font-bold block text-center cursor-pointer hover:surface-hover transition-colors transition-duration-300" style="border-radius:2rem; box-shadow:0px 3px 4px rgba(0, 0, 0, 0.1), 0px 24px 36px rgba(0, 0, 0, 0.04);">TRY NOW</a>
-                <ul class="list-none p-0 m-0">
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Responsive Layout</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Unlimited Push Messages</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>1000 Support Tickets</span>
-                    </li>
-                    <li class="flex align-items-center mb-3">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Free Shipping</span>
-                    </li>
-                    <li class="flex align-items-center">
-                        <i class="pi pi-check-circle text-green-500 text-xl mr-2"></i>
-                        <span>Unlimited Storage</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="px-5 sm:px-8 py-8 bg-gray-900 flex flex-column md:flex-row md:align-items-start gap-5" style="border-top-left-radius:14px; border-top-right-radius:14px">
-            <div class="flex align-items-center flex-1">
-                <img alt="intro image" src="assets/demo/images/landing/logo-v.svg" class="w-4rem">
-                <span class="text-white text-5xl font-bold ml-2">Verona</span>
-            </div>
+    </div>
+
+    <div
+        class="px-5 sm:px-8 py-8 bg-gray-900 flex flex-column md:flex-row md:align-items-start gap-5"
+    >
+        <div class="flex align-items-center flex-1">
+            <img
+                alt="intro image"
+                src="assets\demo\images\landing\logo-dark.png"
+                style="border-radius: 50%"
+                class="w-4rem"
+            />
+            <span
+                class="text-white text-5xl font-bold ml-2"
+                style="font-family: Courier"
+                >Natural Spa</span
+            >
             <div class="flex-1">
-                <div class="text-xl text-gray-600 mb-4">LATEST</div>
-                <ul class="list-none p-0 m-0">
+                <!-- <div class="text-xl text-gray-600 mb-4">LATEST</div> -->
+                <!-- <ul class="list-none p-0 m-0">
                     <li class="mb-3">
                         <a class="cursor-pointer text-white text-xl">Ultima</a>
                     </li>
-                    <li class="mb-3">
+                    <li class="mb-2">
                         <a class="cursor-pointer text-white text-xl">Apollo</a>
                     </li>
                     <li class="mb-3">
@@ -208,41 +1144,29 @@
                     <li class="mb-3">
                         <a class="cursor-pointer text-white text-xl">Diamond</a>
                     </li>
-                    <li>
-                        <a class="cursor-pointer text-white text-xl">Poseidon</a>
-                    </li>
-                </ul>
+                </ul> -->
             </div>
             <div class="flex-1">
                 <div class="text-xl text-gray-600 mb-4">DEMOS</div>
                 <ul class="list-none p-0 m-0">
-                    <li class="mb-3">
-                        <a href="https://www.primefaces.org/primeng" class="cursor-pointer text-white text-xl">PrimeNG</a>
-                    </li>
-                    <li class="mb-3">
-                        <a href="https://www.primefaces.org/showcase" class="cursor-pointer text-white text-xl">PrimeFaces</a>
-                    </li>
-                    <li class="mb-3">
-                        <a href="https://www.primefaces.org/primereact" class="cursor-pointer text-white text-xl">PrimeReact</a>
-                    </li>
-                    <li>
-                        <a href="https://www.primefaces.org/primevue" class="cursor-pointer text-white text-xl">PrimeVue</a>
-                    </li>
+                    <li class="mb-3"></li>
+                    <li class="mb-3"></li>
+                    <li class="mb-3"></li>
+                    <li></li>
                 </ul>
             </div>
             <div class="flex flex-1 gap-4">
-                <a href="http://github.com/primefaces">
+                <a href="">
                     <i class="pi pi-github text-white text-5xl"></i>
                 </a>
-                <a href="https://discord.gg/gzKFYnpmCY">
+                <a href="">
                     <i class="pi pi-discord text-white text-5xl"></i>
                 </a>
-                <a href="http://twitter/primeng">
+                <a href="">
                     <i class="pi pi-twitter text-white text-5xl"></i>
                 </a>
             </div>
         </div>
     </div>
 </div>
-
 <app-config [minimal]="true"></app-config>
