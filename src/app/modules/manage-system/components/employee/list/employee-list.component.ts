@@ -1,54 +1,54 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Employee, EmployeeTest } from 'src/app/demo/api/employee';
-import { EmployeeService } from 'src/app/shared';
+import { Employee } from 'src/app/demo/api/employee';
+import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { Genders } from 'src/app/shared/constants/gender';
+import { Table } from 'primeng/table';
+import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
     styleUrls: ['./employee-list.component.scss'],
-    providers: [MessageService, ConfirmationService],
+    providers: [MessageService, ToastService, ConfirmationService],
 })
 export class EmployeeListComponent {
+    genders: any[] = Genders;
     overlayVisible: boolean = false;
-    genders: string[] = [];
     isSkeleton: boolean = true;
-    employees: Employee[] = [];
-    tests: any[] = [];
     employee: Employee = {};
+    employees: Employee[] = [];
     deleteProductsDialog: boolean = false;
-    employeeTest: EmployeeTest[] = [];
+    keyToast: string = 'bc';
 
     constructor(
-        private employeeService: EmployeeService,
+        private _employeeService: EmployeeService,
         private _messageService: MessageService,
-        private router: Router,
-        private confirmationService: ConfirmationService
+        private _router: Router,
+        private _confirmationService: ConfirmationService,
+        private _toastService: ToastService
     ) {}
 
     ngOnInit() {
         this.onInitApi();
-        setTimeout(() => {
-            this.isSkeleton = false;
-        }, 1500);
-    }
-
-    messageErrorDelete() {
-        this._messageService.add({ severity: 'error', summary: 'Notification', detail: 'Delete Failure' });
+        this.loadSkeletonTable();
     }
 
     onInitApi() {
-        this.employeeService.getListBackEnd().subscribe(
-            (next) => {
-                // this.tests = next;
-                // console.log(this.tests);
-                this.employeeTest = next.data;
-                // console.log(this.employeeTest);
+        this._employeeService.getListEmployee().subscribe({
+            next: (res) => {
+                if (res.data.length > 0) {
+                    this.employees = res.data as Employee[];
+                } else {
+                    this._toastService.showError('Empty List', this.keyToast);
+                }
             },
-            (error) => {
-                console.log(error);
-            }
-        );
+            error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showError(item, this.keyToast);
+                });
+            },
+        });
     }
 
     confirmDelete(employee: Employee) {
@@ -60,22 +60,23 @@ export class EmployeeListComponent {
 
     deleteConfirmed() {
         if (this.employee.id) {
-            this.employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
+            this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
                 next: () => {
-                    this._messageService.add({
-                        severity: 'success',
-                        summary: 'Thành công',
-                        detail: 'Xóa Branch thành công',
-                        life: 3000,
-                    });
+                    this._toastService.showSuccess(MESSAGE_TITLE.DELETE_SUCC, this.keyToast);
                     this.onInitApi();
                     this.deleteProductsDialog = false;
                 },
                 error: () => {
-                    this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Products Delete Falied', life: 3000 });
+                    this._toastService.showError(MESSAGE_TITLE.DELETE_ERR, this.keyToast);
                 },
             });
         }
+    }
+
+    loadSkeletonTable() {
+        setTimeout(() => {
+            this.isSkeleton = false;
+        }, 1000);
     }
 
     toggle() {
@@ -83,12 +84,14 @@ export class EmployeeListComponent {
     }
 
     navigateToCreateEmployee() {
-        this.router.navigate(['manage-employee/create']);
+        this._router.navigate([ROUTER.CREATE_EMPLOYEE]);
     }
 
     navigateToEditEmployee(id: number) {
-        this.router.navigate(['manage-employee/edit/' + id]);
+        this._router.navigate([ROUTER.EDIT_EMPLOYEE + id]);
     }
 
-    onGlobalFilter(firt: any, event: any) {}
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
 }

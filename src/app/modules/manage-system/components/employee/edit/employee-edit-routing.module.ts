@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EmployeeEditComponent } from './employee-edit.component';
-
 const routes: Routes = [];
 
 @NgModule({

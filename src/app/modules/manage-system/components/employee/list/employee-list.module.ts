@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EmployeeListRoutingModule } from './employee-list-routing.module';
@@ -22,10 +22,10 @@ import { MessagesModule } from 'primeng/messages';
         MenuModule,
         ContextMenuModule,
         SplitButtonModule,
-        FormsModule,
         SkeletonModule,
+        FormsModule,
         MessagesModule,
-        SharedModule
-    ]
+        SharedModule,
+    ],
 })
 export class EmployeeListModule {}
