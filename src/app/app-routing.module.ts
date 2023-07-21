@@ -39,11 +39,11 @@ const routes: Routes = [
                     ),
             },
             {
-                path: 'profile',
-                data: { breadcrumb: 'User Management' },
+                path: 'customer',
+                data: { breadcrumb: 'Manage Customer' },
                 loadChildren: () =>
-                    import('./demo/components/profile/profile.module').then(
-                        (m) => m.ProfileModule
+                    import('./modules/manage-system/components/customer/customer.module').then(
+                        (m) => m.CustomerModule
                     ),
             },
             {
@@ -77,15 +77,7 @@ const routes: Routes = [
                     import('./demo/components/apps/apps.module').then(
                         (m) => m.AppsModule
                     ),
-            },
-            {
-                path: 'manage-system',
-                data: { breadcrumb: 'Manage System' },
-                loadChildren: () =>
-                    import('./modules/manage-system/manage-system.module').then(
-                        (m) => m.ManageSystemModule
-                    ),
-            },
+            }
         ],
     },
     {

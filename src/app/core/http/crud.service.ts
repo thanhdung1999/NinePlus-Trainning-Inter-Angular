@@ -9,12 +9,15 @@ export abstract class ApiBaseService {
         if (!this.baseUrl || this.baseUrl.length === 0) {
             return this.apiBasePath;
         }
-        return `${this.apiBasePath}${environment.apiVersion}/${this.baseUrl}`;
+        return `${this.apiBasePath}/${this.apiUrl}/${environment.apiVersion}/${this.baseUrl}`;
     }
+
     constructor(
         protected httpClient: HttpClient,
+        protected baseUrl = '',
         protected apiBasePath: string = environment.defaultApiBasePath,
-        protected baseUrl = ''
+        protected apiVersion = environment.apiVersion,
+        protected apiUrl = environment.apiUrl,
     ) {}
 }
 
