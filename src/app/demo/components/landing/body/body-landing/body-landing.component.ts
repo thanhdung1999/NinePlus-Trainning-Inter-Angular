@@ -1,5 +1,8 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Product } from '../../../../api/product';
+import { ProductService } from '../../../../service/product.service';
 
 @Component({
     selector: 'app-body-landing',
@@ -7,20 +10,27 @@ import { Component } from '@angular/core';
     styleUrls: ['./body-landing.component.scss'],
 })
 export class BodyLandingComponent {
-    constructor(private viewportScroller: ViewportScroller) {}
+    constructor(
+        private viewportScroller: ViewportScroller,
+        private productService: ProductService
+    ) {}
 
     onHead() {
         this.viewportScroller.scrollToPosition([0, 0]);
     }
 
+    products: Product[] | undefined;
+
     ngOnInit(): void {
-        // Lấy tất cả các phần tử có class "elementor-counter-number"
-        // tslint:disable-next-line:no-shadowed-variable
+        this.jumpNumber();
+        this.getProductList();
+    }
+
+    jumpNumber() {
         const elements: NodeListOf<HTMLElement> = document.querySelectorAll(
             '.elementor-counter-number'
         );
 
-        // tslint:disable-next-line:only-arrow-functions
         elements.forEach(function (element: HTMLElement) {
             const duration: number = parseInt(
                 element.getAttribute('data-duration') || '0',
@@ -53,19 +63,15 @@ export class BodyLandingComponent {
                 element.textContent = currentValue.toLocaleString();
             }, 10); //
         });
-
-        // var carouselWidth = $('.carousel-inner')[0].scrollWidth;
-        // var cardWidth = $('.carousel-item').width();
-
-        // var scrollPosition = 0;
-        
-        // $('.carousel-control-next').on('click', function(){
-        //   scrollPosition = scrollPosition+ cardWidth;
-        //   $('.carousel-inner').animate({scrollLeft:scrollPosition},
-        //    600);
-        // })
-    //     }
-    
-       
+    }
+    getProductList() {
+        this.productService
+            .getProducts()
+            .then((data: Product[]) => {
+                this.products = data;
+            })
+            .catch((e) => {
+                console.error('Đã xảy ra lỗi khi lấy dữ liệu:', e);
+            });
     }
 }
