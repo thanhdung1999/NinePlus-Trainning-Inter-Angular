@@ -6,10 +6,10 @@
 export const environment = {
     production: false,
     apiUrl: 'api',
-    defaultApiBasePath: 'http://a1lplatform.com:7521/api',
+    defaultApiBasePath: 'http://119.82.130.211:6060',
     session_expiry: 1000,
     originPath: 'http://localhost:4200',
-    apiVersion: '',
+    apiVersion: 'v1',
     application_key: '',
     application_id: '',
     supporterEmail: '',
