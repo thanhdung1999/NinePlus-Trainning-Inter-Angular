@@ -13,19 +13,13 @@ export class HeaderLandingComponent {
 
     isAuth = false;
 
-    constructor(
-        private _layoutService: LayoutService,
-        private _sessionService: SessionService
-    ) {}
+    constructor(private _layoutService: LayoutService, private _sessionService: SessionService) {}
     ngOnInit(): void {
         this.getRole();
     }
 
     getRole() {
-        if (
-            !isNil(this._sessionService.userInformation) &&
-            !isEmpty(this._sessionService.userInformation)
-        ) {
+        if (!isNil(this._sessionService.userInformation) && !isEmpty(this._sessionService.userInformation)) {
             this.isAuth = true;
         } else {
             setTimeout(() => {
@@ -44,12 +38,7 @@ export class HeaderLandingComponent {
 
     get logo(): string {
         const path = 'assets/layout/images/logo-';
-        const logo =
-            this.layoutTheme === 'primaryColor'
-                ? 'light.png'
-                : this.colorScheme === 'light'
-                ? 'dark.png'
-                : 'light.png';
+        const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : this.colorScheme === 'light' ? 'dark.png' : 'light.png';
         return path + logo;
     }
 

@@ -17,7 +17,7 @@ export abstract class ApiBaseService {
         protected baseUrl = '',
         protected apiBasePath: string = environment.defaultApiBasePath,
         protected apiVersion = environment.apiVersion,
-        protected apiUrl = environment.apiUrl
+        protected apiUrl = environment.apiUrl,
     ) {}
 }
 
