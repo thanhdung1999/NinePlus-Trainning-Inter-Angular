@@ -3,5 +3,10 @@ export enum ROUTER {
     CREATE_CUSTOMER = 'customer/create',
     EDIT_CUSTOMER = 'customer/edit',
     DETAIL_CUSTOMER = 'customer/detail',
-    LOGIN = 'auth/login',
+    FORGOT_PASSWORD = 'auth/forgotpassword',
+    CHANGE_PASSWORD = 'auth/changepassword',
+    RESET_PASSWORD = 'auth/reset-password',
+    SIGNUP = 'auth/register',
+    LANDING = 'landing',
+    AUTH_ERROR = 'auth/error',
 }
