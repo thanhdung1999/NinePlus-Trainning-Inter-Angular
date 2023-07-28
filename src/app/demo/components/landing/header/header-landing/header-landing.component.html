@@ -1,8 +1,7 @@
 <div class="bg-no-repeat bg-cover bg-bottom">
     <div
         class="navbarr flex align-items-center justify-content-between"
-        style="position: fixed; width: 100%; height: 15%; top: 0; z-index: 999"
-    >
+        style="position: fixed; width: 100%; height: 15%; top: 0; z-index: 999">
         <a style="height: inherit" class="app-logo" [routerLink]="['/']">
             <img alt="app logo" [src]="logo" />
             <span class="typewriter text-color">
@@ -22,59 +21,47 @@
                         data-bs-target="#navbarNav"
                         aria-controls="navbarNav"
                         aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
+                        aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul
                             class="flex flex-column lg:flex-row m-0 p-0 list-none text-2xl lg:text-base"
-                            style="justify-content: space-between"
-                        >
+                            style="justify-content: space-between">
                             <li>
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >HOME</a
-                                >
+                                    leaveToClass="hidden">HOME</a>
                             </li>
                             <li>
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >ABOUT US</a
-                                >
+                                    leaveToClass="hidden">ABOUT US</a>
                             </li>
                             <li>
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >SERVICE</a
-                                >
+                                    leaveToClass="hidden">SERVICE</a>
                             </li>
                             <li>
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >THERAPITS</a
-                                >
+                                    leaveToClass="hidden">THERAPITS</a>
                             </li>
                             <li>
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >BOOK NOW</a
-                                >
+                                    leaveToClass="hidden">BOOK NOW</a>
                             </li>
 
                             <li>
@@ -82,16 +69,12 @@
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
                                     pStyleClass="#landing-menu"
                                     leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >SHORTCODES</a
-                                >
+                                    leaveToClass="hidden">SHORTCODES</a>
                             </li>
                             <li *ngIf="isAuth === false">
                                 <a
                                     class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    (click)="showPopupLogin()"
-                                    >SIGN IN</a
-                                >
+                                    (click)="showPopupLogin()">SIGN IN</a>
                             </li>
                         </ul>
                     </div>
@@ -103,5 +86,4 @@
 <app-login
     [isPopupLogin]="isPopupLogin"
     (hiddenPopup)="hidePopupLogin()"
-    (getRole)="getRole()"
-></app-login>
+    (getRole)="getRole()"></app-login>
