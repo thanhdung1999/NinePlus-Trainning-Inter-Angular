@@ -9,12 +9,15 @@ export abstract class ApiBaseService {
         if (!this.baseUrl || this.baseUrl.length === 0) {
             return this.apiBasePath;
         }
-        return `${this.apiBasePath}${environment.apiVersion}/${this.baseUrl}`;
+        return `${this.apiBasePath}/${this.apiUrl}/${environment.apiVersion}/${this.baseUrl}`;
     }
+
     constructor(
         protected httpClient: HttpClient,
+        protected baseUrl = '',
         protected apiBasePath: string = environment.defaultApiBasePath,
-        protected baseUrl = ''
+        protected apiVersion = environment.apiVersion,
+        protected apiUrl = environment.apiUrl
     ) {}
 }
 
@@ -28,15 +31,11 @@ export class CrudBaseService extends ApiBaseService {
     }
 
     get(id: string): Observable<any> {
-        return this.httpClient
-            .get<any>(`${this.basePath}/${id}`)
-            .pipe(map((res: any) => res && res.data));
+        return this.httpClient.get<any>(`${this.basePath}/${id}`).pipe(map((res: any) => res && res.data));
     }
 
     list(): Observable<any> {
-        return this.httpClient
-            .get<any>(`${this.basePath}`)
-            .pipe(map((res: any) => res));
+        return this.httpClient.get<any>(`${this.basePath}`).pipe(map((res: any) => res));
     }
 
     filter(filterParams: any): Observable<any[]> {
@@ -53,6 +52,10 @@ export class CrudBaseService extends ApiBaseService {
 
     update(body: any): Observable<any> {
         return this.httpClient.post(`${this.basePath}`, body);
+    }
+
+    updateByPut(body: any): Observable<any> {
+        return this.httpClient.put(`${this.basePath}`, body);
     }
 
     delete(id: string, key: string): Observable<any> {

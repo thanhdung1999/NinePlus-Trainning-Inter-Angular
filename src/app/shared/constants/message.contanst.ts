@@ -33,6 +33,25 @@ export enum MESSAGE_TITLE {
     EDIT_BRANCH_SUCC = 'Edit branch successful',
     ADD_NEW_BRANCH_ERR = 'Add new branch error',
     EDIT_BRANCH_ERR = 'Edit branch error',
+    CONFIRM_DELETE = 'Are you sure you want to delete customer: ',
+    ADD_NEW_EMPLOYEE = 'Add new successful',
+    RESET_PASS_SUCC = 'Reset password successful',
+    RESET_PASS_ERR = 'Reset password error',
+}
+
+export enum MESSAGE_ERROR_INPUT {
+    VALID = 'Input fields are incorrect',
+    MIN_LENGTH_NAME = 'Name enter at least 4 characters',
+    MIN_LENGTH_PASSWORD = 'Password enter at least 8 characters',
+    MIN_LENGTH_USERNAME = 'Username enter at least 8 characters',
+    USERNAME_EXISTS = 'Username already exists',
+    PASSWORD_OR_USERNAME_EMPTY = 'username or password not entered',
+    ID_ALREADY_EXISTS = 'Id already exists',
+    ID_DOES_NOT_EXISTS = "Id doesn't exist",
+    EMAIL_ALREADY_EXISTS = 'Email already exists',
+    EMAIL_INVALID = 'Invalid email',
+    INCORRECT_ACCOUNT = 'Incorrect account',
+    MATCH_PASSWORD = 'Password does not match',
 }
 
 export const MESSAGE_ERROR = [
@@ -304,20 +323,14 @@ export const MESSAGE_TRANS_COMMON = [
 export const MESSAGE_NAME = [
     {
         id: 'NP001B',
-        message_VN:
-            'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
-        message_EN:
-            'Meeting rooms were booked during this time. Please enter another time !',
-        message_JP:
-            'この時間帯に会議室が予約されました。別の時間を入力してください !',
+        message_VN: 'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
+        message_EN: 'Meeting rooms were booked during this time. Please enter another time !',
+        message_JP: 'この時間帯に会議室が予約されました。別の時間を入力してください !',
     },
     {
         id: 'NP001A',
-        message_VN:
-            'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
-        message_EN:
-            'Meeting rooms were booked during this time. Please enter another time !',
-        message_JP:
-            'この時間帯に会議室が予約されました。別の時間を入力してください !',
+        message_VN: 'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
+        message_EN: 'Meeting rooms were booked during this time. Please enter another time !',
+        message_JP: 'この時間帯に会議室が予約されました。別の時間を入力してください !',
     },
 ];
