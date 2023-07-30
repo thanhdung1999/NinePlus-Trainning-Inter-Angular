@@ -13,11 +13,11 @@ const interceptors = [
         useClass: AuthTokenHeaderInterceptor,
         multi: true,
     },
-    // {
-    //     provide: HTTP_INTERCEPTORS,
-    //     useClass: ApiDefaultHeaderInterceptor,
-    //     multi: true,
-    // },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiDefaultHeaderInterceptor,
+        multi: true,
+    },
     {
         provide: HTTP_INTERCEPTORS,
         useClass: ExternalApiInterceptor, // must be the last one

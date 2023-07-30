@@ -6,10 +6,6 @@ import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
 import { Table } from 'primeng/table';
 import { ToastService } from 'src/app/shared/services/toast.service';
-<<<<<<< HEAD
-=======
-import { error } from 'console';
->>>>>>> 4b3264c ([SBFA-3] create reset password function employee)
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',

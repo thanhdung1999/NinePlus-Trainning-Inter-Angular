@@ -6,9 +6,20 @@ import { SharedModule } from 'src/app/shared';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { WorkShiftListComponent } from './work-shift-list.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [WorkShiftListComponent],
-    imports: [CommonModule, WorkShiftListRoutingModule, SharedModule, SkeletonModule, TableModule]
+    imports: [
+        CommonModule,
+        WorkShiftListRoutingModule,
+        SharedModule,
+        SkeletonModule,
+        TableModule,
+        RadioButtonModule,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
 })
 export class WorkShiftListModule {}
