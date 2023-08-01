@@ -59,15 +59,11 @@ const routes: Routes = [
             {
                 path: 'booking',
                 data: { breadcrumb: 'Manage Booking' },
-                loadChildren: () => import('./modules/manage-system/components/booking/booking.module').then((m) => m.BookingModule),
+                loadChildren: () =>
+                    import('./modules/manage-system/components/booking/booking.module').then(
+                        (m) => m.BookingModule
+                    ),
             },
-            {
-                path:'manage-employee',
-                data:{breadcrumb: 'Danh sách nhân viên'},
-                loadChildren: () => import('./modules/manage-system/components/employee/employee.module').then(
-                    (m)=> m.EmployeeModule
-                ),
-            }
         ],
     },
     {

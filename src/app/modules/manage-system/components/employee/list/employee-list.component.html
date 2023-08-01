@@ -21,13 +21,6 @@
                         icon="pi pi-file-export" label="Export Excel"
                         (click)="toggle()"></button>
                 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 909721b ([SBFA-3] update UI and validate form)
-=======
->>>>>>> 28afd77 ([SBFA-3] create API and UI employee management)
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
@@ -62,15 +55,7 @@
                                 [showClear]="true" placeholder="Select a Gender">
                                 <ng-template let-genders pTemplate="item">
                                     <div class="flex align-items-center">
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         <div>{{ genders.name}}</div>
-=======
-                                        <div>{{genders.name}}</div>
->>>>>>> 909721b ([SBFA-3] update UI and validate form)
-=======
-                                        <div>{{ genders.name}}</div>
->>>>>>> 28afd77 ([SBFA-3] create API and UI employee management)
                                     </div>
                                 </ng-template>
                             </p-dropdown>
@@ -114,17 +99,8 @@
                 <tr>
                     <td>{{employeeTest.id}}</td>
                     <td>{{employeeTest.name}}</td>
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <td>{{employeeTest.gender ? "Nam" :
                         employeeTest.gender===false ? "Nữ" : "Trống"}}</td>
-=======
-                    <td>{{employeeTest.gender ? "Nam" : "Nữ"}}</td>
->>>>>>> 909721b ([SBFA-3] update UI and validate form)
-=======
-                    <td>{{employeeTest.gender ? "Nam" :
-                        employeeTest.gender===false ? "Nữ" : "Trống"}}</td>
->>>>>>> 28afd77 ([SBFA-3] create API and UI employee management)
                     <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
                     <td>{{employeeTest.phoneNumber}}</td>
                     <td>

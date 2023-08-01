@@ -10,8 +10,8 @@ import { ProductService } from '../../../../service/product.service';
 })
 export class BodyLandingComponent {
     constructor(
+        private productService: ProductService,
         private viewportScroller: ViewportScroller,
-        private productService: ProductService
     ) {}
 
     onHead() {
