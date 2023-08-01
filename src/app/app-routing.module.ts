@@ -54,7 +54,6 @@ const routes: Routes = [
             {
                 path: 'apps',
                 data: { breadcrumb: 'Apps' },
-                loadChildren: () => import('./demo/components/apps/apps.module').then((m) => m.AppsModule),
             },
             {
                 path: 'booking',

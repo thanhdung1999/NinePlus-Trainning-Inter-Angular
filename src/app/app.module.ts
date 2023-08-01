@@ -34,6 +34,11 @@ import { TableModule } from 'primeng/table';
             provide: LocationStrategy,
             useClass: PathLocationStrategy,
         },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiDefaultHeaderInterceptor,
+            multi: true,
+        },
     ],
     bootstrap: [AppComponent],
 })

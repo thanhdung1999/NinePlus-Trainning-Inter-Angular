@@ -8,6 +8,7 @@ import { ProductService } from '../../../../service/product.service';
     templateUrl: './body-landing.component.html',
     styleUrls: ['./body-landing.component.scss'],
 })
+
 export class BodyLandingComponent {
     constructor(
         private productService: ProductService,

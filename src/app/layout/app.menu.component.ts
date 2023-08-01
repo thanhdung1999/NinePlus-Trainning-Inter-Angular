@@ -33,6 +33,12 @@ export class AppMenuComponent implements OnInit {
                         routerLink: [ROUTER.CREATE_EMPLOYEE],
                     },
                 ],
+
+            },
+            {
+                label: 'Service',
+                icon: 'pi pi-slack',
+                items: [],
             },
           
             {

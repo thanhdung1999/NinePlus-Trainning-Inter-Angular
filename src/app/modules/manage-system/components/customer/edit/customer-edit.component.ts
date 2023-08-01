@@ -2,16 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import {
-    HandleString,
-    MESSAGE_ERROR_INPUT,
-    MESSAGE_TITLE,
-    ROUTER,
-    TOAST,
-} from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -63,23 +57,10 @@ export class CustomerEditComponent implements OnInit {
                     const customer = data as Customer;
                     this.formUpdateCustomer = this._fb.group({
                         id: [this.customerId],
-                        customerName: [
-                            customer?.customerName,
-                            [Validators.required, Validators.minLength(4)],
-                        ],
-                        phoneNumber: [
-                            customer?.phoneNumber,
-                            [
-                                Validators.required,
-                                Validators.pattern(this.phoneNumberParttern),
-                            ],
-                        ],
+                        customerName: [customer?.customerName, [Validators.required, Validators.minLength(4)]],
+                        phoneNumber: [customer?.phoneNumber, [Validators.required, Validators.pattern(this.phoneNumberParttern)]],
                         address: [customer?.address],
-                        dateOfBirth: [
-                            customer?.dateOfBirth
-                                ? new Date(customer.dateOfBirth)
-                                : '',
-                        ],
+                        dateOfBirth: [customer?.dateOfBirth ? new Date(customer.dateOfBirth) : ''],
                         totalMoney: [customer?.totalMoney],
                     });
                 }
