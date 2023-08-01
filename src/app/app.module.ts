@@ -9,12 +9,16 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ApiDefaultHeaderInterceptor } from './core';
+import { TableModule } from 'primeng/table';
+
+
 @NgModule({
     imports: [
         AppLayoutModule,
         AppRoutingModule,
         CoreModule,
         SharedModule,
+        TableModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

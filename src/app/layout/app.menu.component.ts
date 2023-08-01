@@ -33,12 +33,14 @@ export class AppMenuComponent implements OnInit {
                         routerLink: [ROUTER.CREATE_EMPLOYEE],
                     },
                 ],
+
             },
             {
                 label: 'Service',
                 icon: 'pi pi-slack',
                 items: [],
             },
+          
             {
                 label: 'Customer',
                 icon: 'pi pi-users',
@@ -63,7 +65,16 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Booking',
                 icon: 'pi pi-book',
-                items: [],
+                items: [  {
+                    label: 'List',
+                    icon: 'pi pi-list',
+                    routerLink: [ROUTER.LIST_BOOKING],
+                },
+                {
+                    label: 'Create',
+                    icon: 'pi pi-plus',
+                    routerLink: [ROUTER.CREATE_BOOKING],
+                },],
             },
             {
                 label: 'User',
