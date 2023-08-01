@@ -14,6 +14,7 @@ export class HeaderLandingComponent {
     isAuth = false;
 
     constructor(private _layoutService: LayoutService, private _sessionService: SessionService, private _authenticateService: AuthenticateService) {}
+
     ngOnInit(): void {
         this.getRole();
     }
