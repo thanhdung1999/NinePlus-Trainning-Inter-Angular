@@ -83,7 +83,6 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Achievement</a>
-
                             </li>
                         </ul>
                     </li>
@@ -166,17 +165,7 @@
             <a class="nav-link">
                 <button class="btn btn-lg btn-md btn-success">BOOKING NOW</button>
             </a>
-
         </div>
-        <div>
-            <a class="nav-link" (click)="showPopupLogin()">
-                <button class="btn btn-primary btn-lg btn-md">
-                    <i class="pi pi-user-plus"></i>
-                    LOG IN
-                </button>
-            </a>
-        </div>
-
         <ng-container *ngIf="isAuth === false; else user">
             <div>
                 <a class="nav-link" (click)="showPopupLogin()">
@@ -196,4 +185,3 @@
 </nav>
 
 <app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()"></app-login>
-

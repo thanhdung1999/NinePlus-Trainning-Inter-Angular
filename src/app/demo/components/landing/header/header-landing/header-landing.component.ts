@@ -20,7 +20,7 @@ export class HeaderLandingComponent {
     }
 
     getRole() {
-        if (!isNil(this._sessionService.userInformation) && !isEmpty(this._sessionService.userInformation)) {
+        if (!isNil(this._sessionService.userAuthenticate) && !isEmpty(this._sessionService.userAuthenticate)) {
             this.isAuth = true;
         } else {
             setTimeout(() => {

@@ -42,11 +42,9 @@
     padding: 0;
 }
 
-
-.navbar{
+.navbar {
     padding-bottom: 0;
 }
-
 
 span {
     font-family: "Courier New", Courier, monospace;
@@ -54,8 +52,6 @@ span {
     font-weight: 700;
     color: var(--v-menuitem-text-color);
 }
-
-
 
 .overlay {
     //position: fixed;
@@ -133,10 +129,10 @@ span {
 
 @media only screen and (max-width: 768px) {
     .app_name {
-        font-size: 2rem        ;
+        font-size: 2rem;
     }
 
-    img{
+    img {
         margin-bottom: 10px;
         width: 40%;
     }
@@ -145,27 +141,41 @@ span {
     }
 }
 
-.app_name{
-    font-family: 'Lato', sans-serif;
+.app_name {
+    font-family: "Lato", sans-serif;
     font-style: italic;
 }
-body, h1, h2, h3, h4, h5, h6, a:hover, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, li a {
-    font-family: 'Lato', sans-serif;
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a:hover,
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+li a {
+    font-family: "Lato", sans-serif;
     color: #333333;
 }
-a{
-    font-family: 'Lato', sans-serif;
+a {
+    font-family: "Lato", sans-serif;
     color: #333333;
     font-size: 17px;
 }
-span{
-    font-family: 'Lato', sans-serif;
+span {
+    font-family: "Lato", sans-serif;
     color: #333333;
     //font-size: 15px;
 }
-.app1-logo{
-    max-width:50%;height:auto;
-
+.app1-logo {
+    max-width: 50%;
+    height: auto;
 }
 .centered-hr {
     display: flex;
@@ -174,7 +184,7 @@ span{
 }
 
 .gradient-hr {
-    top:0;
+    top: 0;
     height: 2px;
     width: 50%;
     background: linear-gradient(to right, transparent, #0e0d0d, transparent);
@@ -182,12 +192,11 @@ span{
     bottom: 0;
 }
 
-
-.container-fluid{
+.container-fluid {
     display: flex;
 }
 
-.v-flex{
+.v-flex {
     display: flex;
     justify-content: space-around;
 }
@@ -205,3 +214,4 @@ span{
         width: 50px;
         height: auto;
     }
+}
