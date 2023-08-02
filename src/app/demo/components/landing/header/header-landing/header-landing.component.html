@@ -83,6 +83,7 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Achievement</a>
+
                             </li>
                         </ul>
                     </li>
@@ -96,6 +97,29 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Body treatment</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Facial treatment</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Hair care</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Nail</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#"> Cosmetics</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Health protection products</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Hair Care</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Facial treatment</a>
@@ -142,6 +166,7 @@
             <a class="nav-link">
                 <button class="btn btn-lg btn-md btn-success">BOOKING NOW</button>
             </a>
+
         </div>
         <div>
             <a class="nav-link" (click)="showPopupLogin()">
@@ -151,7 +176,24 @@
                 </button>
             </a>
         </div>
+
+        <ng-container *ngIf="isAuth === false; else user">
+            <div>
+                <a class="nav-link" (click)="showPopupLogin()">
+                    <button class="btn btn-primary btn-lg btn-md">
+                        <i class="pi pi-user-plus"></i>
+                        LOG IN
+                    </button>
+                </a>
+            </div>
+        </ng-container>
+        <ng-template #user>
+            <div class="profile">
+                <app-topbar-profile></app-topbar-profile>
+            </div>
+        </ng-template>
     </div>
 </nav>
 
-<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()" (getRole)="getRole()"></app-login>
+<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()"></app-login>
+

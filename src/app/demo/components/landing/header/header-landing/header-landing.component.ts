@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { isEmpty, isNil } from 'lodash';
-import { SessionService } from 'src/app/core';
+import { AuthenticateService, SessionService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
@@ -13,16 +13,14 @@ export class HeaderLandingComponent {
 
     isAuth = false;
 
-    constructor(private _layoutService: LayoutService, private _sessionService: SessionService) {}
+    constructor(private _layoutService: LayoutService, private _sessionService: SessionService, private _authenticateService: AuthenticateService) {}
+
     ngOnInit(): void {
         this.getRole();
     }
 
     getRole() {
-        if (
-            !isNil(this._sessionService.userInformation) &&
-            !isEmpty(this._sessionService.userInformation)
-        ) {
+        if (!isNil(this._sessionService.userInformation) && !isEmpty(this._sessionService.userInformation)) {
             this.isAuth = true;
         } else {
             setTimeout(() => {
