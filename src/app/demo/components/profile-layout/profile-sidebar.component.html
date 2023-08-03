@@ -1,6 +1,6 @@
 <div class="layout-menu-container">
     <div class="flex flex-column justify-content-center">
-        <div *ngFor="let menu of menus; let i = index" class="mt-5">
+        <div *ngFor="let menu of menus; let i = index" class="mb-5">
             <div class="flex align-items-center hover">
                 <i class="{{ menu.icon }} text-2xl cursor-pointer" (click)="toggleMenuItem(menu, i)"></i>
                 <span class="block ml-3 font-medium text-xl cursor-pointer" (click)="toggleMenuItem(menu, i)">{{ menu.label }}</span>

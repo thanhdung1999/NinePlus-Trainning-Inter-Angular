@@ -81,6 +81,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
+                path: '',
+                loadChildren: () => import('./demo/components/profile-customer/profile-customer.module').then((m) => m.ProfileCustomerModule),
+            },
+            {
                 path: 'changepassword',
                 loadChildren: () => import('./demo/components/auth/changepassword/changepassword.module').then((m) => m.ChangePasswordModule),
             },
