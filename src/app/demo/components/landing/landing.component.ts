@@ -10,10 +10,9 @@ export class LandingComponent {
     ngOnInit(): void {
         window.scroll(0, 0);
       }
-    
 
-     scrollTo(viewChild: HTMLElement) {
-        viewChild.scrollIntoView({behavior: 'smooth'});
+    scrollTo(viewChild: HTMLElement) {
+        viewChild.scrollIntoView({ behavior: 'smooth' });
     }
 
     get backgroundStyle(): object {
@@ -33,7 +32,7 @@ export class LandingComponent {
 
     get logo(): string {
         const path = 'assets/layout/images/logo-';
-        const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : (this.colorScheme === 'light' ? 'dark.png' : 'light.png');
+        const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : this.colorScheme === 'light' ? 'dark.png' : 'light.png';
         return path + logo;
     }
 }

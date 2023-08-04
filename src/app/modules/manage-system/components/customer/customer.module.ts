@@ -4,7 +4,12 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerComponent } from './customer.component';
 
 @NgModule({
-    declarations: [CustomerComponent],
-    imports: [CommonModule, CustomerRoutingModule],
+    declarations: [
+        CustomerComponent
+    ],
+    imports: [
+        CommonModule, 
+        CustomerRoutingModule
+    ]
 })
 export class CustomerModule {}

@@ -1,11 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { AuthGuard } from './core';
+import { ProfileLayoutComponent } from './demo/components/profile-layout/profile-layout.component';
 
 const routes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
@@ -62,6 +65,11 @@ const routes: Routes = [
                 data: { breadcrumb: 'Apps' },
                 loadChildren: () => import('./demo/components/apps/apps.module').then((m) => m.AppsModule),
             },
+            {
+                path: 'booking',
+                data: { breadcrumb: 'Manage Booking' },
+                loadChildren: () => import('./modules/manage-system/components/booking/booking.module').then((m) => m.BookingModule),
+            },
         ],
     },
     {
@@ -72,6 +80,21 @@ const routes: Routes = [
     {
         path: 'landing',
         loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
+    },
+    {
+        path: 'profile',
+        component: ProfileLayoutComponent,
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./demo/components/profile-customer/profile-customer.module').then((m) => m.ProfileCustomerModule),
+            },
+            {
+                path: 'changepassword',
+                loadChildren: () => import('./demo/components/auth/changepassword/changepassword.module').then((m) => m.ChangePasswordModule),
+            },
+        ],
     },
     {
         path: 'notfound',
