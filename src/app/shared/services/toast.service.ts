@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
     providedIn: 'root',
 })
 export class ToastService {
-    constructor(public _messageService: MessageService) {}
+    constructor(public _messageService: MessageService) { }
     showError(message: string, keyToast: string) {
         this._messageService.add({
             key: keyToast,
@@ -18,6 +18,39 @@ export class ToastService {
             key: keyToast,
             severity: 'success',
             summary: 'Success',
+            detail: message,
+        });
+    }
+
+    showWarning(message: string, keyToast: string) {
+        this._messageService.add({
+            key: keyToast,
+            severity: 'warn',
+            summary: 'Notification',
+            detail: message,
+        });
+    }
+
+    showSuccessNoKey(message: string) {
+        this._messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: message,
+        });
+    }
+
+    showErrorNoKey(message: string) {
+        this._messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+        });
+    }
+
+    showWarningNoKey(message: string) {
+        this._messageService.add({
+            severity: 'warn',
+            summary: 'Notification',
             detail: message,
         });
     }

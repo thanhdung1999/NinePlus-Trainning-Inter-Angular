@@ -1,11 +1,13 @@
-<div *ngIf="isPopupLogin === true" class="p-component-overlay" (click)="closeFormLogin()"></div>
+<div *ngIf="isPopupLogin === true" class="p-component-overlay"></div>
 <form
     (submit)="submit()"
-    class="form-login surface-ground flex align-items-center justify-content-center overflow-hidden"
+    class="form-login surface-ground flex align-items-center justify-content-center overflow-hidden md:w-6 sm:w-9 lg:w-4 animate-width"
     *ngIf="isPopupLogin === true"
 >
     <p-toast [key]="keyToast"></p-toast>
-    <div class="px-5 pb-7 flex flex-column justify-content-center h-full w-full relative pt-7">
+    <div
+        class="px-5 pb-5 flex flex-column justify-content-center h-full w-full relative"
+    >
         <span class="icon-close" (click)="closeFormLogin()">
             <i class="pi pi-times" style="font-size: 1.5rem"></i>
         </span>

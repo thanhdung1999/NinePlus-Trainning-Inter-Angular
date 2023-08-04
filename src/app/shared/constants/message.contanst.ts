@@ -35,6 +35,10 @@ export enum MESSAGE_TITLE {
     EDIT_BRANCH_ERR = 'Edit branch error',
     CONFIRM_DELETE = 'Are you sure you want to delete customer: ',
     ADD_NEW_EMPLOYEE = 'Add new successful',
+    RESET_PASS_SUCC = 'Reset password successful',
+    RESET_PASS_ERR = 'Reset password error',
+    LIST_EMPTY = 'Empty list',
+    CHANGE = 'Successfully changed',
 }
 
 export enum MESSAGE_ERROR_INPUT {
