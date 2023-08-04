@@ -40,6 +40,12 @@ const routes: Routes = [
                 loadChildren: () => import('./modules/manage-system/components/customer/customer.module').then((m) => m.CustomerModule),
             },
             {
+                path: 'work-shift',
+                data: { breadcrumb: 'Manage Work Shift' },
+                loadChildren: () =>
+                    import('./modules/manage-system/components/work-shift/work-shift.module').then((m) => m.WorkShiftModule),
+            },
+            {
                 path: 'documentation',
                 data: { breadcrumb: 'Documentation' },
                 loadChildren: () => import('./demo/components/documentation/documentation.module').then((m) => m.DocumentationModule),

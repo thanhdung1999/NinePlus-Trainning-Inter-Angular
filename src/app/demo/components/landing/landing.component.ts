@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 @Component({
@@ -6,10 +6,10 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 })
 export class LandingComponent {
     constructor(private layoutService: LayoutService) {}
-
+    
     ngOnInit(): void {
         window.scroll(0, 0);
-    }
+      }
 
     scrollTo(viewChild: HTMLElement) {
         viewChild.scrollIntoView({ behavior: 'smooth' });

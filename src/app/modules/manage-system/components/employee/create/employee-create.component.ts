@@ -9,6 +9,8 @@ import { EmployeeCreate } from 'src/app/demo/api/employee';
 import { Genders } from 'src/app/shared/constants/gender';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { ROUTER } from 'src/app/shared';
+import { UploadService } from 'src/app/shared/services/upload.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 @Component({
     selector: 'app-employee-create',
     templateUrl: './employee-create.component.html',
@@ -18,15 +20,19 @@ import { ROUTER } from 'src/app/shared';
 export class EmployeeCreateComponent {
     genders: any[] = Genders;
     form!: FormGroup;
+    formImage!: FormGroup;
     date: string = '';
     keyToast: string = 'bc';
+    fileUrl: string = ''
     constructor(
         private _router: Router,
         private _employeeService: EmployeeService,
         private _messageService: MessageService,
         private _fb: FormBuilder,
-        private _toastService: ToastService
-    ) {}
+        private _toastService: ToastService,
+        private _uploadService: UploadService,
+        private _notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         this.initFormCreateEmployee();
@@ -38,8 +44,8 @@ export class EmployeeCreateComponent {
         const password = /^.{8,}$/;
         this.form = this._fb.group({
             name: ['', Validators.compose([Validators.required])],
-            gender: [''],
-            birthday: [''],
+            gender: [null],
+            birthday: [null],
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
             address: [''],
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
@@ -51,7 +57,21 @@ export class EmployeeCreateComponent {
     }
 
     onFileSelect(event: any): void {
-        this.form.get('imageFile')?.setValue(event.files[0]);
+        const formData = new FormData();
+        formData.append("file", event.files[0]);
+        formData.append("filePath", event.files[0].name);
+        this._uploadService.upLoadFile(formData).subscribe({
+            next: (res: any) => {
+                this.form.patchValue({
+                    imageFile: res.data.filePath
+                })
+                this.fileUrl = res.data.fileUrl;
+            }, error: (error) => {
+                error.error.Messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            }
+        })
     }
 
     createEmployee() {
@@ -61,31 +81,26 @@ export class EmployeeCreateComponent {
                     birthday: this.form.get('birthday')?.value.toISOString(),
                 });
             }
-            const formData = new FormData();
-            Object.keys(this.form.controls).forEach((key) => {
-                const control = this.form.get(key);
-                if (control) {
-                    formData.append(key, control.value);
-                }
-            });
-            this._employeeService.createEmployee(formData as EmployeeCreate).subscribe({
+            this._employeeService.createEmployee(this.form.value).subscribe({
                 next: (res) => {
+                    this._notificationService.addMessage(MESSAGE_TITLE.ADD_SUCC);
                     this.navigateBackEmployeeList();
-                    this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
                 },
                 error: (error) => {
-                    this.form.patchValue({ birthday: '' });
+                    this.form.patchValue({ birthday: new Date(this.form.get('birthday')?.value) });
                     if (error.error.messages) {
                         error.error.messages.forEach((item: string) => {
-                            this._toastService.showError(item, this.keyToast);
+                            this._toastService.showErrorNoKey(item);
                         });
                     } else {
                         error.error.Messages.forEach((item: string) => {
-                            this._toastService.showError(item, this.keyToast);
+                            this._toastService.showErrorNoKey(item);
                         });
                     }
-                },
+                }
             });
+        } else {
+            this._toastService.showError('Kiểm tra lại thông tin các trường (*)', this.keyToast);
         }
     }
 

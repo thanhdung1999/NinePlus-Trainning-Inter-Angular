@@ -6,6 +6,10 @@ import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
 import { Table } from 'primeng/table';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
+import { Workshift } from 'src/app/demo/api/work-shift';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
@@ -19,19 +23,30 @@ export class EmployeeListComponent {
     employee: Employee = {};
     employees: Employee[] = [];
     deleteProductsDialog: boolean = false;
+    resetPassDialog: boolean = false;
     keyToast: string = 'bc';
-
+    userNameToResetPass = '';
+    formFilter!: FormGroup;
+    workshifts: Workshift[] = [];
     constructor(
         private _employeeService: EmployeeService,
         private _messageService: MessageService,
         private _router: Router,
         private _confirmationService: ConfirmationService,
-        private _toastService: ToastService
-    ) {}
+        private _toastService: ToastService,
+        private _fb: FormBuilder,
+        private _workShiftService: WorkShiftService,
+        private _notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
         this.onInitApi();
         this.loadSkeletonTable();
+        this.getListWorkShift();
+        this.formFilter = this._fb.group({
+            WorkShiftId: [''],
+            Gender: [''],
+        });
     }
 
     onInitApi() {
@@ -40,16 +55,56 @@ export class EmployeeListComponent {
                 if (res.data.length > 0) {
                     this.employees = res.data as Employee[];
                 } else {
-                    this._toastService.showError('Empty List', this.keyToast);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
-                    this._toastService.showError(item, this.keyToast);
+                    this._toastService.showErrorNoKey(item);
                 });
             },
         });
     }
+
+    getListWorkShift() {
+        this._workShiftService.getListWorkShift().subscribe({
+            next: (res) => {
+                this.workshifts = res.data as Workshift[];
+                if (this.workshifts.length === 0) {
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                }
+                this.toastFormAnotherScreen();
+            },
+            error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            },
+        });
+    }
+
+    filterEmployee() {
+        this._employeeService.filterEmployee(this.formFilter.value).subscribe({
+            next: (res: any) => {
+                this.employees = res.data as Employee[];
+                if (this.employees.length === 0) {
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                }
+            }, error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            }
+        })
+    }
+
+    toastFormAnotherScreen() {
+        const message = this._notificationService.getMessage();
+        if (message) {
+          this._toastService.showSuccessNoKey(message.toString());
+          this._notificationService.clearMessage();
+        }
+      }
 
     confirmDelete(employee: Employee) {
         if (employee.id != -1 && employee.id != undefined) {
@@ -58,16 +113,49 @@ export class EmployeeListComponent {
         }
     }
 
+    confirmResetPass(employee: Employee) {
+        if (employee.id) {
+            this._employeeService.getEmployeeById(employee.id.toString()).subscribe({
+                next: (res) => {
+                    this.userNameToResetPass = res.userName;
+                    this.employee = employee;
+                },
+                error: (error) => {
+                    error.error.Messages.forEach((item: string) => {
+                        this._toastService.showErrorNoKey(item);
+                    });
+                },
+            });
+        }
+        this.resetPassDialog = true;
+    }
+
     deleteConfirmed() {
         if (this.employee.id) {
             this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
                 next: () => {
-                    this._toastService.showSuccess(MESSAGE_TITLE.DELETE_SUCC, this.keyToast);
+                    this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
                     this.onInitApi();
                     this.deleteProductsDialog = false;
+                    this.employee = {};
                 },
                 error: () => {
-                    this._toastService.showError(MESSAGE_TITLE.DELETE_ERR, this.keyToast);
+                    this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
+                },
+            });
+        }
+    }
+
+    resetConfirmed() {
+        if (this.userNameToResetPass) {
+            this._employeeService.resetPasswordEmployee(this.userNameToResetPass).subscribe({
+                next: () => {
+                    this._toastService.showSuccessNoKey(MESSAGE_TITLE.RESET_PASS_SUCC);
+                    this.resetPassDialog = false;
+                    this.employee = {};
+                },
+                error: (error) => {
+                    this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_SUCC);
                 },
             });
         }
@@ -80,6 +168,7 @@ export class EmployeeListComponent {
     }
 
     toggle() {
+    
         this.overlayVisible = !this.overlayVisible;
     }
 

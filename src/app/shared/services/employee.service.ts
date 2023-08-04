@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
 import { Employee, EmployeeUpdate, EmployeeCreate } from 'src/app/demo/api/employee';
-
+import { ApiResponse } from 'src/app/core/http/api-response';
 @Injectable({
     providedIn: 'root',
 })
@@ -41,5 +41,22 @@ export class EmployeeService extends CrudBaseService {
 
     createEmployee(employee: EmployeeCreate): Observable<EmployeeCreate> {
         return this.create(employee);
+    }
+
+    resetPasswordEmployee(body: any): Observable<any> {
+        const url = `${this.basePath}/${body}/reset-password`;
+        return this.httpClient.patch(url, {});
+    }
+
+    getListDetailWorkshift(idWorkshift: number, key: string): Observable<ApiResponse> {
+        return this._httpClient.get(`${this.basePath}?${key}=${idWorkshift}`);
+    }
+
+    changeWorkshiftByIdEmployee(body: any): Observable<any> {
+        return this.httpClient.patch(`${this.basePath}/change-workshift`, body);
+    }
+
+    filterEmployee(body: any): Observable<any[]> {
+        return this.filter(body);
     }
 }

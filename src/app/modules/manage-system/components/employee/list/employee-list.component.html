@@ -1,5 +1,5 @@
 <div class="card">
-    <p-toast key="bc"></p-toast>
+    <p-toast></p-toast>
     <p-table #dt [value]="employees" [paginator]="true" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -25,7 +25,7 @@
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
                         icon="pi pi-filter" label="Filter" (click)="toggle()"></button>
-                    <p-overlay [(visible)]="overlayVisible"
+                    <p-overlay [(visible)]="overlayVisible" [formGroup]="formFilter" (ngSubmit)="filterEmployee()"
                         [responsive]="{ breakpoint: '640px', direction: 'top', contentStyleClass: 'h-20rem'}"
                         contentStyleClass="p-4 surface-overlay shadow-2 border-round">
                         <div>
@@ -36,6 +36,8 @@
                             <p-dropdown inputId="country" [options]="genders"
                                 optionLabel="name" [filter]="true"
                                 filterBy="name"
+                                optionValue="code"
+                                formControlName="Gender"
                                 [showClear]="true" placeholder="Select a Gender">
                                 <ng-template let-genders pTemplate="item">
                                     <div class="flex align-items-center">
@@ -47,18 +49,24 @@
                         <div class="mt-4">
                             <div>
                                 <label for="country"
-                                    class="font-medium text-900">Gender</label>
+                                    class="font-medium text-900">Workshift</label>
                             </div>
-                            <p-dropdown inputId="country" [options]="genders"
+                            <p-dropdown inputId="country" [options]="workshifts"
                                 optionLabel="name" [filter]="true"
                                 filterBy="name"
+                                optionValue="id"
+                                formControlName="WorkShiftId"
                                 [showClear]="true" placeholder="Select a Gender">
-                                <ng-template let-genders pTemplate="item">
+                                <ng-template let-workshifts pTemplate="item">
                                     <div class="flex align-items-center">
-                                        <div>{{ genders.name}}</div>
+                                        <div>{{ workshifts.name}}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
+                        </div>
+                        <div class="mt-4">
+                            <p-button label="Primary" styleClass="p-button-rounded p-button-sm ml-5" label="Apply" (onClick)="filterEmployee()"></p-button>
+                            <p-button label="Primary" styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm" label="Clear" (onClick)="onInitApi()"></p-button>
                         </div>
                     </p-overlay>
                     <button pButton
@@ -110,7 +118,11 @@
                                 (click)="navigateToEditEmployee(employeeTest.id)"></button>
                             <button pButton pRipple icon="pi pi-trash"
                                 (click)="confirmDelete(employeeTest)"
-                                class="p-button-rounded p-button-warning"></button>
+                                class="p-button-rounded p-button-warning mr-2"></button>
+                                <button pButton pRipple (click)="confirmResetPass(employeeTest)" class="p-button-rounded p-button-danger">
+                                    <span class="reset-label">Reset </span>
+                                    <i class="pi pi-key"></i>
+                                  </button>
                         </div>
                     </td>
                 </tr>
@@ -128,6 +140,20 @@
                 label="No" (click)="deleteProductsDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="deleteConfirmed()"
+                label="Yes"></button>
+        </ng-template>
+    </p-dialog>
+    <p-dialog [(visible)]="resetPassDialog" header="Confirm" [modal]="true"
+        [style]="{width:'450px'}">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span *ngIf="employee"> Are you sure you want to reset password to <b>{{employee.name}}</b>?</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple icon="pi pi-times" class="p-button-text"
+                label="No" (click)="resetPassDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text"
+                (click)="resetConfirmed()"
                 label="Yes"></button>
         </ng-template>
     </p-dialog>
