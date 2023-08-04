@@ -6,16 +6,15 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ApiDefaultHeaderInterceptor } from './core';
+import { ProfileLayoutModule } from './demo/components/profile-layout/profile-layout.module';
 import { TableModule } from 'primeng/table';
-
-
 
 @NgModule({
     imports: [
         AppLayoutModule,
+        ProfileLayoutModule,
         AppRoutingModule,
         CoreModule,
         SharedModule,

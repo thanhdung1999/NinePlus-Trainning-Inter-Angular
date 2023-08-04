@@ -3,17 +3,21 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DividerModule } from 'primeng/divider';
 import { ToastModule } from 'primeng/toast';
-import { ChangePasswordRoutingModule } from './changepassword-routing.component';
-import { ChangePasswordComponent } from './changepassword.component';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProfileCustomerRoutingModule } from './profile-customer-routing.module';
+import { ProfileCustomerComponent } from './profile-customer.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
-    declarations: [ChangePasswordComponent],
+    declarations: [ProfileCustomerComponent],
     imports: [
         CommonModule,
+        ProfileCustomerRoutingModule,
         ButtonModule,
         RippleModule,
         InputTextModule,
@@ -21,8 +25,10 @@ import { InputTextModule } from 'primeng/inputtext';
         DividerModule,
         FormsModule,
         ReactiveFormsModule,
-        ChangePasswordRoutingModule,
         AppConfigModule,
+        CalendarModule,
+        InputTextareaModule,
+        InputMaskModule,
     ],
 })
-export class ChangePasswordModule {}
+export class ProfileCustomerModule {}
