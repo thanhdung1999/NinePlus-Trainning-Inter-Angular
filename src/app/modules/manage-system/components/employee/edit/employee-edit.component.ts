@@ -9,7 +9,8 @@ import { EmployeeUpdate } from 'src/app/demo/api/employee';
 import { Genders } from 'src/app/shared/constants/gender';
 import { ROUTER } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { co } from '@fullcalendar/core/internal-common';
+import { Workshift } from 'src/app/demo/api/work-shift';
+import { UploadService } from 'src/app/shared/services/upload.service';
 @Component({
     selector: 'app-employee-edit',
     templateUrl: './employee-edit.component.html',
@@ -23,14 +24,17 @@ export class EmployeeEditComponent {
     defaultGender!: boolean;
     imageDisplay: string = '';
     keyToast: string = 'bc';
+    workShifts: Workshift[] = [];
+    fileUrl: string = '';
     constructor(
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
         private _employeeService: EmployeeService,
         private _messageService: MessageService,
         private _fb: FormBuilder,
-        private _toastService: ToastService
-    ) {}
+        private _toastService: ToastService,
+        private _uploadService: UploadService
+    ) { }
 
     ngOnInit() {
         this.getEmployeeById();
@@ -43,8 +47,8 @@ export class EmployeeEditComponent {
         this.form = this._fb.group({
             id: [{ value: '', disabled: true }],
             name: ['', Validators.compose([Validators.required])],
-            gender: [''],
-            birthday: [''],
+            gender: [null],
+            birthday: [null],
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
             address: [''],
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
@@ -76,13 +80,21 @@ export class EmployeeEditComponent {
     }
 
     onFileSelect(event: any): void {
-        const reader = new FileReader();
-        const file = event.files[0];
-        reader.onload = (e: any) => {
-            this.imageDisplay = e.target.result;
-        };
-        reader.readAsDataURL(file);
-        this.form.get('imageFile')?.setValue(event.files[0]);
+        const formData = new FormData();
+        formData.append("file", event.files[0]);
+        formData.append("filePath", event.files[0].name);
+        this._uploadService.upLoadFile(formData).subscribe({
+            next: (res: any) => {
+                this.form.patchValue({
+                    imageFile: res.data.filePath
+                })
+                this.fileUrl = res.data.fileUrl;
+            }, error: (error) => {
+                error.error.Messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            }
+        })
     }
 
     updateEmployeeById() {

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { CrudBaseService } from 'src/app/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { an } from '@fullcalendar/core/internal-common';
 import { ApiResponse } from 'src/app/core/http/api-response';
+import { Workshift } from 'src/app/demo/api/work-shift';
 @Injectable({
     providedIn: 'root',
 })
@@ -26,5 +26,21 @@ export class WorkShiftService extends CrudBaseService {
 
     getListWorkShift(): Observable<ApiResponse> {
         return this.list();
+    }
+
+    deleteWorkShiftById(id: string): Observable<ApiResponse> {
+        return this.delete(id, 'id');
+    }
+
+    createWorkshift(workshift: Workshift): Observable<ApiResponse> {
+        return this.create(workshift);
+    }
+
+    updateWorkshiftById(workshift: Workshift): Observable<ApiResponse> {
+        return this.updateByPut(workshift);
+    }
+
+    getWorkshiftById(id: string): Observable<ApiResponse> {
+        return this.get(id);
     }
 }

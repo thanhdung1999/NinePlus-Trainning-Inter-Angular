@@ -14,4 +14,7 @@ export enum ROUTER {
     LANDING = 'landing',
     AUTH_ERROR = 'auth/error',
     LIST_WORK_SHIFT = 'work-shift/list',
+    DETAIL_WORKSHIFT = 'work-shift/detail/',
+    CREATE_WORKSHIFT = 'work-shift/create',
+    UPDATE_WORKSHIFT = 'work-shift/edit/',
 }

@@ -37,6 +37,8 @@ export enum MESSAGE_TITLE {
     ADD_NEW_EMPLOYEE = 'Add new successful',
     RESET_PASS_SUCC = 'Reset password successful',
     RESET_PASS_ERR = 'Reset password error',
+    LIST_EMPTY = 'Empty list',
+    CHANGE = 'Successfully changed',
 }
 
 export enum MESSAGE_ERROR_INPUT {

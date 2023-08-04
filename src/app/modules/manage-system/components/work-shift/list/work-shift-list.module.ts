@@ -17,9 +17,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         SharedModule,
         SkeletonModule,
         TableModule,
+        FormsModule,
         RadioButtonModule,
         ReactiveFormsModule,
-        FormsModule,
     ],
 })
 export class WorkShiftListModule {}

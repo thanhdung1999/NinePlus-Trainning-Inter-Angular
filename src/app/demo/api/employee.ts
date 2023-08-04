@@ -34,6 +34,10 @@ export interface EmployeeUpdate {
     workShiftId?: number;
 }
 export interface UploadEvent {
-    originalEvent: Event;
-    files: File[];
+    filePath: File[];
+}
+
+export interface EmployeeChangeWorkshift {
+    listId: [],
+    workShiftId: number
 }

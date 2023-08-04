@@ -1,5 +1,5 @@
 <div class="card">
-    <p-toast key="bc"></p-toast>
+    <p-toast></p-toast>
     <p-table #dt [value]="employees" [paginator]="true" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -25,7 +25,7 @@
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
                         icon="pi pi-filter" label="Filter" (click)="toggle()"></button>
-                    <p-overlay [(visible)]="overlayVisible"
+                    <p-overlay [(visible)]="overlayVisible" [formGroup]="formFilter" (ngSubmit)="filterEmployee()"
                         [responsive]="{ breakpoint: '640px', direction: 'top', contentStyleClass: 'h-20rem'}"
                         contentStyleClass="p-4 surface-overlay shadow-2 border-round">
                         <div>
@@ -36,6 +36,8 @@
                             <p-dropdown inputId="country" [options]="genders"
                                 optionLabel="name" [filter]="true"
                                 filterBy="name"
+                                optionValue="code"
+                                formControlName="Gender"
                                 [showClear]="true" placeholder="Select a Gender">
                                 <ng-template let-genders pTemplate="item">
                                     <div class="flex align-items-center">
@@ -47,18 +49,24 @@
                         <div class="mt-4">
                             <div>
                                 <label for="country"
-                                    class="font-medium text-900">Gender</label>
+                                    class="font-medium text-900">Workshift</label>
                             </div>
-                            <p-dropdown inputId="country" [options]="genders"
+                            <p-dropdown inputId="country" [options]="workshifts"
                                 optionLabel="name" [filter]="true"
                                 filterBy="name"
+                                optionValue="id"
+                                formControlName="WorkShiftId"
                                 [showClear]="true" placeholder="Select a Gender">
-                                <ng-template let-genders pTemplate="item">
+                                <ng-template let-workshifts pTemplate="item">
                                     <div class="flex align-items-center">
-                                        <div>{{ genders.name}}</div>
+                                        <div>{{ workshifts.name}}</div>
                                     </div>
                                 </ng-template>
                             </p-dropdown>
+                        </div>
+                        <div class="mt-4">
+                            <p-button label="Primary" styleClass="p-button-rounded p-button-sm ml-5" label="Apply" (onClick)="filterEmployee()"></p-button>
+                            <p-button label="Primary" styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm" label="Clear" (onClick)="onInitApi()"></p-button>
                         </div>
                     </p-overlay>
                     <button pButton
