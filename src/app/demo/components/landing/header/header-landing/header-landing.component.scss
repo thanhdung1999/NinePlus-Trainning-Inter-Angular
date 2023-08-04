@@ -1,151 +1,3 @@
-
-.layout-topbar1 {
-    //position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5.5rem;
-    z-index: 9999;
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-}
-.layout-topbar2 {
-    //position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    display: flex;
-    justify-content: space-around;
-    padding: 0;
-}
-
-
-.navbar{
-    padding-bottom: 0;
-}
-
-
-span {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--v-menuitem-text-color);
-}
-
-
-
-.overlay {
-    //position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    animation: fadeIn linear 0.2;
-}
-
-.mobile {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 280px;
-    max-width: 100%;
-    background-color: #fff;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: transform linear 0.2s, opacity linear 0.2s;
-}
-.list {
-    margin-top: 24px;
-    margin-left: 10px;
-}
-.link {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    padding: 8px 0;
-    font-size: 1.4rem;
-}
-.btn-close {
-    position: absolute;
-    font-size: 1.4rem;
-    top: 2rem;
-    right: 1rem;
-}
-
-#nav_input:checked ~ .overlay {
-    display: block;
-}
-#nav_input:checked ~ .mobile {
-    transform: translateX(0%);
-    opacity: 1;
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@media only screen and (max-width: 992px) {
-    img {
-        width: 28px;
-        height: 28px;
-    }
-    .layout-topbar {
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
-    .pi {
-        display: block;
-    }
-    .navbar-toggler-icon {
-        display: none;
-    }
-}
-
-@media only screen and (max-width: 768px) {
-    .app_name {
-        font-size: 2rem;
-        ;
-    }
-
-    img{
-        margin-bottom: 10px;
-        width: 40%;
-    }
-    .layout-topbar {
-        height: 70px;
-    }
-}
-.app_name{
-    font-family: 'Lato', sans-serif;
-    font-style: italic;
-}
-body, h1, h2, h3, h4, h5, h6, a:hover, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, li a {
-    font-family: 'Lato', sans-serif;
-    color: #333333;
-}
-a{
-    font-family: 'Lato', sans-serif;
-    color: #333333;
-    font-size: 17px;
-}
-span{
-    font-family: 'Lato', sans-serif;
-    color: #333333;
-    //font-size: 15px;
-}
-.app1-logo{
-    max-width:50%;height:auto;
-
-}
 .centered-hr {
     display: flex;
     justify-content: center;
@@ -161,20 +13,25 @@ span{
     bottom: 0;
 }
 
-.container-fluid{
-    display: flex;
-}
-
-.v-flex{
+.layout-topbar1 {
+    width: 100%;
+    height: 5.5rem;
+    z-index: 9999;
     display: flex;
     justify-content: space-around;
+    padding: 0;
 }
-
-.btn-primary:hover {
-    background-color: rgba(28, 23, 22, 0.62); /* Màu mới khi hover */
-    color: #fff; /* Màu chữ khi hover */
-    transition: all 0.5s ease 0s;
+    
+a {
+    font-family: "Lato", sans-serif;
+    color: #333333;
+    font-size: 17px;
 }
-.nav-link{
-    font-weight: bolder;
+span {
+    font-family: "Lato", sans-serif;
+    color: #333333;
+}
+.app1-logo {
+    max-width: 60%;
+    height: auto;
 }

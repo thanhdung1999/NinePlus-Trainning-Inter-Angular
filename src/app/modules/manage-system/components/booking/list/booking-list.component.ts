@@ -30,6 +30,9 @@ export class BookingListComponent implements OnInit {
 
     keyToast: string = '';
 
+       visible: boolean = false;
+
+
     constructor(
         private _bookingService: BookingService,
         private _toastService: ToastService,
@@ -134,4 +137,7 @@ export class BookingListComponent implements OnInit {
         return result;
     }
 
+    showDialog() {
+        this.visible = true;
+    }
 }

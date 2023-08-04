@@ -8,6 +8,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SharedModule } from 'src/app/shared';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
     declarations: [BookingCreateComponent],
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
         SharedModule,
         InputNumberModule,
         FormsModule,
+        MultiSelectModule
     ],
 })
 export class BookingCreateModule {}

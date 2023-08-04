@@ -1,35 +1,42 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="layout-topbar2">
-        <div>
-            <ul class="navbar-nav me-auto mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" style="color: #1b785c">REGISTER FOR CONSULTATIONS</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary pt-0">
+    <div class="container-fluid flex mx-5 mt-5">
+        <a class="navbar-brand mb-2 text-green-600">REGISTER FOR CONSULTATIONS</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span><i class="pi pi-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse mx-5" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto text-lg text-xl mb-2 mb-lg-0">
+                <li class="nav-item mx-3">
+                    <a class="nav-link active text-700" aria-current="page" href="#">New-Events</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">New-Events</a>
+                <li class="nav-item mx-3">
+                    <a class="nav-link active text-700" aria-current="page" href="#">Voucher</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Voucher</a>
+                <li class="nav-item mx-3">
+                    <a class="nav-link active text-700" aria-current="page" href="#">Feedback</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Feedback</a>
+                <li class="nav-item mx-3">
+                    <a class="nav-link active text-700" aria-current="page" href="#">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link"> Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Recruitment</a>
+                <li class="nav-item mx-3">
+                    <a class="nav-link active text-700" aria-current="page" href="#">Recruitment</a>
                 </li>
             </ul>
-        </div>
-        <div class="d-flex">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2 mb-2" type="search" placeholder="Search" aria-label="Search" />
-                <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+            <form class="d-flex">
+                <input class="form-control me-2 text-lg" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success" type="submit"><i class="pi pi-search"></i></button>
             </form>
-            <div class="mx-1 dropdown">
+            <div class="mx-3 dropdown">
                 <button
-                    class="btn btn-outline-secondary dropdown-toggle"
+                    class="btn dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton"
                     data-bs-toggle="dropdown"
@@ -59,93 +66,87 @@
                 <img class="app1-logo" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
             </a>
         </div>
-        <div>
-            <input type="checkbox" name="" id="nav_input" hidden />
-            <label for="nav_input" class="overlay"></label>
-            <div class="navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Abouts Us
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#"> About Us</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Vision, Mission, Core Values</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"> About the president</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Team of doctors</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Achievement</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Service
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#"> Skin Care treatment</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Body treatment</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Facial treatment</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Hair care</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Nail</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Products
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="#"> Cosmetics</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Health protection products</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Hair Care</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link hover:text-red-500 font-thin">Blog</a>
-                    </li>
-                </ul>
+        <div class="mb-5">
+            <div class="navbar-collapse bg-body-tertiary mb-3">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container">
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        About Us
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> About Us</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Vision, Mission, Core Values</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> About the president</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Team of doctors</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Achievement</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Services
+                                    </a>
+                                    <ul class="dropdown-menu mx-5">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> Skin Care treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Body treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Facial treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Hair care</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Nail</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Products
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> Cosmetics</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Health protection products</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Hair Care</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link">Blogs</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
-            <!-- <nav class="mobile">
-                <label for="nav_input" class="btn-close"></label>
-                <ul class="list">
-                    <li><a href="" class="link">HOME</a></li>
-                    <li><a href="" class="link">SERVICE</a></li>
-                    <li><a href="" class="link">THERAPITS</a></li>
-                    <li><a href="" class="link">SHORTCODES</a></li>
-                    <li><a href="" class="link">ABOUT</a></li>
-                </ul>
-            </nav> -->
         </div>
         <div>
             <a class="nav-link">
-                <button class="btn btn-lg btn-md btn-success">BOOKING NOW</button>
+                <button class="btn btn-md btn-success">BOOKING NOW</button>
             </a>
         </div>
         <div>
             <a class="nav-link" (click)="showPopupLogin()">
-                <button class="btn btn-primary btn-lg btn-md">
+                <button class="btn btn-primary btn-md">
                     <i class="pi pi-user-plus"></i>
                     LOG IN
                 </button>

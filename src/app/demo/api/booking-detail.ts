@@ -13,6 +13,4 @@ export interface BookingDetail {
 export interface Services {
     id?: number;
     name?: string;
-    price?: number;
-    serviceTime?: number;
 }
