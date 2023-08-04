@@ -8,7 +8,7 @@
         responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['id', 'customerName', 'phoneNumber']"
+        [globalFilterFields]="['id', 'customerName', 'bookingDate', 'status']"
         [resetPageOnSort]="resetPageOnSort"
     >
         <ng-template pTemplate="caption">
@@ -114,7 +114,11 @@
                         {{ booking.totime | date : "hh:mm" }}
                         {{ booking.fromTime | date : "dd/MM/yyyy" }}
                     </td>
-                    <td>{{ booking.status }}</td>
+                    <td>{{ booking.status === 1
+                            ? 'Waiting'
+                            : booking.status === 2
+                            ? 'Inprogress'
+                            : 'Done' }}</td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
                             <p-confirmDialog

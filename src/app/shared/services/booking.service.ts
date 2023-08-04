@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
 import { ApiResponse } from 'src/app/core/http/api-response';
 import { Booking } from 'src/app/demo/api/booking';
+import { BookingCreate } from 'src/app/demo/api/booking-create';
+import { BookingUpdate } from 'src/app/demo/api/booking-update';
 
 @Injectable({
     providedIn: 'root',
@@ -35,7 +37,7 @@ export class BookingService extends CrudBaseService {
         return this.list();
     }
 
-    addBooking(booking: Booking): Observable<ApiResponse> {
+    addBooking(booking: BookingCreate): Observable<ApiResponse> {
         return this.create(booking);
     }
 
@@ -43,7 +45,7 @@ export class BookingService extends CrudBaseService {
         return this.get(id);
     }
 
-    updateBooking(booking: Booking): Observable<ApiResponse> {
+    updateBooking(booking: BookingUpdate): Observable<ApiResponse> {
         return this._httpClient.put(`${this.basePath}`, booking);
     }
 

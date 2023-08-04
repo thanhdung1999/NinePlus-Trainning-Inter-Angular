@@ -2,6 +2,16 @@
     <span class="text-80 text-xl font-bold mb-4 block">Detail Booking</span>
     <div class="grid">
         <div class="col-12 lg:col-1"></div>
+        <div class="col-12">
+            <button
+                pButton
+                icon="pi pi-angle-left"
+                pRipple
+                label="Back"
+                class="w-auto"
+                (click)="navigateToListBooking()"
+            ></button>
+        </div>
         <div
             class="col-12 lg:col-9 pl-8 flex flex-column justify-content-start"
         >
@@ -130,17 +140,6 @@
                     pInputText
                     [disabled]="true"
                 />
-            </div>
-
-            <div class="col-12">
-                <button
-                    pButton
-                    icon="pi pi-angle-left"
-                    pRipple
-                    label="Back"
-                    class="w-auto"
-                    (click)="navigateToListBooking()"
-                ></button>
             </div>
         </div>
     </div>
