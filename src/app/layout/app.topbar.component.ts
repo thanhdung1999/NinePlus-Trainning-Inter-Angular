@@ -1,9 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { TranslationService } from '../modules/manage-system/components/i18n';
 import { LanguageFlag, LANGUAGES, ROUTER } from '../shared';
 import { LayoutService } from './service/app.layout.service';
 import { AuthenticateService } from '../core';
+import { TranslationService } from '../modules/i18n/translation.service';
 
 @Component({
     selector: 'app-topbar',

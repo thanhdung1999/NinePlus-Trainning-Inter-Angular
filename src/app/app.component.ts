@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { LayoutService } from './layout/service/app.layout.service';
-import { TranslationService } from './modules/manage-system/components/i18n';
-import { locale as enLang } from './modules/manage-system/components/i18n/vocabs/en';
-import { locale as viLang } from './modules/manage-system/components/i18n/vocabs/vi';
+import { locale as enLang } from './modules/i18n/vocabs/en';
+import { locale as viLang } from './modules/i18n/vocabs/vi';
+import { TranslationService } from './modules/i18n';
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

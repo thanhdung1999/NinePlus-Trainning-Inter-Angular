@@ -1,39 +1,20 @@
-import {
-    ChangeDetectorRef,
-    Component,
-    HostBinding,
-    Input,
-    OnDestroy,
-    OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { IsActiveMatchOptions, NavigationEnd, Router } from '@angular/router';
-import {
-    animate,
-    state,
-    style,
-    transition,
-    trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MenuService } from './app.menu.service';
 import { LayoutService } from './service/app.layout.service';
 
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[app-menuitem]',
     template: `
         <ng-container>
-            <div
-                *ngIf="root && item.visible !== false"
-                class="layout-menuitem-root-text"
-            >
+            <div *ngIf="root && item.visible !== false" class="layout-menuitem-root-text">
                 {{ item.label | translate }}
             </div>
             <a
-                *ngIf="
-                    (!item.routerLink || item.items) && item.visible !== false
-                "
+                *ngIf="(!item.routerLink || item.items) && item.visible !== false"
                 [attr.href]="item.url"
                 (click)="itemClick($event)"
                 (mouseenter)="onMouseEnter()"
@@ -46,10 +27,7 @@ import { LayoutService } from './service/app.layout.service';
             >
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
                 <span class="layout-menuitem-text">{{ item.label | translate }}</span>
-                <i
-                    class="pi pi-fw pi-angle-down layout-submenu-toggler"
-                    *ngIf="item.items"
-                ></i>
+                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
             </a>
             <a
                 *ngIf="item.routerLink && !item.items && item.visible !== false"
@@ -80,30 +58,13 @@ import { LayoutService } from './service/app.layout.service';
                 [tooltipDisabled]="!(isSlim && root)"
             >
                 <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-                <span class="layout-menuitem-text">{{ item.label | translate}}</span>
-                <i
-                    class="pi pi-fw pi-angle-down layout-submenu-toggler"
-                    *ngIf="item.items"
-                ></i>
+                <span class="layout-menuitem-text">{{ item.label | translate }}</span>
+                <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
             </a>
 
-            <ul
-                *ngIf="item.items && item.visible !== false"
-                [@children]="submenuAnimation"
-            >
-                <ng-template
-                    ngFor
-                    let-child
-                    let-i="index"
-                    [ngForOf]="item.items"
-                >
-                    <li
-                        app-menuitem
-                        [item]="child"
-                        [index]="i"
-                        [parentKey]="key"
-                        [class]="child.badgeClass"
-                    ></li>
+            <ul *ngIf="item.items && item.visible !== false" [@children]="submenuAnimation">
+                <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
+                    <li app-menuitem [item]="child" [index]="i" [parentKey]="key" [class]="child.badgeClass"></li>
                 </ng-template>
             </ul>
         </ng-container>
@@ -134,10 +95,7 @@ import { LayoutService } from './service/app.layout.service';
                     display: 'block',
                 })
             ),
-            transition(
-                'collapsed <=> expanded',
-                animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')
-            ),
+            transition('collapsed <=> expanded', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
         ]),
     ],
 })
@@ -158,56 +116,36 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
     key: string = '';
 
-    constructor(
-        public layoutService: LayoutService,
-        private cd: ChangeDetectorRef,
-        public router: Router,
-        private menuService: MenuService
-    ) {
-        this.menuSourceSubscription = this.menuService.menuSource$.subscribe(
-            (value) => {
-                Promise.resolve(null).then(() => {
-                    if (value.routeEvent) {
-                        this.active =
-                            value.key === this.key ||
-                            value.key.startsWith(this.key + '-')
-                                ? true
-                                : false;
-                    } else {
-                        if (
-                            value.key !== this.key &&
-                            !value.key.startsWith(this.key + '-')
-                        ) {
-                            this.active = false;
-                        }
-                    }
-                });
-            }
-        );
-
-        this.menuResetSubscription = this.menuService.resetSource$.subscribe(
-            () => {
-                this.active = false;
-            }
-        );
-
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
-            .subscribe((params) => {
-                if (this.isSlim) {
-                    this.active = false;
+    constructor(public layoutService: LayoutService, private cd: ChangeDetectorRef, public router: Router, private menuService: MenuService) {
+        this.menuSourceSubscription = this.menuService.menuSource$.subscribe((value) => {
+            Promise.resolve(null).then(() => {
+                if (value.routeEvent) {
+                    this.active = value.key === this.key || value.key.startsWith(this.key + '-') ? true : false;
                 } else {
-                    if (this.item.routerLink) {
-                        this.updateActiveStateFromRoute();
+                    if (value.key !== this.key && !value.key.startsWith(this.key + '-')) {
+                        this.active = false;
                     }
                 }
             });
+        });
+
+        this.menuResetSubscription = this.menuService.resetSource$.subscribe(() => {
+            this.active = false;
+        });
+
+        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((params) => {
+            if (this.isSlim) {
+                this.active = false;
+            } else {
+                if (this.item.routerLink) {
+                    this.updateActiveStateFromRoute();
+                }
+            }
+        });
     }
 
     ngOnInit() {
-        this.key = this.parentKey
-            ? this.parentKey + '-' + this.index
-            : String(this.index);
+        this.key = this.parentKey ? this.parentKey + '-' + this.index : String(this.index);
 
         if (!this.isSlim && this.item.routerLink) {
             this.updateActiveStateFromRoute();
@@ -242,8 +180,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
 
         // navigate with hover
         if (this.root && this.isSlim) {
-            this.layoutService.state.menuHoverActive =
-                !this.layoutService.state.menuHoverActive;
+            this.layoutService.state.menuHoverActive = !this.layoutService.state.menuHoverActive;
         }
 
         // execute command
@@ -252,11 +189,7 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
         }
 
         // add tab
-        if (
-            event.metaKey &&
-            this.item.routerLink &&
-            (!this.item.data || !this.item.data.fullPage)
-        ) {
+        if (event.metaKey && this.item.routerLink && (!this.item.data || !this.item.data.fullPage)) {
             this.layoutService.onTabOpen(this.item);
             event.preventDefault();
         }
@@ -293,14 +226,8 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
     }
 
     get submenuAnimation() {
-        if (this.layoutService.isDesktop() && this.layoutService.isSlim())
-            return this.active ? 'visible' : 'hidden';
-        else
-            return this.root
-                ? 'expanded'
-                : this.active
-                ? 'expanded'
-                : 'collapsed';
+        if (this.layoutService.isDesktop() && this.layoutService.isSlim()) return this.active ? 'visible' : 'hidden';
+        else return this.root ? 'expanded' : this.active ? 'expanded' : 'collapsed';
     }
 
     get isSlim() {

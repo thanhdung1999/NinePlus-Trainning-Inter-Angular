@@ -14,89 +14,97 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Dashboard',
+                label: 'Trang chủ',
                 icon: 'pi pi-home',
-                items: [],
+                items: [
+                    {
+                        label: 'Cổng thông tin',
+                        icon: 'pi pi-fw pi-home',
+                        routerLink: [''],
+                    }
+                ],
             },
             {
-                label: 'Employee',
+                label: 'Quản lý nhân viên',
                 icon: 'pi pi-wrench',
                 items: [
                     {
-                        label: 'List',
-                        icon: 'pi pi-fw pi-plus',
+                        label: 'Danh sách',
+                        icon: 'pi pi-fw pi-list',
                         routerLink: [ROUTER.LIST_EMPLOYEE],
                     },
                     {
-                        label: 'Create',
+                        label: 'Tạo',
                         icon: 'pi pi-plus',
                         routerLink: [ROUTER.CREATE_EMPLOYEE],
                     },
                 ],
             },
             {
-                label: 'Work Shift',
+                label: 'Quản lý ca làm việc',
                 icon: 'pi pi-wrench',
                 items: [
                     {
-                        label: 'List',
-                        icon: 'pi pi-fw pi-plus',
+                        label: 'Danh sách',
+                        icon: 'pi pi-fw pi-list',
                         routerLink: [ROUTER.LIST_WORK_SHIFT],
                     },
                 ],
             },
             {
-                label: 'Service',
+                label: 'Quản lý dịch vụ',
                 icon: 'pi pi-slack',
                 items: [],
             },
             {
-                label: 'Customer',
+                label: 'Quản lý khách hàng',
                 icon: 'pi pi-users',
                 items: [
                     {
-                        label: 'List',
+                        label: 'Danh sách',
                         icon: 'pi pi-list',
                         routerLink: [ROUTER.LIST_CUSTOMER],
                     },
                     {
-                        label: 'Create',
+                        label: 'Tạo',
                         icon: 'pi pi-plus',
                         routerLink: [ROUTER.CREATE_CUSTOMER],
                     },
                 ],
             },
             {
-                label: 'Service',
+                label: 'Dịch vụ',
                 icon: 'pi pi-slack',
                 items: [],
             },
             {
-                label: 'Booking',
+                label: 'Quản lý đặt lịch',
                 icon: 'pi pi-book',
-                items: [  {
-                    label: 'List',
-                    icon: 'pi pi-list',
-                    routerLink: [ROUTER.LIST_BOOKING],
-                },
-                {
-                    label: 'Create',
-                    icon: 'pi pi-plus',
-                    routerLink: [ROUTER.CREATE_BOOKING],
-                },],
+                items: [
+                    {
+                        label: 'Danh sách',
+                        icon: 'pi pi-list',
+                        routerLink: [ROUTER.LIST_BOOKING],
+                    },
+                    {
+                        label: 'Tạo',
+                        icon: 'pi pi-plus',
+                        routerLink: [ROUTER.CREATE_BOOKING],
+                    },
+                ],
             },
             {
-                label: 'User',
+                label: 'Quản lý người dùng',
                 icon: 'pi pi-user',
                 items: [],
             },
             {
-                label: 'Feedback',
+                label: 'Quảng lý feedback',
                 icon: 'pi pi-envelope',
                 items: [],
             },
             {
-                label: 'Settings',
+                label: 'Cài đặt',
                 icon: 'pi pi-cog',
                 items: [],
             },

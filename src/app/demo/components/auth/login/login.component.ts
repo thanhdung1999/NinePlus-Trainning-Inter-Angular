@@ -15,23 +15,12 @@ import { ROLE } from 'src/app/shared/constants/role';
 })
 export class LoginComponent {
     @Input() isPopupLogin = false;
-
     @Output() hiddenPopup: EventEmitter<any> = new EventEmitter();
-
     username = '';
-
     password = '';
-
     isLoadingSubmit = false;
-
     keyToast = TOAST.KEY_BC;
-
-    constructor(
-        private _authenticateService: AuthenticateService,
-        private _toastService: ToastService,
-        private _router: Router,
-        private _sessionService: SessionService
-    ) {}
+    constructor(private _authenticateService: AuthenticateService, private _toastService: ToastService, private _router: Router) {}
 
     submit() {
         this.isLoadingSubmit = true;
@@ -48,7 +37,7 @@ export class LoginComponent {
                         }, 1000);
                     } else if (role === ROLE.SUPERADMIN) {
                         setTimeout(() => {
-                            this._router.navigate([ROUTER.LIST_BOOKING]);
+                            window.location.href = '';
                         }, 1000);
                     }
                 },
@@ -69,9 +58,7 @@ export class LoginComponent {
             });
         }
     }
-
     closeFormLogin() {
-        // child call parent
         this.hiddenPopup.emit();
     }
 

@@ -31,23 +31,22 @@ const routes: Routes = [
             },
             {
                 path: 'employee',
-                data: { breadcrumb: 'Manage Employee' },
-                loadChildren: () => import('./modules/manage-system/components/employee/employee.module').then((m) => m.EmployeeModule),
+                data: { breadcrumb: 'Quản lý nhân viên' },
+                loadChildren: () => import('./modules/employee/employee.module').then((m) => m.EmployeeModule),
             },
             {
                 path: 'customer',
-                data: { breadcrumb: 'Manage Customer' },
-                loadChildren: () => import('./modules/manage-system/components/customer/customer.module').then((m) => m.CustomerModule),
+                data: { breadcrumb: 'Quản lý khách hàng' },
+                loadChildren: () => import('./modules/customer/customer.module').then((m) => m.CustomerModule),
             },
             {
                 path: 'work-shift',
-                data: { breadcrumb: 'Manage Work Shift' },
-                loadChildren: () =>
-                    import('./modules/manage-system/components/work-shift/work-shift.module').then((m) => m.WorkShiftModule),
+                data: { breadcrumb: 'Quản lý ca làm việc' },
+                loadChildren: () => import('./modules/work-shift/work-shift.module').then((m) => m.WorkShiftModule),
             },
             {
                 path: 'documentation',
-                data: { breadcrumb: 'Documentation' },
+                data: { breadcrumb: 'Tài liệu' },
                 loadChildren: () => import('./demo/components/documentation/documentation.module').then((m) => m.DocumentationModule),
             },
             {
@@ -67,8 +66,8 @@ const routes: Routes = [
             },
             {
                 path: 'booking',
-                data: { breadcrumb: 'Manage Booking' },
-                loadChildren: () => import('./modules/manage-system/components/booking/booking.module').then((m) => m.BookingModule),
+                data: { breadcrumb: 'Quản lý đặt lịch' },
+                loadChildren: () => import('./modules/booking/booking.module').then((m) => m.BookingModule),
             },
         ],
     },

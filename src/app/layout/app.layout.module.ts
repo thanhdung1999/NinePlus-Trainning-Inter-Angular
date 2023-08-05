@@ -22,7 +22,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { TooltipModule } from 'primeng/tooltip';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenuModule } from 'primeng/menu';
-import { TranslationModule } from '../modules/manage-system/components/i18n';
+import { TranslationModule } from '../modules/i18n';
 
 @NgModule({
     declarations: [

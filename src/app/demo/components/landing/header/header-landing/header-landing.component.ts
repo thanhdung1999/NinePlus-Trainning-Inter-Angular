@@ -10,9 +10,7 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 })
 export class HeaderLandingComponent {
     isPopupLogin = false;
-
     isAuth = false;
-
     constructor(private _layoutService: LayoutService, private _sessionService: SessionService, private _authenticateService: AuthenticateService) {}
 
     ngOnInit(): void {
@@ -22,10 +20,6 @@ export class HeaderLandingComponent {
     getRole() {
         if (!isNil(this._sessionService.userInformation) && !isEmpty(this._sessionService.userInformation)) {
             this.isAuth = true;
-        } else {
-            setTimeout(() => {
-                this.showPopupLogin();
-            }, 5000);
         }
     }
 

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { TranslationService } from 'src/app/modules/manage-system/components/i18n';
 import { AuthenticateService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LANGUAGES, LanguageFlag, ROUTER } from 'src/app/shared';
 import { Router } from '@angular/router';
+import { TranslationService } from 'src/app/modules/i18n';
 @Component({
     selector: 'app-topbar-profile',
     templateUrl: './topbar-profile.component.html',

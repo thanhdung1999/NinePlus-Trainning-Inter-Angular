@@ -6,19 +6,8 @@ import { RouterModule } from '@angular/router';
         RouterModule.forChild([
             {
                 path: '',
-                data: { breadcrumb: 'Dashboard' },
-                loadChildren: () =>
-                    import('./saas/saas.dashboard.module').then(
-                        (m) => m.SaaSDashboardModule
-                    ),
-            },
-            {
-                path: 'dashboard-sales',
-                data: { breadcrumb: 'Dashboard' },
-                loadChildren: () =>
-                    import('./sales/sales.dashboard.module').then(
-                        (m) => m.SalesDashboardModule
-                    ),
+                data: { breadcrumb: 'Cổng thông tin' },
+                loadChildren: () => import('./saas/saas.dashboard.module').then((m) => m.SaaSDashboardModule),
             },
         ]),
     ],

@@ -6,8 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ProfileLayoutComponent } from './profile-layout.component';
 import { ProfileSidebarComponent } from './profile-sidebar.component';
 import { ProfileHeaderComponent } from './profile-header.component';
-import { TopbarProfileModule } from './topbar-profile/topbar-profile.module';
 import { BadgeModule } from 'primeng/badge';
+import { TopbarProfileModule } from './topbar-profile/topbar-profile.module';
 
 @NgModule({
     declarations: [ProfileLayoutComponent, ProfileSidebarComponent, ProfileHeaderComponent],
