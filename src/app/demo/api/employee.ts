@@ -16,9 +16,9 @@ export interface EmployeeCreate {
     email?: string;
     phoneNumber?: string;
     gender?: boolean;
-    imageFile?: string;
-    username?: string;
+    imageFile?: any;
     password?: string;
+    username?: string;
     workShiftId?: number;
 }
 

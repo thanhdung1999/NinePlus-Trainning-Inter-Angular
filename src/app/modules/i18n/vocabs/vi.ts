@@ -18,6 +18,7 @@ export const locale = {
             FILTER: 'Bộ lọc',
             Move: 'Di chuyển',
             DEFAULT: 'Mặc định',
+            LIST: 'Danh sách',
         },
         BTN: {
             SAVE: 'Lưu',
@@ -74,9 +75,18 @@ export const locale = {
             NUMBER_EMPLOYEE: 'Số nhân viên',
             WORKING_DAY: 'Ngày làm việc',
             TIME: 'Thời gian',
+            CALENDER: 'Lịch',
+            BOOKING_DATE: 'Ngày đặt lịch',
+            FROM_TO: 'Thời gian từ - Đến',
+            FROM:'Thời gian bắt đầu',
+            TO: 'Thời gian kết thúc',
+            SERVICE: 'Dịch vụ',
+            NOTE: 'Ghi chú',
+            STATUS: "Tình trạng"
+            
         },
         AUTH: {
-            CREATE_ACCOUNT: "Tạo tại khoản",
+            CREATE_ACCOUNT: 'Tạo tại khoản',
             RESET_PASSWORD: 'Đặt lại mật khẩu',
             FORGOT_PASSWORD: 'Quên mật khẩu?',
             CHANGE_PASSWORD: 'Thay đổi mật khẩu',
