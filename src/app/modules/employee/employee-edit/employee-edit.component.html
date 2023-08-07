@@ -6,123 +6,147 @@
             <div class="col-12 lg:col-12">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="id" class="font-medium text-900">ID<span
-                                style="color: red"> *</span></label>
-                        <input id="id" type="text" pInputText [value]="idEmployeeInit" [disabled]="true">
-                        <p style="color: red"
-                            *ngIf="form.get('id')?.errors?.['required'] && form.get('id')?.touched">*
-                            Không được để trống</p>
+                        <label for="id" class="font-medium text-900">ID<span style="color: red"> *</span></label>
+                        <input id="id" type="text" pInputText [value]="idEmployeeInit" [disabled]="true" />
+                        <p style="color: red" *ngIf="form.get('id')?.errors?.['required'] && form.get('id')?.touched">* Không được để trống</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="name" class="font-medium text-900">{{ "FIELDS.NAME" | translate }}<span
-                                style="color: red"> *</span></label>
-                        <input id="name" type="text" pInputText
-                            formControlName="name">
-                        <p style="color: red"
-                            *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">*
-                            Không được để trống</p>
-                        <p style="color: red"
-                            *ngIf="form.get('name')?.errors?.['pattern'] && form.get('name')?.touched">*
-                            Chữ cái đầu phải viết hoa</p>
+                        <label for="name" class="font-medium text-900">{{ "FIELDS.NAME" | translate }}<span style="color: red"> *</span></label>
+                        <input id="name" type="text" pInputText formControlName="name" />
+                        <p style="color: red" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">* Không được để trống</p>
+                        <p style="color: red" *ngIf="form.get('name')?.errors?.['pattern'] && form.get('name')?.touched">
+                            * Chữ cái đầu phải viết hoa
+                        </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="email" class="font-medium text-900">Email<span
-                                style="color: red"> *</span></label>
-                        <input id="email" type="text" pInputText
-                            formControlName="email">
-                        <p style="color: red"
-                            *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">*
-                            Không được để trống</p>
-                        <p style="color: red"
-                            *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">*
-                            Email chưa đúng định dạng. Ex: abc12@gmail.com</p>
+                        <label for="email" class="font-medium text-900">Email<span style="color: red"> *</span></label>
+                        <input id="email" type="text" pInputText formControlName="email" />
+                        <p style="color: red" *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">* Không được để trống</p>
+                        <p style="color: red" *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
+                            * Email chưa đúng định dạng. Ex: abc12@gmail.com
+                        </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="phone" class="font-medium text-900">{{ "FIELDS.PHONE" | translate }}<span
-                                style="color: red"> *</span></label>
-                        <input id="phone" type="text" pInputText
-                            formControlName="phoneNumber">
-                        <p style="color: red"
-                            *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">*
-                            Không được để trống</p>
-                        <p style="color: red"
-                            *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">*
-                            Số điện thoại bao gồm 10 số và không chứ kí tự</p>
+                        <label for="phone" class="font-medium text-900">{{ "FIELDS.PHONE" | translate }}<span style="color: red"> *</span></label>
+                        <input id="phone" type="text" pInputText formControlName="phoneNumber" />
+                        <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
+                            * Không được để trống
+                        </p>
+                        <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
+                            * Số điện thoại bao gồm 10 số và không chứ kí tự
+                        </p>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="grid field">
                             <div class="field col-12 md:col-5">
                                 <label for="gender" class="font-medium text-900">{{ "FIELDS.GENDER" | translate }}</label>
-                                <p-dropdown inputId="gender" [options]="genders"
-                                    optionLabel="name" [filter]="true"
+                                <p-dropdown
+                                    inputId="gender"
+                                    [options]="genders"
+                                    optionLabel="name"
+                                    [filter]="true"
                                     filterBy="name"
                                     optionValue="code"
                                     [showClear]="true"
                                     placeholder="Select a Gender"
                                     formControlName="gender"
-                                    [(ngModel)]="defaultGender">
+                                    [(ngModel)]="defaultGender"
+                                >
                                     <ng-template let-genders pTemplate="item">
                                         <div class="flex align-items-center">
-                                            <div>{{ genders.name}}</div>
+                                            <div>{{ genders.name }}</div>
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
                             </div>
                             <div class="field col-12 md:col-7">
-                                <label for="birthday"
-                                    class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
-                                <p-calendar [(ngModel)]="birthdayInit"
-                                    id="birthday"
-                                    [showTime]="true"
-                                    [showSeconds]="true"
-                                    [showIcon]="true"
-                                    formControlName="birthday"></p-calendar>
+                                <label for="birthday" class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
+                                <p-calendar [(ngModel)]="birthdayInit" id="birthday" [showIcon]="true" formControlName="birthday"></p-calendar>
                             </div>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="avatar" class="font-medium text-900">{{ "FIELDS.AVATAR" | translate }}</label>
                         <div class="flex align-items-center">
-                            <div class="img-container mr-4">
-                                <img
-                                    [src]=imageDisplay alt="Trống" />
-                                <span *ngIf="imageDisplay"
-                                    class="pi pi-times hoverClick" (click)="removeImage()"></span>
+                            <div class="flex align-items-center" style="position: relative">
+                                <div class="img-container mr-4">
+                                    <img
+                                        #image
+                                        (error)="image.src = 'assets/layout/images/blank.png'"
+                                        [src]="fileUrl ? fileUrl : 'assets/layout/images/blank.png'"
+                                        alt="Trống"
+                                    />
+                                    <!-- <span *ngIf="fileUrl" class="pi pi-times hoverClick" (click)="setImageDefault()"></span> -->
+                                </div>
+                                <div style="position: relative">
+                                    <input
+                                        id="imageUpload"
+                                        type="file"
+                                        class="w-100 opacity-0 cursor-pointer"
+                                        accept="image/*"
+                                        style="position: absolute; width: 39px; height: 39px; right: 50%; top: 50%; z-index: 20; translate: 50% -50%"
+                                        (change)="uploadFile($event)"
+                                    />
+
+                                    <button
+                                        class="p-button-primary change-input-image w-10rem"
+                                        pButton
+                                        pRipple
+                                        icon="pi pi-check"
+                                        label="Upload file"
+                                        pTooltip="Chọn ảnh đại diện"
+                                        tooltipPosition="top"
+                                    >
+                                        <div
+                                            style="position: absolute"
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                        >
+                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                        </div>
+                                    </button>
+                                </div>
                             </div>
-                            <p-fileUpload id="image" mode="basic"
-                                accept="image/**"
-                                name="image" chooseLabel="Upload Image"
-                                styleClass="p-button-outlined p-button-plain"
-                                [maxFileSize]="1000000"
-                                (onSelect)="onFileSelect($event)"
-                                ngDefaultControl="image"></p-fileUpload>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="workshiftId" class="font-medium text-900">{{ "FIELDS.WORKSHIFT_ID" | translate }}<span
-                                style="color: red"> *</span></label>
-                        <input id="workshiftId" type="text" pInputText
-                            formControlName="workShiftId">
-                        <p style="color: red"
-                            *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">*
-                            Không được để trống</p>
+                        <label for="workshiftId" class="font-medium text-900"
+                            >{{ "FIELDS.WORKSHIFT_ID" | translate }}<span style="color: red"> *</span></label
+                        >
+                        <p-dropdown
+                            placeholder="{{ 'FIELDS.TIME_WORK' | translate }}"
+                            formControlName="workShiftId"
+                            optionValue="id"
+                            optionLabel="name"
+                            emptyFilterMessage="Không tìm thấy dữ liệu"
+                            emptyMessage="Không tìm thấy dữ liệu"
+                            [options]="workShifts"
+                            [filter]="true"
+                            filterBy="name"
+                            [showClear]="true"
+                        >
+                        </p-dropdown>
+                        <p style="color: red" *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
+                            * Không được để trống
+                        </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
-                        <input id="address" type="text" pInputText
-                            formControlName="address">
+                        <input id="address" type="text" pInputText formControlName="address" />
                     </div>
                     <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
-                                <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}"
-                                    icon="pi pi-check" type="submit"></button>
+                                <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}" icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
-                                <button pButton pRipple label="{{ 'BTN.RETURN' | translate }}"
+                                <button
+                                    pButton
+                                    pRipple
+                                    label="{{ 'BTN.RETURN' | translate }}"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"
-                                    class="p-button-outlined"></button>
+                                    class="p-button-outlined"
+                                ></button>
                             </div>
                         </div>
                     </div>
