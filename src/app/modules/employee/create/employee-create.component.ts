@@ -10,9 +10,12 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { ROUTER } from 'src/app/shared';
 import { UploadService } from 'src/app/shared/services/upload.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
 const MESSAGE_WARNING = {
     REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
 };
+========
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
 @Component({
     selector: 'app-employee-create',
     templateUrl: './employee-create.component.html',
@@ -26,6 +29,10 @@ export class EmployeeCreateComponent {
     date: string = '';
     keyToast: string = 'bc';
     fileUrl: string = ''
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
+
+========
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
     constructor(
         private _router: Router,
         private _employeeService: EmployeeService,
@@ -33,7 +40,11 @@ export class EmployeeCreateComponent {
         private _fb: FormBuilder,
         private _toastService: ToastService,
         private _uploadService: UploadService,
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
         private _notificationService: NotificationService,
+========
+        private _notificationService: NotificationService
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
     ) { }
 
     ngOnInit() {
@@ -64,17 +75,25 @@ export class EmployeeCreateComponent {
         formData.append("filePath", event.files[0].name);
         this._uploadService.upLoadFile(formData).subscribe({
             next: (res: any) => {
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
                 console.log(res.data);
                 console.log(res.data.filePath);
                 console.log(res.data.fileUrl);
                 this.form.patchValue({
                     image: res.data.filePath
+========
+                this.form.patchValue({
+                    imageFile: res.data.filePath
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
                 })
                 this.fileUrl = res.data.fileUrl;
             }, error: (error) => {
                 error.error.Messages.forEach((item: string) => {
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
                     this._toastService.showError(item, this.keyToast);
+========
                     this._toastService.showErrorNoKey(item);
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
                 });
             }
         })
@@ -93,7 +112,10 @@ export class EmployeeCreateComponent {
                     this.navigateBackEmployeeList();
                 },
                 error: (error) => {
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
                     console.log(error)
+========
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
                     this.form.patchValue({ birthday: new Date(this.form.get('birthday')?.value) });
                     if (error.error.messages) {
                         error.error.messages.forEach((item: string) => {
@@ -107,7 +129,11 @@ export class EmployeeCreateComponent {
                 }
             });
         } else {
+<<<<<<<< HEAD:src/app/modules/employee/employee-create/employee-create.component.ts
             this._toastService.showError(MESSAGE_WARNING.REQUIRED_VALIDATION, this.keyToast);
+========
+            this._toastService.showError('Kiểm tra lại thông tin các trường (*)', this.keyToast);
+>>>>>>>> 66cb026 ([SBFA-1] update translate for booking):src/app/modules/employee/create/employee-create.component.ts
         }
     }
 
