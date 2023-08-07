@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { Employee } from 'src/app/demo/api/employee';
+import { Workshift } from 'src/app/demo/api/work-shift';
 import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
-import { Table } from 'primeng/table';
-import { ToastService } from 'src/app/shared/services/toast.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
-import { Workshift } from 'src/app/demo/api/work-shift';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 
 @Component({
     selector: 'app-employee-list',
@@ -28,6 +29,8 @@ export class EmployeeListComponent {
     userNameToResetPass = '';
     formFilter!: FormGroup;
     workshifts: Workshift[] = [];
+    totalRecords: number = 0;
+    firstPaging = 0;
 
     constructor(
         private _employeeService: EmployeeService,
@@ -38,34 +41,24 @@ export class EmployeeListComponent {
         private _fb: FormBuilder,
         private _workShiftService: WorkShiftService,
         private _notificationService: NotificationService,
+        private _detect: ChangeDetectorRef,
     ) { }
 
     ngOnInit() {
-        this.onInitApi();
+        this.initForm();
         this.loadSkeletonTable();
         this.getListWorkShift();
-        this.initFormFilter();
     }
-
-    onInitApi() {
-        this._employeeService.getListEmployee().subscribe({
-            next: (res) => {
-                if (res.data.length > 0) {
-                    this.employees = res.data as Employee[];
-                } else {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
-                }
-                this.toastFormAnotherScreen();
-                this.initFormFilter();
-            },
-            error: (error) => {
-                error.error.messages.forEach((item: string) => {
-                    this._toastService.showErrorNoKey(item);
-                });
-            },
+    initForm(): void {
+        this.formFilter = this._fb.group({
+            keyword: [''],
+            workShiftId: [''],
+            gender: [''],
+            pageNumber: [1],
+            pageSize: [5],
+            isExport: false,
         });
     }
-
     getListWorkShift() {
         this._workShiftService.getListWorkShift().subscribe({
             next: (res) => {
@@ -81,22 +74,36 @@ export class EmployeeListComponent {
             },
         });
     }
-
+    filter(event: any): void {
+        if (event && event.first) {
+            this.firstPaging = event.first;
+        }
+        event.sortField && FilterHelper.sortOrderByNoneMulti(this.formFilter, event.sortField, event.sortOrder);
+        event.rows && FilterHelper.setPagingSize(this.formFilter, event.rows);
+        (event.first || event.first === 0) &&
+            event.rows &&
+            FilterHelper.setPageNumber(this.formFilter, FilterHelper.getPageNumber(event.first, event.rows));
+        this.filterEmployee();
+    }
     filterEmployee() {
-        this.formFilter.get('WorkShiftId')?.setValue(this.formFilter.get('WorkShiftId')?.value === null ? '' : this.formFilter.get('WorkShiftId')?.value);
-        this.formFilter.get('Gender')?.setValue(this.formFilter.get('Gender')?.value === null ? '' : this.formFilter.get('Gender')?.value);
-        this._employeeService.filterEmployee(this.formFilter.value).subscribe({
+        this.isSkeleton = true;
+        let param = FilterHelper.removeNullValue(this.formFilter.value);
+        this._employeeService.filterEmployee(param).subscribe({
             next: (res: any) => {
                 this.employees = res.data as Employee[];
+                this.totalRecords = res.totalCount as number;
                 if (this.employees.length === 0) {
                     this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
-            }, error: (error) => {
+                this.loadSkeletonTable();
+                this._detect.detectChanges();
+            },
+            error: (error) => {
                 error.error.messages.forEach((item: string) => {
                     this._toastService.showErrorNoKey(item);
                 });
-            }
-        })
+            },
+        });
     }
 
     toastFormAnotherScreen() {
@@ -137,7 +144,7 @@ export class EmployeeListComponent {
             this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
                 next: (next) => {
                     this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
-                    this.onInitApi();
+                    this.filterEmployee();
                     this.deleteProductsDialog = false;
                     this.employee = {};
                 },
@@ -147,13 +154,6 @@ export class EmployeeListComponent {
                 },
             });
         }
-    }
-
-    initFormFilter() {
-        this.formFilter = this._fb.group({
-            WorkShiftId: [''],
-            Gender: [''],
-        });
     }
 
     resetConfirmed() {
@@ -191,5 +191,10 @@ export class EmployeeListComponent {
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+    clearFilter(): void {
+        this.formFilter.reset();
+        this.initForm();
+        this.filterEmployee();
     }
 }

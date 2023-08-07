@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MESSAGE_TITLE } from 'src/app/shared';
-import { EmployeeService } from 'src/app/shared';
 import { MessageService } from 'primeng/api';
-import { Validators } from '@angular/forms';
-import { Genders } from 'src/app/shared/constants/gender';
-import { ROUTER } from 'src/app/shared';
-import { ToastService } from 'src/app/shared/services/toast.service';
+import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { Workshift } from 'src/app/demo/api/work-shift';
-import { UploadService } from 'src/app/shared/services/upload.service';
+import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { Genders } from 'src/app/shared/constants/gender';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { UploadService } from 'src/app/shared/services/upload.service';
+import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 const MESSAGE_WARNING = {
     REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
 };
@@ -30,7 +29,7 @@ export class EmployeeEditComponent {
     fileUrl: string = '';
     idEmployeeInit: number = 0;
     keyToast = 'bc';
-
+    fileUpload: any;
     constructor(
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
@@ -40,13 +39,29 @@ export class EmployeeEditComponent {
         private _toastService: ToastService,
         private _uploadService: UploadService,
         private _notificationService: NotificationService,
-    ) { }
+        private _workShiftService: WorkShiftService
+    ) {}
 
     ngOnInit() {
+        this.getListWorkShift();
         this.getEmployeeById();
         this.initFormUpdateEmployee();
     }
-
+    getListWorkShift() {
+        this._workShiftService.getListWorkShift().subscribe({
+            next: (res) => {
+                this.workShifts = res.data as Workshift[];
+                if (this.workShifts.length === 0) {
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                }
+            },
+            error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            },
+        });
+    }
     initFormUpdateEmployee() {
         const phone = /^(?:\+?84|0)(?:\d{9})$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -76,9 +91,9 @@ export class EmployeeEditComponent {
                         this.birthdayInit = res.birthday ? new Date(res.birthday) : this.birthdayInit;
                         this.imageDisplay = res.imageLink;
                         this.form.patchValue({
-                            imageFile: res.image
-                        })
-                        console.log(this.form.get('imageFile')?.value)
+                            imageFile: res.image,
+                        });
+                        console.log(this.form.get('imageFile')?.value);
                     },
                     error: (error) => {
                         error.error.Messages.forEach((item: string) => {
@@ -89,25 +104,29 @@ export class EmployeeEditComponent {
             }
         });
     }
-
+    uploadFile(event: any): void {
+        this.fileUpload = event.target.files[0];
+        this.getBase64(event.target.files[0]);
+    }
     onFileSelect(event: any): void {
         const formData = new FormData();
-        formData.append("file", event.files[0]);
-        formData.append("filePath", event.files[0].name);
+        formData.append('file', event.files[0]);
+        formData.append('filePath', event.files[0].name);
         this._uploadService.upLoadFile(formData).subscribe({
             next: (res: any) => {
                 this.form.patchValue({
-                    imageFile: res.data.filePath
-                })
+                    imageFile: res.data.filePath,
+                });
                 this.imageDisplay = res.data.fileUrl;
-                console.log(this.form.value)
-                console.log(this.form.get('imageFile')?.value)
-            }, error: (error) => {
+                console.log(this.form.value);
+                console.log(this.form.get('imageFile')?.value);
+            },
+            error: (error) => {
                 error.error.Messages.forEach((item: string) => {
                     this._toastService.showError(item, this.keyToast);
                 });
-            }
-        })
+            },
+        });
     }
 
     updateEmployeeById() {
@@ -115,26 +134,65 @@ export class EmployeeEditComponent {
             if (this.form.get('birthday')?.value) {
                 this.convertDataBeforeUpdate();
             }
-            console.log(this.form.value)
-            this._employeeService.updateEmployeeById(this.form.value).subscribe({
-                next: (res) => {
-                    this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
-                    this.navigateBackEmployeeList();
-                },
-                error: (error) => {
-                    console.log(error)
-                    this.birthdayInit = new Date(this.birthdayInit);
-                    if (error.error.messages) {
-                        error.error.messages.forEach((item: string) => {
-                            this._toastService.showError(item, this.keyToast);
+            let param = FilterHelper.removeNullValue(this.form.value);
+            if (this.fileUpload) {
+                const formData = new FormData();
+                formData.append('file', this.fileUpload);
+                formData.append('filePath', 'employee');
+                this._uploadService.upLoadFile(formData).subscribe({
+                    next: (res: any) => {
+                        this.form.patchValue({
+                            imageFile: res.data.filePath,
                         });
-                    } else {
+                        param.image = res.data.filePath;
+                        this.fileUrl = res.data.fileUrl;
+                        this._employeeService.updateEmployeeById(param).subscribe({
+                            next: (res) => {
+                                this.navigateBackEmployeeList();
+                                this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
+                            },
+                            error: (error) => {
+                                this.birthdayInit = new Date(this.birthdayInit);
+                                if (error.error.messages) {
+                                    error.error.messages.forEach((item: string) => {
+                                        this._toastService.showError(item, this.keyToast);
+                                    });
+                                } else {
+                                    error.error.Messages.forEach((item: string) => {
+                                        this._toastService.showError(item, this.keyToast);
+                                    });
+                                }
+                            },
+                        });
+                    },
+                    error: (error) => {
                         error.error.Messages.forEach((item: string) => {
-                            this._toastService.showError(item, this.keyToast);
+                            this._toastService.showErrorNoKey(item);
                         });
-                    }
-                },
-            });
+                    },
+                });
+            }
+            if (!this.fileUpload) {
+                this._employeeService.updateEmployeeById(this.form.value).subscribe({
+                    next: (res) => {
+                        this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
+                        this.navigateBackEmployeeList();
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        this.birthdayInit = new Date(this.birthdayInit);
+                        if (error.error.messages) {
+                            error.error.messages.forEach((item: string) => {
+                                this._toastService.showError(item, this.keyToast);
+                            });
+                        } else {
+                            error.error.Messages.forEach((item: string) => {
+                                this._toastService.showError(item, this.keyToast);
+                            });
+                        }
+                    },
+                });
+            }
         } else {
             this._toastService.showError(MESSAGE_WARNING.REQUIRED_VALIDATION, this.keyToast);
         }
@@ -143,7 +201,7 @@ export class EmployeeEditComponent {
     removeImage() {
         const formData = new FormData();
         // console.log(this.form.get('imageFile')?.value.replace(/\\/g, '\\\\'))
-        formData.append("filePath", this.form.get('imageFile')?.value);
+        formData.append('filePath', this.form.get('imageFile')?.value);
         for (const value of formData.values()) {
             console.log(value);
         }
@@ -151,12 +209,13 @@ export class EmployeeEditComponent {
             next: (res) => {
                 this.form.patchValue({
                     imageFile: '',
-                })
+                });
                 this.imageDisplay = '';
-            }, error: (error) => {
+            },
+            error: (error) => {
                 this._toastService.showErrorNoKey('Xoá lỗi');
-            }
-        })
+            },
+        });
     }
 
     navigateBackEmployeeList() {
@@ -182,5 +241,16 @@ export class EmployeeEditComponent {
         this.form.patchValue({
             birthday: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
         });
+    }
+    getBase64(file: any) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            this.fileUrl = reader.result as string;
+            // this._detect.detectChanges();
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
     }
 }
