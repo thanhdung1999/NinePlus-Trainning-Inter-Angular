@@ -20,7 +20,7 @@ export class RegisterComponent {
 
     isLoadingSubmit = false;
 
-    phoneNumberParttern = '[()0-9]{10,12}';
+    patternPhoneNumber = '[0-9]{10,11}';
 
     formCreateCustomer!: FormGroup;
 
@@ -41,7 +41,7 @@ export class RegisterComponent {
     initFormCreateCustomer() {
         this.formCreateCustomer = this._fb.group({
             customerName: ['', [Validators.required, Validators.minLength(4)]],
-            phoneNumber: ['', [Validators.required, Validators.pattern(this.phoneNumberParttern)]],
+            phoneNumber: ['', [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
             address: [''],
             dateOfBirth: [''],
             username: ['', [Validators.required, Validators.minLength(8)]],
@@ -119,14 +119,6 @@ export class RegisterComponent {
             err.error.messages?.forEach((ms: string) => {
                 this._toastService.showError(ms, this.keyToast);
             });
-        }
-    }
-
-    keyPressPhoneNumber(event: any) {
-        const pattern = /[0-9]/;
-        let inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
         }
     }
 

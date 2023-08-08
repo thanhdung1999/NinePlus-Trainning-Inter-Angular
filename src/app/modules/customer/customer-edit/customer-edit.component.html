@@ -1,0 +1,79 @@
+<div class="card">
+    <p-toast [key]="keyToast"></p-toast>
+    <span class="text-80 text-xl font-bold mb-4 block">{{ "MANAGE_CUSTOMER.TITLE_EDIT" | translate }}</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2"></div>
+        <div class="col-12 lg:col-10">
+            <ng-template [ngIf]="formUpdateCustomer">
+                <form [formGroup]="formUpdateCustomer" (ngSubmit)="onSubmit()">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-4 col-12">
+                            <label class="font-medium text-900">ID </label>
+                            <input type="text" pInputText [disabled]="true" [value]="customerId" />
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="name" class="font-medium text-900"
+                                >{{ "FIELDS.NAME" | translate }} <span class="text-red-500 text-900">*</span></label
+                            >
+                            <input id="name" type="text" formControlName="customerName" pInputText required />
+                            <div *ngIf="f['customerName'].invalid && submitted && f['customerName'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['customerName'].errors['required']">
+                                    {{ "INVALID.NAME" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="phone-number" class="font-medium text-900"
+                                >{{ "FIELDS.PHONE" | translate }} <span class="text-red-500 text-900">*</span></label
+                            >
+                            <p-inputMask
+                                mask="99999999999"
+                                slotChar=""
+                                formControlName="phoneNumber"
+                                [showClear]="true"
+                                [autoClear]="false"
+                                [maxlength]="11"
+                            ></p-inputMask>
+                            <div *ngIf="f['phoneNumber'].invalid && submitted && f['phoneNumber'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
+                                <div *ngIf="f['phoneNumber'].hasError('pattern')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
+                            <textarea id="address" type="text" formControlName="address" pInputTextarea rows="1" [autoResize]="true"></textarea>
+                        </div>
+                        <div class="field mb-4 col-12 sm:col-12 md:col-7">
+                            <label class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
+                            <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" formControlName="dateOfBirth" [readonlyInput]="true"> </p-calendar>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label class="font-medium text-900">{{ "FIELDS.TOTAL_MONEY" | translate }}</label>
+                            <input [disabled]="true" inputId="integeronly" pInputText [value]="valueFormUpdateCustomer.totalMoney" />
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button
+                                type="submit"
+                                icon="pi pi-check"
+                                pButton
+                                pRipple
+                                [loading]="isLoadingSubmit"
+                                label="{{ 'BTN.SAVE' | translate }}"
+                                class="w-auto"
+                            ></button>
+                            <button
+                                type="text"
+                                icon="pi pi-times"
+                                pButton
+                                pRipple
+                                label="{{ 'BTN.CANCEL' | translate }}"
+                                class="w-auto ml-3"
+                                (click)="navigateToListCustomer()"
+                            ></button>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</div>

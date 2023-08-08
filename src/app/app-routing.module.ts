@@ -2,7 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { AuthGuard } from './core';
-import { ProfileLayoutComponent } from './demo/components/profile-layout/profile-layout.component';
+import { ProfileLayoutComponent } from './demo/layout/profile-layout/profile-layout.component';
+import { DefaultLayoutComponent } from './demo/layout/default-layout/default-layout.component';
 
 const routes: Routes = [
     {
@@ -72,25 +73,31 @@ const routes: Routes = [
         ],
     },
     {
+        path: '',
+        component: DefaultLayoutComponent,
+        children: [
+            {
+                path: 'landing',
+                loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
+            },
+        ],
+    },
+    {
         path: 'auth',
         data: { breadcrumb: 'Auth' },
         loadChildren: () => import('./demo/components/auth/auth.module').then((m) => m.AuthModule),
     },
     {
-        path: 'landing',
-        loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
-    },
-    {
-        path: 'profile',
+        path: 'account',
         component: ProfileLayoutComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                path: '',
+                path: 'profile',
                 loadChildren: () => import('./demo/components/profile-customer/profile-customer.module').then((m) => m.ProfileCustomerModule),
             },
             {
-                path: 'changepassword',
+                path: 'change-password',
                 loadChildren: () => import('./demo/components/auth/changepassword/changepassword.module').then((m) => m.ChangePasswordModule),
             },
         ],

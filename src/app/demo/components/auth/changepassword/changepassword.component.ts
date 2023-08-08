@@ -66,8 +66,8 @@ export class ChangePasswordComponent {
                     this.isSuccessChangePassword = true;
                 },
                 error: (err) => {
-                    if (err.status === 400 && err.error?.messages?.length > 0) {
-                        err.error.messages?.forEach((ms: string) => {
+                    if (err.error?.Messages?.length > 0) {
+                        err.error.Messages?.forEach((ms: string) => {
                             this._toastService.showError(ms, this.keyToast);
                         });
                     }

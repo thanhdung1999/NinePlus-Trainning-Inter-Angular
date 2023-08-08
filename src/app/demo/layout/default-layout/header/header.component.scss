@@ -1,0 +1,47 @@
+:root {
+    --header-height: 5.5rem;
+}
+
+.centered-hr {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.gradient-hr {
+    top: 0;
+    height: 2px;
+    width: 50%;
+    background: linear-gradient(to right, transparent, #0e0d0d, transparent);
+    box-shadow: 0 2px 0 rgba(28, 33, 39, 0.17);
+    bottom: 0;
+}
+
+.layout-topbar1 {
+    background: var(--surface-ground);
+    width: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+}
+
+a {
+    font-family: "Lato", sans-serif;
+    color: #333333;
+    font-size: 17px;
+}
+span {
+    font-family: "Lato", sans-serif;
+    color: #333333;
+}
+
+.img-container {
+    display: flex;
+    align-items: center;
+}
