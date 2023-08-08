@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
                 loadChildren: () => import('./accessdenied/accessdenied.module').then((m) => m.AccessdeniedModule),
             },
             {
-                path: 'forgotpassword',
+                path: 'forgot-password',
                 loadChildren: () => import('./forgotpassword/forgotpassword.module').then((m) => m.ForgotPasswordModule),
             },
             {

@@ -1,0 +1,55 @@
+<div class="card">
+    <span class="text-80 text-xl font-bold mb-4 block">{{ "MANAGE_CUSTOMER.TITLE_DETAIL" | translate }}</span>
+    <div class="grid">
+        <div class="col-12 lg:col-1"></div>
+        <div class="col-12 lg:col-9 pl-8 flex flex-column justify-content-start">
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3">ID <span class="text-red-500 text-900">*</span></label>
+                <span>{{ customerId }}</span>
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3"
+                    >{{ "FIELDS.NAME" | translate }} <span class="text-red-500 text-900">*</span></label
+                >
+                <span>{{ customer.customerName }}</span>
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="phone-number" class="font-medium text-900 mr-3"
+                    >{{ "FIELDS.PHONE" | translate }}<span class="text-red-500 text-900">*</span></label
+                >
+                <span>{{ customer.phoneNumber }}</span>
+            </div>
+            <div class="field w-field mb-4 col-12 flex">
+                <label for=" address" class="font-medium text-900 mr-3">{{ "FIELDS.ADDRESS" | translate }}</label>
+                <span>{{ customer.address }}</span>
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="birth-day" class="font-medium text-900 mr-3">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
+                <span>{{ customer.dateOfBirth | date : "dd/MM/yyyy" }}</span>
+            </div>
+            <div class="field w-field mb-2 col-12 flex align-items-center">
+                <label for="total-money" class="font-medium text-900 mr-3">{{ "FIELDS.TOTAL_MONEY" | translate }}</label>
+                <span>{{ customer.totalMoney }}</span>
+            </div>
+            <div class="col-12">
+                <button
+                    pButton
+                    icon="pi pi-angle-left"
+                    pRipple
+                    label="{{ 'BTN.BACK' | translate }}"
+                    class="w-auto"
+                    (click)="navigateToListCustomer()"
+                ></button>
+            </div>
+        </div>
+        <div class="col-12 lg:col-2">
+            <p-button
+                label="{{ 'MANAGE_CUSTOMER.BOOKING_HISTORY' | translate }} "
+                icon="pi pi-plus"
+                styleClass="p-button-raised flex ml-auto"
+                (click)="showDialogBooking()"
+            ></p-button>
+        </div>
+    </div>
+</div>
+<app-history-booking [customerId]="customerId" [dialogBooking]="dialogBooking" (controlDialog)="hideDialogBooking()"></app-history-booking>

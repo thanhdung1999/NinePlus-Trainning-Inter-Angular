@@ -8,8 +8,8 @@ body {
     right: 0;
     left: 0;
     margin: auto;
-    width: 30%;
-    height: 90%;
+    width: 27% !important;
+    height: 80%;
     border-radius: 25px;
     z-index: 9999;
     background-color: #fff !important;
@@ -19,11 +19,18 @@ body {
         right: 0;
         top: 0;
         padding: 15px;
+        z-index: 99999;
         cursor: pointer;
         &:hover {
             opacity: 0.6;
         }
     }
+
+    .img-logo {
+        width: 100%;
+        padding: 0 15%;
+    }
+
     .forgot-password {
         &:hover {
             opacity: 0.8;
@@ -38,31 +45,35 @@ body {
 .p-component-overlay {
     z-index: 9999 !important;
 }
-@media (max-width: 768px) {
+@media (min-width: 576px) and (max-width: 768px) {
     .form-login {
-        top: 0;
-        bottom: 0;
-        height: 100% !important;
-        width: 100% !important;
-        border-radius: unset;
-    }
-    .icon-close {
-        top: 5px !important;
-        right: 5px !important;
-    }
-}
-@media (min-width: 768px) and (max-width: 992px) {
-    .form-login {
+        height: 75% !important;
         width: 60% !important;
     }
 }
+
+@media (max-width: 576px) {
+    .form-login {
+        top: 0;
+        bottom: 0;
+        width: 90% !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .form-login {
+        width: 50% !important;
+    }
+}
+
 @media (min-width: 992px) and (max-width: 1200px) {
     .form-login {
         width: 40% !important;
     }
 }
+
 @media (min-width: 1200px) and (max-width: 1450px) {
     .form-login {
-        width: 40% !important;
+        width: 35% !important;
     }
 }

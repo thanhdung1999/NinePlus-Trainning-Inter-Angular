@@ -55,6 +55,21 @@ export enum MESSAGE_ERROR_INPUT {
     INCORRECT_ACCOUNT = 'Incorrect account',
     MATCH_PASSWORD = 'Password does not match',
 }
+// TODO
+// export enum MESSAGE_ERROR_INPUT {
+//     VALID = 'Vui lòng nhập các trường chính xác',
+//     MIN_LENGTH_NAME = 'Tên nhập ít nhất 4 ký tự',
+//     MIN_LENGTH_PASSWORD = 'Mật khẩu nhập ít nhất 8 ký tự',
+//     MIN_LENGTH_USERNAME = 'Tên tài khoản nhập ít nhất 8 ký tự',
+//     USERNAME_EXISTS = 'Tên tài khoản đã tồn tại',
+//     PASSWORD_OR_USERNAME_EMPTY = 'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu',
+//     ID_ALREADY_EXISTS = 'ID đã tồn tại',
+//     ID_DOES_NOT_EXISTS = 'ID không tồn tại',
+//     EMAIL_ALREADY_EXISTS = 'Email đã tồn tại',
+//     EMAIL_INVALID = 'Email không hợp lệ',
+//     INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
+//     MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
+// }
 
 export const MESSAGE_ERROR = [
     {

@@ -11,6 +11,7 @@ export interface UserAuthenticate {
     refreshTokenExpiryTime: Date;
     role: string;
     token: string;
+    userId: string;
 }
 
 export class RememberMe {

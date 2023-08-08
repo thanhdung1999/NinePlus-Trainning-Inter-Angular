@@ -6,11 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
-import { FooterLoginTypesModule } from '../footer-login-types/footer-login-types.module';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
     imports: [
@@ -20,12 +21,13 @@ import { ToastModule } from 'primeng/toast';
         RippleModule,
         InputTextModule,
         AppConfigModule,
-        FooterLoginTypesModule,
         CalendarModule,
         InputTextareaModule,
         ReactiveFormsModule,
         FormsModule,
         ToastModule,
+        InputMaskModule,
+        TranslateModule,
     ],
     declarations: [RegisterComponent],
 })

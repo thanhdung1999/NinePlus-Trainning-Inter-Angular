@@ -2,22 +2,26 @@
     <form [formGroup]="formUpdateCustomer" (ngSubmit)="onSubmit()" class="card-form w-full h-full" [ngClass]="{ 'p-input-filled': filledInput }">
         <p-toast [key]="keyToast"></p-toast>
         <div class="p-fluid wrapper-profile">
-            <h5>Profile</h5>
+            <h5>{{ "AUTH.PROFILE" | translate }}</h5>
             <p-divider layout="horizontal"></p-divider>
             <div class="card p-fluid mt-5 mb-8">
                 <div class="flex flex-column">
                     <div class="field">
                         <div class="col-12">
-                            <label for="name" class="font-medium text-900">Name <span class="text-red-500 text-900">*</span></label>
+                            <label for="name" class="font-medium text-900"
+                                >{{ "FIELDS.NAME" | translate }} <span class="text-red-500 text-900">*</span></label
+                            >
                             <input id="name" type="text" formControlName="customerName" pInputText required />
                             <div *ngIf="f['customerName'].invalid && submitted && f['customerName'].errors" class="text-red-500 mt-2 block">
-                                <div *ngIf="f['customerName'].errors['required']">Name is required.</div>
+                                <div *ngIf="f['customerName'].errors['required']">{{ "INVALID.NAME" | translate }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="field flex flex-wrap">
                         <div class="col-6 phone-number">
-                            <label for="phone-number" class="font-medium text-900">Phone Number <span class="text-red-500 text-900">*</span></label>
+                            <label for="phone-number" class="font-medium text-900"
+                                >{{ "FIELDS.PHONE" | translate }} <span class="text-red-500 text-900">*</span></label
+                            >
                             <p-inputMask
                                 mask="99999999999"
                                 slotChar=""
@@ -27,25 +31,41 @@
                                 [maxlength]="11"
                             ></p-inputMask>
                             <div *ngIf="f['phoneNumber'].invalid && submitted && f['phoneNumber'].errors" class="text-red-500 mt-2 block">
-                                <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required.</div>
-                                <div *ngIf="f['phoneNumber'].hasError('pattern')">Phone number enter at least 10 characters .</div>
+                                <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
+                                <div *ngIf="f['phoneNumber'].hasError('pattern')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
                             </div>
                         </div>
 
                         <div class="col-6 birth-day">
-                            <label class="font-medium text-900">BirthDay</label>
+                            <label class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
                             <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" formControlName="dateOfBirth" [readonlyInput]="true"> </p-calendar>
                         </div>
                     </div>
                     <div class="field">
                         <div class="col-12">
-                            <label for="address" class="font-medium text-900">Address</label>
+                            <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
                             <textarea id="address" type="text" formControlName="address" pInputTextarea rows="1" [autoResize]="true"></textarea>
                         </div>
                     </div>
                 </div>
-                <div class="field pb-2 col-12">
-                    <button pButton pRipple type="submit" [loading]="isLoading" label="Update Profile" class="p-button-info w-12rem"></button>
+                <div class="field pb-2 flex col">
+                    <button
+                        pButton
+                        pRipple
+                        type="submit"
+                        [loading]="isLoading"
+                        label="{{ 'BTN.UPDATE' | translate }} {{ 'AUTH.PROFILE' | translate }}"
+                        class="p-button-info w-12rem"
+                    ></button>
+                    <button
+                        pButton
+                        pRipple
+                        icon="pi pi-angle-left"
+                        type="button"
+                        label="{{ 'BTN.BACK' | translate }}"
+                        class="p-button-info ml-3 btn-back"
+                        (click)="navigateToLanding()"
+                    ></button>
                 </div>
             </div>
         </div>

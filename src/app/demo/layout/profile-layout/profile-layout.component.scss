@@ -1,0 +1,25 @@
+body {
+    background: unset !important;
+}
+.layout-container {
+    background: #fff !important;
+    .layout-content-wrapper {
+        overflow: hidden;
+        background-color: #92c884;
+        .layout-content {
+            height: auto !important;
+            border-top-right-radius: 30px;
+            background-color: #fff !important;
+            border-top: unset !important;
+            box-shadow: unset !important;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .outlet {
+        width: 100%;
+    }
+}

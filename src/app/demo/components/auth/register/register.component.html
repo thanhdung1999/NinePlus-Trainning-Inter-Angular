@@ -1,8 +1,5 @@
 <p-toast [key]="keyToast"></p-toast>
-<div
-    class="surface-ground flex align-items-center justify-content-center overflow-x-hidden py-7"
-    [ngClass]="{ 'p-input-filled': filledInput }"
->
+<div class="surface-ground flex align-items-center justify-content-center overflow-x-hidden py-7" [ngClass]="{ 'p-input-filled': filledInput }">
     <ng-template [ngIf]="formCreateCustomer">
         <form
             class="surface-card py-4 px-5 sm:px-7 shadow-2 flex flex-column w-7 form-register"
@@ -11,24 +8,27 @@
             (ngSubmit)="onSubmit()"
         >
             <div class="flex justify-content-between align-items-center">
-                <h5 class="font-bold mr-auto block mb-1 text-4xl">Create Account</h5>
+                <h5 class="font-bold mr-auto block mb-1 text-4xl">{{ "AUTH.CREATE_ACCOUNT" | translate }}</h5>
                 <div class="align-items-center flex signin">
-                    <span class="text-color-secondary title-no-account"> Already have an account? </span>
-                    <button type="'button" class="btn btn-secondary ml-3" (click)="navigateToLanding()">Sign In</button>
+                    <span class="text-color-secondary title-no-account"> {{ "AUTH.YOU_HAVE_ACCOUNT" | translate }} </span>
+                    <button type="'button" class="btn btn-secondary ml-3" (click)="navigateToLanding()">
+                        {{ "TRANSLATOR.SIGN_UP" | translate }}
+                    </button>
                 </div>
             </div>
             <hr style="border-top: 1px solid #99a6b3" />
             <div class="p-fluid mt-5">
                 <div class="p-formgrid grid">
                     <div class="field col">
-                        <label htmlFor="name">Name<span class="text-red-500 ml-1 text-900">*</span></label>
+                        <label htmlFor="name">{{ "FIELDS.NAME" | translate }}<span class="text-red-500 ml-1 text-900">*</span></label>
                         <input pInputText id="name" formControlName="customerName" type="text" />
                         <div *ngIf="f['customerName'].invalid && submitted && f['customerName'].errors" class="text-red-500 mt-2 block">
-                            <div *ngIf="f['customerName'].errors['required']">Name is required.</div>
+                            <div *ngIf="f['customerName'].errors['required']">{{ "INVALID.NAME" | translate }}</div>
+                            <div *ngIf="f['customerName'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_NAME" | translate }}</div>
                         </div>
                     </div>
                     <div class="field col">
-                        <label>Birthday</label>
+                        <label>{{ "FIELDS.BIRTH_DAY" | translate }}</label>
                         <p-calendar
                             dateFormat="dd/mm/yy"
                             [showIcon]="true"
@@ -42,37 +42,41 @@
             </div>
             <div class="p-fluid">
                 <div class="field mb-5">
-                    <label htmlFor="phoneNumber">Phone number<span class="text-red-500 ml-1 text-900">*</span></label>
-                    <input pInputText id="phoneNumber" formControlName="phoneNumber" (keypress)="keyPressPhoneNumber($event)" required type="text" />
+                    <label htmlFor="phoneNumber">{{ "FIELDS.PHONE" | translate }}<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <p-inputMask
+                        mask="99999999999"
+                        slotChar=""
+                        formControlName="phoneNumber"
+                        [showClear]="true"
+                        [autoClear]="false"
+                        [maxlength]="11"
+                    ></p-inputMask>
                     <div *ngIf="f['phoneNumber'].invalid && submitted && f['phoneNumber'].errors" class="text-red-500 mt-2 block">
-                        <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required.</div>
-
-                        <div *ngIf="f['phoneNumber'].errors['pattern']">Phone number does not exist</div>
+                        <div *ngIf="f['phoneNumber'].errors['required']">{{'INVALID.PHONE' | translate}}</div>
+                        <div *ngIf="f['phoneNumber'].hasError('pattern')">{{'INVALID.MIN_LENGTH_PHONE' | translate}}</div>
                     </div>
                 </div>
 
                 <div class="field mb-5">
-                    <label>Username<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <label>{{ "FIELDS.USERNAME" | translate }}<span class="text-red-500 ml-1 text-900">*</span></label>
                     <input pInputText formControlName="username" type="text" required />
                     <div *ngIf="f['username'].invalid && submitted && f['username'].errors" class="text-red-500 mt-2 block">
-                        <div *ngIf="f['username'].errors['required']">Username is required.</div>
-                        <div *ngIf="f['username'].hasError('minlength')">Password enter at least 8 characters.</div>
+                        <div *ngIf="f['username'].errors['required']">{{ "INVALID.USERNAME" | translate }}</div>
+                        <div *ngIf="f['username'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_USERNAME" | translate }}</div>
                     </div>
                 </div>
 
                 <div class="field mb-5">
-                    <label>Password<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <label>{{ "FIELDS.PASSWORD" | translate }}<span class="text-red-500 ml-1 text-900">*</span></label>
                     <input pInputText formControlName="password" type="password" required />
-                    <span *ngIf="submitted === false"
-                        >Use 8 or more characters with a mix of letters, numbers and symboys. Must not contain your name or username
-                    </span>
+                    <span *ngIf="submitted === false">{{ "AUTH.NOTIFY_PASSWORD" | translate }} </span>
                     <div *ngIf="f['password'].invalid && submitted && f['password'].errors" class="text-red-500 mt-2 block">
-                        <div *ngIf="f['password'].errors['required']">Password is required.</div>
-                        <div *ngIf="f['password'].hasError('minlength')">Password enter at least 8 characters.</div>
+                        <div *ngIf="f['password'].errors['required']">{{ "INVALID.PASSWORD" | translate }}</div>
+                        <div *ngIf="f['password'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PASSWORD" | translate }}</div>
                     </div>
                 </div>
                 <div class="field mb-5">
-                    <label for="address" class="font-medium text-900">Address</label>
+                    <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
                     <textarea id="address" type="text" formControlName="address" pInputTextarea rows="2" [autoResize]="true"></textarea>
                 </div>
             </div>
@@ -83,15 +87,10 @@
                         [loading]="isLoadingSubmit"
                         pButton
                         pRipple
-                        label="Create Account & continue"
+                        label="{{ 'AUTH.CREATE_ACCOUNT' | translate }}"
                         class="mb-2 p-button-success"
                     ></button>
                 </div>
-                <span class="block text-center">or</span>
-                <hr style="border-top: 1px solid #99a6b3" />
-                <span class="text-color-secondary text-center mb-2 block">Sign up with</span>
-                <app-footer-login-types></app-footer-login-types>
-                <hr style="border-top: 1px solid #99a6b3" />
             </div>
         </form>
     </ng-template>
