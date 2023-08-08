@@ -52,7 +52,7 @@ export class EmployeeCreateComponent {
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
             address: [''],
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
-            image: [null],
+            imageFile: [null],
             username: ['', Validators.compose([Validators.required])],
             password: ['', Validators.compose([Validators.required, Validators.pattern(password)])],
             workShiftId: [0, Validators.compose([Validators.required])],
@@ -65,13 +65,12 @@ export class EmployeeCreateComponent {
         formData.append("filePath", event.files[0].name);
         this._uploadService.upLoadFile(formData).subscribe({
             next: (res: any) => {
-                console.log(res.data);
-                console.log(res.data.filePath);
-                console.log(res.data.fileUrl);
                 this.form.patchValue({
                     image: res.data.filePath
                 })
                 this.fileUrl = res.data.fileUrl;
+                console.log(this.form.value)
+                console.log(this.form.value)
             }, error: (error) => {
                 error.error.Messages.forEach((item: string) => {
                     this._toastService.showError(item, this.keyToast);
@@ -87,8 +86,10 @@ export class EmployeeCreateComponent {
                     birthday: this.form.get('birthday')?.value.toISOString(),
                 });
             }
+            console.log(this.form.value)
             this._employeeService.createEmployee(this.form.value).subscribe({
                 next: (res) => {
+                    console.log(res)
                     this._notificationService.addMessage(MESSAGE_TITLE.ADD_SUCC);
                     this.navigateBackEmployeeList();
                 },

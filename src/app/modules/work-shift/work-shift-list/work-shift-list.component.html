@@ -2,7 +2,7 @@
     <p-toast></p-toast>
     <p-table #dt [paginator]="true" [value]="workshifts" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="{{ 'TRANSLATOR.CURRENTPAGE' | translate }}"
         [rowsPerPageOptions]="[5,15,25]"
         [globalFilterFields]="['name','fromTime', 'toTime', 'numberEmployee']">
         <ng-template pTemplate="caption">
@@ -28,22 +28,22 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width:10%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:10%">{{ "TRANSLATOR.NO" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="fromTime" class="white-space-nowrap"
                     style="width:20%">{{ 'FIELDS.NAME' | translate }} <p-sortIcon
                         field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width:20%">{{ 'FIELDS.TIME_WORK' | translate }}</th>
+                    style="width:20%">{{ "EMPLOYEE_FIELDS.TIME_WORK" | translate }}</th>
                 <th pSortableColumn="timeWord"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.TIME' | translate }}</th>
+                    class="white-space-nowrap" style="width:20%">{{ "EMPLOYEE_FIELDS.WORKING_HOURS" | translate }}</th>
                 <th pSortableColumn="numberEmployee"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.NUMBER_EMPLOYEE' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{ "EMPLOYEE_FIELDS.NUMBER_EMPLOYEE" | translate }}
                 </th>
                 <th pSortableColumn="description"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DESRIPTION' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{ "EMPLOYEE_FIELDS.DESRIPTION" | translate }}
                 </th>
                 <th pSortableColumn="isDefault"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DEFAULT' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{ "TRANSLATOR.DEFAULT" | translate }}
                 </th>
                 <th style="width:25%"></th>
             </tr>
@@ -91,7 +91,7 @@
         </ng-template>
     </p-table>
 
-    <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true"
+    <p-dialog [(visible)]="deleteProductsDialog" header="{{ 'TRANSLATOR.DETAIL' | translate }}" [modal]="true"
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
@@ -99,10 +99,10 @@
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
-                label="No" (click)="deleteProductsDialog = false"></button>
+                label="{{ 'BTN.RETURN' | translate }}" (click)="deleteProductsDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="deleteConfirmed()"
-                label="Yes"></button>
+                label="{{ 'BTN.SAVE' | translate }}"></button>
         </ng-template>
     </p-dialog>
 </div>

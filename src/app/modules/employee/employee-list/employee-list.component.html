@@ -2,7 +2,7 @@
     <p-toast></p-toast>
     <p-table #dt [value]="employees" [paginator]="true" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="{{ 'TRANSLATOR.CURRENTPAGE' | translate }}"
         [rowsPerPageOptions]="[5,15,25]"
         [globalFilterFields]="['id','name','phoneNumber']">
         <ng-template pTemplate="caption">
@@ -14,77 +14,100 @@
                         <i class="pi pi-search"></i>
                         <input pInputText type="text"
                             (input)="onGlobalFilter(dt, $event)"
-                            placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}" class="w-full" />
+                            placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}"
+                            class="w-full" />
                     </span>
                 </div>
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
-                        icon="pi pi-filter" label="{{ 'TRANSLATOR.FILTER' | translate }}" (click)="toggle()"></button>
-                    <p-overlay [(visible)]="overlayVisible" 
+                        icon="pi pi-filter"
+                        label="{{ 'TRANSLATOR.FILTER' | translate }}"
+                        (click)="toggle()"></button>
+                    <p-overlay [(visible)]="overlayVisible"
                         [responsive]="{ breakpoint: '640px', direction: 'top', contentStyleClass: 'h-20rem'}"
                         contentStyleClass="p-4 surface-overlay shadow-2 border-round">
-                        <form [formGroup]="formFilter" (ngSubmit)="filterEmployee()">
-                        <div>
+                        <form [formGroup]="formFilter"
+                            (ngSubmit)="filterEmployee()">
                             <div>
-                                <label for="country"
-                                    class="font-medium text-900">{{ "FIELDS.GENDER" | translate }}</label>
+                                <div>
+                                    <label for="gender"
+                                        class="font-medium text-900">{{
+                                        "FIELDS.GENDER" | translate }}</label>
+                                </div>
+                                <p-dropdown inputId="gender" [options]="genders"
+                                    optionLabel="name" [filter]="true"
+                                    filterBy="name"
+                                    optionValue="code"
+                                    formControlName="Gender"
+                                    [showClear]="true"
+                                    placeholder="{{ 'MANAGE_BRANCH.SELECT' | translate }}{{ 'FIELDS.GENDER' | translate }}">
+                                    <ng-template let-genders pTemplate="item">
+                                        <div class="flex align-items-center">
+                                            <div>{{genders.name}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
                             </div>
-                            <p-dropdown inputId="country" [options]="genders"
-                                optionLabel="name" [filter]="true"
-                                filterBy="name"
-                                optionValue="code"
-                                formControlName="Gender"
-                                [showClear]="true" placeholder="Select a Gender">
-                                <ng-template let-genders pTemplate="item">
-                                    <div class="flex align-items-center">
-                                        <div>{{genders.name}}</div>
-                                    </div>
-                                </ng-template>
-                            </p-dropdown>
-                        </div>
-                        <div class="mt-4">
-                            <div>
-                                <label for="country"
-                                    class="font-medium text-900">{{ "FIELDS.WORKSHIFT" | translate }}</label>
+                            <div class="mt-4">
+                                <div>
+                                    <label for="country"
+                                        class="font-medium text-900">{{
+                                        "EMPLOYEE_FIELDS.WORKSHIFT_ID" |
+                                        translate }}</label>
+                                </div>
+                                <p-dropdown inputId="country"
+                                    [options]="workshifts"
+                                    optionLabel="name" [filter]="true"
+                                    filterBy="name"
+                                    optionValue="id"
+                                    formControlName="WorkShiftId"
+                                    [showClear]="true"
+                                    placeholder="{{ 'MANAGE_BRANCH.SELECT' | translate }}{{ 'EMPLOYEE_FIELDS.WORKSHIFT_ID' | translate }}">
+                                    <ng-template let-workshifts pTemplate="item">
+                                        <div class="flex align-items-center">
+                                            <div>{{ workshifts.name}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
                             </div>
-                            <p-dropdown inputId="country" [options]="workshifts"
-                                optionLabel="name" [filter]="true"
-                                filterBy="name"
-                                optionValue="id"
-                                formControlName="WorkShiftId"
-                                [showClear]="true" placeholder="Select a Workshitf">
-                                <ng-template let-workshifts pTemplate="item">
-                                    <div class="flex align-items-center">
-                                        <div>{{ workshifts.name}}</div>
-                                    </div>
-                                </ng-template>
-                            </p-dropdown>
-                        </div>
-                        <div class="mt-4">
-                            <p-button label="Primary" styleClass="p-button-rounded p-button-sm ml-5" label="{{ 'TRANSLATOR.SAVE' | translate }}" type="submit"></p-button>
-                            <p-button label="Primary" styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm" label="{{ 'TRANSLATOR.RETURN' | translate }}" (onClick)="onInitApi()"></p-button>
-                        </div>
-                    </form>
+                            <div class="mt-4">
+                                <p-button label="Primary"
+                                    styleClass="p-button-rounded p-button-raised p-button-sm ml-5"
+                                    label="{{ 'BTN.SAVE' | translate }}"
+                                    type="submit"></p-button>
+                                <p-button label="Primary"
+                                    styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm"
+                                    label="{{ 'BTN.RETURN' | translate }}"
+                                    (onClick)="onInitApi()"></p-button>
+                            </div>
+                        </form>
                     </p-overlay>
                     <button pButton
                         class="sm:w-auto flex-order-0 sm:flex-order-1"
-                        (click)="navigateToCreateEmployee()"><i class="pi pi-user-plus"></i><span class="ml-1">{{ "TRANSLATOR.ADD_NEW" | translate }}</span></button>
+                        (click)="navigateToCreateEmployee()"><i
+                            class="pi pi-user-plus"></i><span class="ml-1">{{
+                            "TRANSLATOR.ADD_NEW" | translate }}</span></button>
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width:25%">{{ "FIELDS.NO" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:25%">{{ "TRANSLATOR.NO" | translate }}
+                    <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="name" class="white-space-nowrap"
-                    style="width:25%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.NAME" | translate }}
+                    <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="country.name" class="white-space-nowrap"
-                    style="width:25%">{{ "FIELDS.GENDER" | translate }} <p-sortIcon field="country.name"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.GENDER" | translate }}
+                    <p-sortIcon field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width:25%">{{ "FIELDS.BIRTH_DAY" | translate }} <p-sortIcon field="date"></p-sortIcon></th>
+                    style="width:25%">{{ "EMPLOYEE_FIELDS.CREATE_DATE" |
+                    translate }} <p-sortIcon field="date"></p-sortIcon></th>
                 <th pSortableColumn="representative.name"
-                    class="white-space-nowrap" style="width:25%">{{ "FIELDS.PHONE" | translate }}
+                    class="white-space-nowrap" style="width:20%">{{
+                    "FIELDS.PHONE" | translate }}
                     <p-sortIcon field="representative.name"></p-sortIcon></th>
                 <th style="width:25%"></th>
             </tr>
@@ -104,8 +127,9 @@
                 <tr>
                     <td>{{employeeTest.id}}</td>
                     <td>{{employeeTest.name}}</td>
-                    <td>{{employeeTest.gender ? "{{ 'FIELDS.MALE' | translate }}" :
-                        employeeTest.gender===false ? "{{ 'FIELDS.FEMALE' | translate }}" : "Trống"}}</td>
+                    <td>{{employeeTest.gender ? ('FIELDS.MALE' | translate) :
+                        employeeTest.gender===false ? ('FIELDS.FEMALE' |
+                        translate) : ""}}</td>
                     <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
                     <td>{{employeeTest.phoneNumber}}</td>
                     <td>
@@ -116,21 +140,25 @@
                             <button pButton pRipple icon="pi pi-trash"
                                 (click)="confirmDelete(employeeTest)"
                                 class="p-button-rounded p-button-warning mr-2"></button>
-                                <button pButton pRipple (click)="confirmResetPass(employeeTest)" class="p-button-rounded p-button-danger">
-                                    <span class="reset-label">Reset </span>
-                                    <i class="pi pi-key"></i>
-                                  </button>
+                            <button pButton pRipple
+                                (click)="confirmResetPass(employeeTest)"
+                                class="p-button-rounded p-button-danger">
+                                <span class="reset-label">Reset</span>
+                                <i class="pi pi-key"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>
             </ng-template>
         </ng-template>
     </p-table>
-    <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true"
+    <p-dialog [(visible)]="deleteProductsDialog"
+        header="{{ 'TRANSLATOR.DETAIL' | translate }}" [modal]="true"
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{employee.name}}</b>?</span>
+            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate
+                }} <b>{{employee.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
@@ -140,18 +168,21 @@
                 label="Yes"></button>
         </ng-template>
     </p-dialog>
-    <p-dialog [(visible)]="resetPassDialog" header="Confirm" [modal]="true"
+    <p-dialog [(visible)]="resetPassDialog"
+        header="{{ 'TRANSLATOR.DETAIL' | translate }}" [modal]="true"
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{employee.name}}</b>?</span>
+            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate
+                }} <b>{{employee.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
-                label="{{ 'TRANSLATOR.RETURN' | translate }}" (click)="resetPassDialog = false"></button>
+                label="{{ 'BTN.RETURN' | translate }}"
+                (click)="resetPassDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="resetConfirmed()"
-                label="{{ 'TRANSLATOR.SAVE' | translate }}"></button>
+                label="{{ 'BTN.SAVE' | translate }}"></button>
         </ng-template>
     </p-dialog>
 </div>

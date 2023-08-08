@@ -11,7 +11,7 @@
                         <input id="id" type="text" pInputText [value]="idEmployeeInit" [disabled]="true">
                         <p style="color: red"
                             *ngIf="form.get('id')?.errors?.['required'] && form.get('id')?.touched">*
-                            Không được để trống</p>
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="name" class="font-medium text-900">{{ "FIELDS.NAME" | translate }}<span
@@ -20,7 +20,7 @@
                             formControlName="name">
                         <p style="color: red"
                             *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">*
-                            Không được để trống</p>
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                         <p style="color: red"
                             *ngIf="form.get('name')?.errors?.['pattern'] && form.get('name')?.touched">*
                             Chữ cái đầu phải viết hoa</p>
@@ -32,10 +32,10 @@
                             formControlName="email">
                         <p style="color: red"
                             *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">*
-                            Không được để trống</p>
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                         <p style="color: red"
                             *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">*
-                            Email chưa đúng định dạng. Ex: abc12@gmail.com</p>
+                            {{ "MANAGE_BRANCH.VALID_EMAIL" | translate }}</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="phone" class="font-medium text-900">{{ "FIELDS.PHONE" | translate }}<span
@@ -44,10 +44,10 @@
                             formControlName="phoneNumber">
                         <p style="color: red"
                             *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">*
-                            Không được để trống</p>
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                         <p style="color: red"
                             *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">*
-                            Số điện thoại bao gồm 10 số và không chứ kí tự</p>
+                            {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}</p>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="grid field">
@@ -58,7 +58,7 @@
                                     filterBy="name"
                                     optionValue="code"
                                     [showClear]="true"
-                                    placeholder="Select a Gender"
+                                    placeholder="{{ 'MANAGE_BRANCH.SELECT' | translate }}{{ 'FIELDS.GENDER' | translate }}"
                                     formControlName="gender"
                                     [(ngModel)]="defaultGender">
                                     <ng-template let-genders pTemplate="item">
@@ -99,13 +99,13 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="workshiftId" class="font-medium text-900">{{ "FIELDS.WORKSHIFT_ID" | translate }}<span
+                        <label for="workshiftId" class="font-medium text-900">{{ "EMPLOYEE_FIELDS.WORKSHIFT_ID" | translate }}<span
                                 style="color: red"> *</span></label>
                         <input id="workshiftId" type="text" pInputText
                             formControlName="workShiftId">
                         <p style="color: red"
                             *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">*
-                            Không được để trống</p>
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
@@ -115,7 +115,7 @@
                     <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
-                                <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}"
+                                <button pButton pRipple label="{{ 'BTN.SAVE_CHANGE' | translate }}"
                                     icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
