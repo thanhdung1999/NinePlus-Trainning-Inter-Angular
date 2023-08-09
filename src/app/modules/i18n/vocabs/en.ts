@@ -59,7 +59,7 @@ export const locale = {
             VALID_EMAIL: 'Email is not in the correct format. Ex: abc12@gmail.com',
             VALID_PASSWORD: 'Password must be at least 8 characters long',
             VALID_DESRIPTION: 'This field is no more than 255 characters long',
-            VALID_DAY   : 'Must select at least one business day',
+            VALID_DAY: 'Must select at least one business day',
             SELECT: 'Select a ',
         },
         MENU: {
