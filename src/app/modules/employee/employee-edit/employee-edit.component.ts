@@ -40,7 +40,7 @@ export class EmployeeEditComponent {
         private _uploadService: UploadService,
         private _notificationService: NotificationService,
         private _workShiftService: WorkShiftService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.getListWorkShift();
@@ -73,7 +73,7 @@ export class EmployeeEditComponent {
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
             address: [''],
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
-            imageFile: [''],
+            image: [''],
             workShiftId: [0, Validators.compose([Validators.required])],
         });
     }
@@ -89,11 +89,10 @@ export class EmployeeEditComponent {
                         this.idEmployeeInit = this.form.get('id')?.value;
                         this.defaultGender = this.form.get('gender')?.value;
                         this.birthdayInit = res.birthday ? new Date(res.birthday) : this.birthdayInit;
-                        this.imageDisplay = res.imageLink;
+                        this.fileUrl = res.imageLink;
                         this.form.patchValue({
-                            imageFile: res.image,
+                            image: res.image,
                         });
-                        console.log(this.form.get('imageFile')?.value);
                     },
                     error: (error) => {
                         error.error.Messages.forEach((item: string) => {
@@ -115,11 +114,9 @@ export class EmployeeEditComponent {
         this._uploadService.upLoadFile(formData).subscribe({
             next: (res: any) => {
                 this.form.patchValue({
-                    imageFile: res.data.filePath,
+                    image: res.data.filePath,
                 });
                 this.imageDisplay = res.data.fileUrl;
-                console.log(this.form.value);
-                console.log(this.form.get('imageFile')?.value);
             },
             error: (error) => {
                 error.error.Messages.forEach((item: string) => {
@@ -142,14 +139,14 @@ export class EmployeeEditComponent {
                 this._uploadService.upLoadFile(formData).subscribe({
                     next: (res: any) => {
                         this.form.patchValue({
-                            imageFile: res.data.filePath,
+                            image: res.data.filePath,
                         });
                         param.image = res.data.filePath;
                         this.fileUrl = res.data.fileUrl;
                         this._employeeService.updateEmployeeById(param).subscribe({
                             next: (res) => {
+                                this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
                                 this.navigateBackEmployeeList();
-                                this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
                             },
                             error: (error) => {
                                 this.birthdayInit = new Date(this.birthdayInit);
@@ -179,14 +176,9 @@ export class EmployeeEditComponent {
                         this.navigateBackEmployeeList();
                     },
                     error: (error) => {
-                        console.log(error);
                         this.birthdayInit = new Date(this.birthdayInit);
                         if (error.error.messages) {
                             error.error.messages.forEach((item: string) => {
-                                this._toastService.showError(item, this.keyToast);
-                            });
-                        } else {
-                            error.error.Messages.forEach((item: string) => {
                                 this._toastService.showError(item, this.keyToast);
                             });
                         }
@@ -200,19 +192,23 @@ export class EmployeeEditComponent {
 
     removeImage() {
         const formData = new FormData();
-        // console.log(this.form.get('imageFile')?.value.replace(/\\/g, '\\\\'))
-        formData.append('filePath', this.form.get('imageFile')?.value);
+        formData.append('filePath', this.form.get('image')?.value);
         for (const value of formData.values()) {
             console.log(value);
         }
         this._uploadService.deleteImage(formData).subscribe({
             next: (res) => {
                 this.form.patchValue({
-                    imageFile: '',
+                    image: '',
                 });
                 this.imageDisplay = '';
             },
             error: (error) => {
+                if (error.error.messages) {
+                    error.error.messages.forEach((item: string) => {
+                        this._toastService.showError(item, this.keyToast);
+                    });
+                }
                 this._toastService.showErrorNoKey('Xoá lỗi');
             },
         });

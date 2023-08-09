@@ -1,10 +1,11 @@
 <p-toast></p-toast>
-
 <div class="card">
     <form [formGroup]="formFilter">
         <div class="row grid p-fluid">
             <div class="col-12 sm:col-3">
-                <input pInputText type="text" placeholder="{{ 'FIELDS.NAME' | translate }}" formControlName="keyword" />
+                <input pInputText type="text"
+                    placeholder="{{ 'FIELDS.NAME' | translate }}"
+                    formControlName="keyword" />
             </div>
             <div class="col-12 sm:col-3">
                 <p-dropdown
@@ -15,13 +16,12 @@
                     emptyFilterMessage="Không tìm thấy dữ liệu"
                     emptyMessage="Không tìm thấy dữ liệu"
                     [options]="genders"
-                    [showClear]="true"
-                >
+                    [showClear]="true">
                 </p-dropdown>
             </div>
             <div class="col-12 sm:col-3">
                 <p-dropdown
-                    placeholder="{{ 'FIELDS.TIME_WORK' | translate }}"
+                    placeholder="{{ 'EMPLOYEE_FIELDS.WORKSHIFT_ID' | translate }}"
                     formControlName="workShiftId"
                     optionValue="id"
                     optionLabel="name"
@@ -30,12 +30,10 @@
                     [options]="workshifts"
                     [filter]="true"
                     filterBy="name"
-                    [showClear]="true"
-                >
+                    [showClear]="true">
                 </p-dropdown>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 group-button-filter">
                 <button
@@ -44,16 +42,14 @@
                     label="{{ 'TRANSLATOR.SEARCH' | translate }}"
                     class="w-auto mr-2 mb-2"
                     icon="pi pi-search"
-                    (click)="filterEmployee()"
-                ></button>
+                    (click)="filterEmployee()"></button>
                 <button
                     pButton
                     pRipple
-                    label="Xóa điều kiện"
+                    label="{{ 'BTN.REMOVE_CONDITION' | translate }}"
                     class="w-auto mr-2 mb-2"
                     (click)="clearFilter()"
-                    icon="pi pi-exclamation-triangle"
-                ></button>
+                    icon="pi pi-exclamation-triangle"></button>
             </div>
         </div>
     </form>
@@ -72,41 +68,52 @@
         responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['id', 'name', 'phoneNumber']"
-    >
+        [globalFilterFields]="['id', 'name', 'phoneNumber']">
         <ng-template pTemplate="caption">
-            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+            <div
+                class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div></div>
                 <span>
-                    <button pButton class="sm:w-auto flex-order-0 sm:flex-order-1" (click)="navigateToCreateEmployee()">
-                        <i class="pi pi-user-plus"></i><span class="ml-1">{{ "TRANSLATOR.ADD_NEW" | translate }}</span>
+                    <button pButton
+                        class="sm:w-auto flex-order-0 sm:flex-order-1"
+                        (click)="navigateToCreateEmployee()">
+                        <i class="pi pi-user-plus"></i><span class="ml-1">{{
+                            "TRANSLATOR.ADD_NEW" | translate }}</span>
                     </button>
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.NO" | translate }} <p-sortIcon field="id"></p-sortIcon>
+                <th pSortableColumn="id" class="white-space-nowrap"
+                    style="width: 25%">
+                    {{ "TRANSLATOR.NO" | translate }} <p-sortIcon field="id"></p-sortIcon>
                 </th>
-                <th pSortableColumn="name" class="white-space-nowrap" style="width: 25%">
+                <th pSortableColumn="name" class="white-space-nowrap"
+                    style="width: 25%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="country.name" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.GENDER" | translate }} <p-sortIcon field="country.name"></p-sortIcon>
+                <th pSortableColumn="country.name" class="white-space-nowrap"
+                    style="width: 25%">
+                    {{ "FIELDS.GENDER" | translate }} <p-sortIcon
+                        field="country.name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="date" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.BIRTH_DAY" | translate }} <p-sortIcon field="date"></p-sortIcon>
+                <th pSortableColumn="date" class="white-space-nowrap"
+                    style="width: 25%">
+                    {{ "EMPLOYEE_FIELDS.CREATE_DATE" | translate }} <p-sortIcon
+                        field="date"></p-sortIcon>
                 </th>
-                <th pSortableColumn="representative.name" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.PHONE" | translate }} <p-sortIcon field="representative.name"></p-sortIcon>
+                <th pSortableColumn="representative.name"
+                    class="white-space-nowrap" style="width: 25%">
+                    {{ "FIELDS.PHONE" | translate }} <p-sortIcon
+                        field="representative.name"></p-sortIcon>
                 </th>
                 <th style="width: 25%"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-employeeTest>
+        <ng-template pTemplate="body" let-employees>
             <ng-container *ngIf="isSkeleton; else showTable">
-                <tr>
+                <tr [pSelectableRow]="employees">
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
@@ -117,19 +124,19 @@
             </ng-container>
             <ng-template #showTable>
                 <tr>
-                    <td>{{ employeeTest.id }}</td>
-                    <td>{{ employeeTest.name }}</td>
+                    <td>{{ employees.id }}</td>
+                    <td>{{ employees.name }}</td>
                     <td>
                         {{
-                            employeeTest.gender
-                                ? ("FIELDS.MALE" | translate)
-                                : employeeTest.gender === false
-                                ? ("FIELDS.FEMALE" | translate)
-                                : "Trống"
+                        employees.gender
+                        ? ("FIELDS.MALE" | translate)
+                        : employees.gender === false
+                        ? ("FIELDS.FEMALE" | translate)
+                        : "Trống"
                         }}
                     </td>
-                    <td>{{ employeeTest.createdOn | date : "MM/dd/yyyy" }}</td>
-                    <td>{{ employeeTest.phoneNumber }}</td>
+                    <td>{{ employees.createdOn | date : "MM/dd/yyyy" }}</td>
+                    <td>{{ employees.phoneNumber }}</td>
                     <td>
                         <div class="flex">
                             <button
@@ -137,16 +144,16 @@
                                 pRipple
                                 icon="pi pi-pencil"
                                 class="p-button-rounded p-button-success mr-2"
-                                (click)="navigateToEditEmployee(employeeTest.id)"
-                            ></button>
+                                (click)="navigateToEditEmployee(employees.id)"></button>
                             <button
                                 pButton
                                 pRipple
                                 icon="pi pi-trash"
-                                (click)="confirmDelete(employeeTest)"
-                                class="p-button-rounded p-button-warning mr-2"
-                            ></button>
-                            <button pButton pRipple (click)="confirmResetPass(employeeTest)" class="p-button-rounded p-button-danger">
+                                (click)="confirmDelete(employees)"
+                                class="p-button-rounded p-button-warning mr-2"></button>
+                            <button pButton pRipple
+                                (click)="confirmResetPass(employees)"
+                                class="p-button-rounded p-button-danger">
                                 <span class="reset-label">Reset </span>
                                 <i class="pi pi-key"></i>
                             </button>
@@ -156,26 +163,31 @@
             </ng-template>
         </ng-template>
     </p-table>
-    <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
+    <p-dialog [(visible)]="deleteProductsDialog"
+        header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true"
+        [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
             <span *ngIf="employee">
-                {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{ employee.name }}</b
-                >?</span
-            >
+                {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{
+                    employee.name }}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
-            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
-            <button pButton pRipple icon="pi pi-check" class="p-button-text" (click)="deleteConfirmed()" label="Yes"></button>
+            <button pButton pRipple icon="pi pi-times" class="p-button-text"
+                label="{{'BTN.CANCEL' | translate}}"
+                (click)="deleteProductsDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text"
+                (click)="deleteConfirmed()" label="{{'BTN.SAVE' | translate}}"></button>
         </ng-template>
     </p-dialog>
-    <p-dialog [(visible)]="resetPassDialog" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
+    <p-dialog [(visible)]="resetPassDialog"
+        header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true"
+        [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
             <span *ngIf="employee">
-                {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{ employee.name }}</b
-                >?</span
-            >
+                {{ "TRANSLATOR.CONFIRM_PASSWORD" | translate }} <b>{{
+                    employee.name }}</b> ?</span>
         </div>
         <ng-template pTemplate="footer">
             <button
@@ -183,17 +195,15 @@
                 pRipple
                 icon="pi pi-times"
                 class="p-button-text"
-                label="{{ 'TRANSLATOR.RETURN' | translate }}"
-                (click)="resetPassDialog = false"
-            ></button>
+                label="{{'BTN.CANCEL' | translate}}"
+                (click)="resetPassDialog = false"></button>
             <button
                 pButton
                 pRipple
                 icon="pi pi-check"
                 class="p-button-text"
                 (click)="resetConfirmed()"
-                label="{{ 'TRANSLATOR.SAVE' | translate }}"
-            ></button>
+                label="{{ 'BTN.SAVE' | translate }}"></button>
         </ng-template>
     </p-dialog>
 </div>

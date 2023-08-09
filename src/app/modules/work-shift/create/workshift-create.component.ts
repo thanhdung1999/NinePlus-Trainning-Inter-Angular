@@ -24,7 +24,7 @@ export class WorkshiftCreateComponent {
   constructor(private _fb: FormBuilder,
     private _router: Router,
     private _workShiftService: WorkShiftService,
-    private _toastService: ToastService, 
+    private _toastService: ToastService,
     private _notificationService: NotificationService) { }
 
   ngOnInit() {
