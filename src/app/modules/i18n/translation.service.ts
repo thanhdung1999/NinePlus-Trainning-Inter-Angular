@@ -20,8 +20,8 @@ export class TranslationService {
 
     constructor(private translate: TranslateService, public primeNGConfig: PrimeNGConfig) {
         const setLangs = async () => {
-            await this.translate.addLangs(['en']);
-            await this.translate.setDefaultLang('en');
+            await this.translate.addLangs(['vn']);
+            await this.translate.setDefaultLang('vn');
         };
         setLangs();
     }

@@ -98,7 +98,7 @@ export class CustomerEditComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    this._toastService.showError(MESSAGE_ERROR.CHECK_ID_CUSTOMER, this.keyToast);
+                    this.showErrorResponse(err);
                 },
             });
         } else {
@@ -117,19 +117,18 @@ export class CustomerEditComponent implements OnInit {
                 }
             },
             error: (err) => {
-                this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
+                this.showErrorResponse(err);
             },
         });
     }
 
     showErrorResponse(err: HttpErrorResponse): void {
-        if (err.status === 400 && err.error?.messages?.length > 0) {
+        if (err.error?.messages?.length > 0) {
             err.error.messages?.forEach((ms: string) => {
                 this._toastService.showError(ms, this.keyToast);
             });
         }
     }
-
 
     convertDateOfBirth(customer: Customer) {
         const originalDate = new Date(customer?.dateOfBirth + '');

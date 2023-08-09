@@ -49,11 +49,18 @@ export class ProfileCustomerComponent {
     }
 
     initFormUpdateCustomer() {
-        this.formUpdateCustomer = this._fb.group({
-            customerName: ['', [Validators.required, Validators.minLength(4)]],
-            phoneNumber: ['', [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
-            address: [''],
-            dateOfBirth: [''],
+        this._customerService.getCustomerById(this.customerId).subscribe((data) => {
+            const customer = data as Customer;
+            if (!isEmpty(customer)) {
+                this.formUpdateCustomer = this._fb.group({
+                    id: [this.customerId],
+                    customerName: [customer?.customerName, [Validators.required, Validators.minLength(4)]],
+                    phoneNumber: [customer?.phoneNumber, [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
+                    address: [customer?.address],
+                    dateOfBirth: [customer?.dateOfBirth ? new Date(customer.dateOfBirth) : ''],
+                    totalMoney: [customer?.totalMoney],
+                });
+            }
         });
     }
 
@@ -76,8 +83,7 @@ export class ProfileCustomerComponent {
         this.submitted = true;
         if (this.formUpdateCustomer.valid) {
             const updateCustomer = this.trimValueCustomer(this.valueFormUpdateCustomer);
-            // pending API BE
-            // this.saveCustomer(updateCustomer);
+            this.saveCustomer(updateCustomer);
         } else {
             this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
@@ -88,7 +94,7 @@ export class ProfileCustomerComponent {
             next: (res) => {
                 if (!isEmpty(res.data)) {
                     this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
-                    window.location.reload();
+                    this.navigateToLanding();
                 }
             },
             error: (err) => {
@@ -113,7 +119,7 @@ export class ProfileCustomerComponent {
     }
 
     showErrorResponse(err: HttpErrorResponse): void {
-        if (err.status === 400 && err.error?.messages?.length > 0) {
+        if (err.error?.messages?.length > 0) {
             err.error.messages?.forEach((ms: string) => {
                 this._toastService.showError(ms, this.keyToast);
             });

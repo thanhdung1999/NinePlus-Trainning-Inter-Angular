@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { AuthenticateService } from 'src/app/core';
+import { AuthenticateService, SessionService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LANGUAGES, LanguageFlag, ROUTER } from 'src/app/shared';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/modules/i18n';
+import { ROLE } from 'src/app/shared/constants/role';
 @Component({
     selector: 'app-topbar-profile',
     templateUrl: './topbar-profile.component.html',
@@ -18,7 +19,8 @@ export class TopbarProfileComponent {
         public _layoutService: LayoutService,
         private _router: Router,
         private _translationService: TranslationService,
-        private _authenticateService: AuthenticateService
+        private _authenticateService: AuthenticateService,
+        private _sessionService: SessionService
     ) {}
 
     ngOnInit(): void {
@@ -26,7 +28,9 @@ export class TopbarProfileComponent {
     }
 
     navigateProfile() {
-        this._router.navigate([ROUTER.PROFILE]);
+        if (this._sessionService.userAuthenticate.role === ROLE.CUSTOMER) {
+            this._router.navigate([ROUTER.PROFILE]);
+        }
     }
 
     logOut() {

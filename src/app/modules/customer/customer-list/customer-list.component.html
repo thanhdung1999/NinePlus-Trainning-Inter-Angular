@@ -1,24 +1,58 @@
 <div class="card">
+    <form [formGroup]="formFilter">
+        <div class="row grid p-fluid">
+            <div class="col-12 sm:col-3">
+                <input
+                    pInputText
+                    type="text"
+                    placeholder="{{ 'FIELDS.NAME' | translate }}, {{ 'FIELDS.PHONE' | translate }}"
+                    formControlName="keyword"
+                />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 group-button-filter">
+                <button
+                    pButton
+                    pRipple
+                    label="{{ 'TRANSLATOR.SEARCH' | translate }}"
+                    class="w-auto mr-2 mb-2"
+                    icon="pi pi-search"
+                    (click)="filterCustomer()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Xóa điều kiện"
+                    class="w-auto mr-2 mb-2"
+                    (click)="clearFilter()"
+                    icon="pi pi-exclamation-triangle"
+                ></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card">
     <p-toast [key]="keyToast"></p-toast>
     <p-table
         #dt
         [value]="customers"
         [paginator]="true"
         [rows]="5"
-        [rowHover]="true"
+        [lazy]="true"
+        (onLazyLoad)="filter($event)"
+        [totalRecords]="totalRecords"
+        [first]="firstPaging"
         [showCurrentPageReport]="true"
         responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['id', 'customerName', 'phoneNumber', 'dateOfBirth', 'address', 'totalMoney']"
+        [globalFilterFields]="['id', 'customerName', 'phoneNumber','dateOfBirth', 'totalMoney']"
         [resetPageOnSort]="resetPageOnSort"
     >
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Global Search" class="w-full" />
-                </span>
                 <button
                     (click)="navigateToCreateCustomer()"
                     pButton
@@ -35,17 +69,17 @@
                 <th pSortableColumn="customerName" class="white-space-nowrap" style="width: 14.28%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="customerName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="phone_number" class="white-space-nowrap" style="width: 14.28%">
-                    {{ "FIELDS.PHONE" | translate }}<p-sortIcon field="phone_number"></p-sortIcon>
+                <th pSortableColumn="phoneNumber" class="white-space-nowrap" style="width: 14.28%">
+                    {{ "FIELDS.PHONE" | translate }}<p-sortIcon field="phoneNumber"></p-sortIcon>
                 </th>
                 <th pSortableColumn="address" class="white-space-nowrap" style="width: 14.28%">
                     {{ "FIELDS.ADDRESS" | translate }} <p-sortIcon field="address"></p-sortIcon>
                 </th>
-                <th pSortableColumn="date_of_birth" class="white-space-nowrap" style="width: 14.28%">
-                    {{ "FIELDS.BIRTH_DAY" | translate }}<p-sortIcon field="date_of_birth"></p-sortIcon>
+                <th pSortableColumn="dateOfBirth" class="white-space-nowrap" style="width: 14.28%">
+                    {{ "FIELDS.BIRTH_DAY" | translate }}<p-sortIcon field="dateOfBirth"></p-sortIcon>
                 </th>
-                <th pSortableColumn="total_money" class="white-space-nowrap" style="width: 14.28%">
-                    {{ "FIELDS.TOTAL_MONEY" | translate }}<p-sortIcon field="total_money"></p-sortIcon>
+                <th pSortableColumn="totalMoney" class="white-space-nowrap" style="width: 14.28%">
+                    {{ "FIELDS.TOTAL_MONEY" | translate }}<p-sortIcon field="totalMoney"></p-sortIcon>
                 </th>
                 <th class="white-space-nowrap" style="width: 14.28%"></th>
             </tr>
@@ -87,7 +121,7 @@
                                 pRipple
                                 icon="pi pi-eye"
                                 tooltipPosition="top"
-                                pTooltip="{{'TOOLTIP.DETAIL'| translate}}"
+                                pTooltip="{{ 'TOOLTIP.DETAIL' | translate }}"
                                 class="p-button-rounded p-button-secondary mr-2"
                                 (click)="navigateToDeatailCustomer(customer)"
                             ></button>
@@ -96,7 +130,7 @@
                                 pRipple
                                 icon="pi pi-pencil"
                                 tooltipPosition="top"
-                                pTooltip="{{'TOOLTIP.EDIT' | translate}}"
+                                pTooltip="{{ 'TOOLTIP.EDIT' | translate }}"
                                 class="p-button-rounded p-button-success mr-2"
                                 (click)="navigateToEditCustomer(customer)"
                             ></button>
@@ -105,7 +139,7 @@
                                 pRipple
                                 icon="pi pi-trash"
                                 tooltipPosition="top"
-                                pTooltip="{{'TOOLTIP.DELETE' | translate}}"
+                                pTooltip="{{ 'TOOLTIP.DELETE' | translate }}"
                                 class="p-button-rounded p-button-warning"
                                 (click)="showConfirmDelete(customer)"
                             ></button>

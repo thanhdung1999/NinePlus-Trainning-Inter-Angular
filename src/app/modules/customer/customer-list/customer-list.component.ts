@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Customer } from 'src/app/demo/api/customer';
@@ -8,6 +8,8 @@ import { CustomerService } from 'src/app/shared/services/customer.service';
 import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { isEmpty } from 'lodash';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 
 @Component({
     templateUrl: './customer-list.component.html',
@@ -24,17 +26,75 @@ export class CustomerListComponent implements OnInit {
 
     keyToast = TOAST.KEY_BC;
 
+    formFilter!: FormGroup;
+
+    totalRecords: number = 0;
+
+    firstPaging = 0;
+
     constructor(
         private _router: Router,
         private _confirmationService: ConfirmationService,
         public _dialogService: DialogService,
         private _customerService: CustomerService,
-        private _toastService: ToastService
+        private _toastService: ToastService,
+        private _detect: ChangeDetectorRef,
+        private _fb: FormBuilder
     ) {}
 
     ngOnInit() {
+        this.initForm();
         this.showSkeleton();
-        this.getListCustomer();
+    }
+
+    initForm(): void {
+        this.formFilter = this._fb.group({
+            keyword: [''],
+
+            pageNumber: [1],
+            pageSize: [5],
+            isExport: false,
+        });
+    }
+
+    filter(event: any): void {
+        if (event && event.first) {
+            this.firstPaging = event.first;
+        }
+        event.sortField && FilterHelper.sortOrderByNoneMulti(this.formFilter, event.sortField, event.sortOrder);
+        event.rows && FilterHelper.setPagingSize(this.formFilter, event.rows);
+        (event.first || event.first === 0) &&
+            event.rows &&
+            FilterHelper.setPageNumber(this.formFilter, FilterHelper.getPageNumber(event.first, event.rows));
+        this.filterCustomer();
+    }
+
+    filterCustomer() {
+        this.isSkeleton = true;
+        let param = FilterHelper.removeNullValue(this.formFilter.value);
+        this._customerService.filterCustomer(param).subscribe({
+            next: (res: any) => {
+                this.customers = res.data as Customer[];
+                this.totalRecords = res.totalCount as number;
+                if (this.customers.length === 0) {
+                    this._toastService.showWarning(MESSAGE_TITLE.LIST_EMPTY, this.keyToast);
+                }
+                this.showSkeleton();
+                this._detect.detectChanges();
+            },
+            error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showError(item, this.keyToast);
+                    this.isSkeleton = false;
+                });
+            },
+        });
+    }
+
+    clearFilter(): void {
+        this.formFilter.reset();
+        this.initForm();
+        this.filterCustomer();
     }
 
     showSkeleton() {
@@ -44,34 +104,21 @@ export class CustomerListComponent implements OnInit {
         }, 2000);
     }
 
-    getListCustomer() {
-        this._customerService.getListCustomer().subscribe((res) => {
-            if (res.data && res.data.length) {
-                this.customers = res.data as Customer[];
-            }
-        });
-    }
-
     handleDeleteCustomer(id: string) {
         this._customerService.getCustomerById(id).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
                     this._customerService.deleteCustomer(id).subscribe((res) => {
-                        if (res.succeeded) {
-                            this.resetPageOnSort = true;
-                            this.getListCustomer();
-                            if (!isEmpty(res.messages)) {
-                                res.messages?.forEach((string: string) => {
-                                    this._toastService.showSuccess(string, this.keyToast);
-                                });
-                            }
+                        this.resetPageOnSort = true;
+                        if (!isEmpty(res.messages)) {
+                            res.messages?.forEach((string: string) => {
+                                this._toastService.showSuccess(string, this.keyToast);
+                            });
                         }
                     });
                 }
             },
-            error: (err) => {
-                this.getListCustomer();
-            },
+            error: (err) => {},
         });
     }
 
