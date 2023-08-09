@@ -16,9 +16,9 @@ export interface EmployeeCreate {
     email?: string;
     phoneNumber?: string;
     gender?: boolean;
-    imageFile?: string;
-    username?: string;
+    image?: string;
     password?: string;
+    username?: string;
     workShiftId?: number;
 }
 
@@ -30,7 +30,7 @@ export interface EmployeeUpdate {
     email?: string;
     phoneNumber?: string;
     gender?: boolean;
-    imageFile?: string;
+    image?: string;
     workShiftId?: number;
 }
 export interface UploadEvent {

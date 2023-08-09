@@ -1,0 +1,94 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary h-5rem">
+    <div class="layout-topbar1 h-5rem">
+        <div class="img-container h-5rem">
+            <img class="img-logo w-6" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
+        </div>
+        <div>
+            <div class="navbar-collapse bg-body-tertiary">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container">
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Về chúng tôi
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> About Us</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Vision, Mission, Core Values</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> About the president</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Team of doctors</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Achievement</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dịch vụ
+                                    </a>
+                                    <ul class="dropdown-menu mx-5">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> Skin Care treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Body treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Facial treatment</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Hair care</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">Nail</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown mx-3">
+                                    <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Sản phẩm
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> Cosmetics</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Health protection products</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Hair Care</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item mx-3">
+                                    <a class="nav-link">Các bài viết</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div *ngIf="!isAuth">
+            <a class="nav-link" (click)="showPopupLogin()">
+                <button class="btn btn-primary btn-md">
+                    <i class="pi pi-user-plus"></i>
+                    Đăng nhập
+                </button>
+            </a>
+        </div>
+        <div *ngIf="isAuth">
+            <app-topbar-profile></app-topbar-profile>
+        </div>
+    </div>
+</nav>
+
+<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()" (getRole)="getRole()"></app-login>

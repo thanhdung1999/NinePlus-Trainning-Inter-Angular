@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
@@ -9,6 +8,8 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { Customer } from '../../api/customer';
 import { isEmpty } from 'lodash';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionService } from 'src/app/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile-customer',
@@ -25,18 +26,26 @@ export class ProfileCustomerComponent {
 
     keyToast = TOAST.KEY_BC;
 
+    customerId = '';
+
     patternPhoneNumber = '[0-9]{10,11}';
 
     constructor(
         private _layoutService: LayoutService,
         private _customerService: CustomerService,
-        private _router: Router,
+        private _sessionService: SessionService,
         private _toastService: ToastService,
-        private _fb: FormBuilder
+        private _fb: FormBuilder,
+        private _router: Router
     ) {}
 
     ngOnInit(): void {
+        this.getIdCustomer();
         this.initFormUpdateCustomer();
+    }
+
+    getIdCustomer() {
+        this.customerId = this._sessionService.userAuthenticate?.userId;
     }
 
     initFormUpdateCustomer() {
@@ -109,6 +118,10 @@ export class ProfileCustomerComponent {
                 this._toastService.showError(ms, this.keyToast);
             });
         }
+    }
+
+    navigateToLanding() {
+        this._router.navigate([ROUTER.LANDING]);
     }
 
     get f() {

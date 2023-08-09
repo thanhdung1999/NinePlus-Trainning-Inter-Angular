@@ -5,39 +5,58 @@
     *ngIf="isPopupLogin === true"
 >
     <p-toast [key]="keyToast"></p-toast>
-    <div class="px-5 pb-5 flex flex-column justify-content-center h-full w-full relative">
+    <div class="px-5 py-8 flex flex-column justify-content-center h-full w-full relative">
         <span class="icon-close" (click)="closeFormLogin()">
             <i class="pi pi-times" style="font-size: 1.5rem"></i>
         </span>
-        <img class="app1-logo mb-5" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
+        <div class="w-full mb-8">
+            <img class="img-logo w-full" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
+        </div>
 
         <span class="p-input-icon-left mb-4">
             <i class="pi pi-user"></i>
-            <input type="text" pInputText required placeholder="Username" [(ngModel)]="username" name="username" class="w-full border-round-2xl" />
+            <input
+                type="text"
+                pInputText
+                required
+                placeholder="{{ 'FIELDS.USERNAME' | translate }}"
+                [(ngModel)]="username"
+                name="username"
+                class="w-full border-round-2xl"
+            />
         </span>
 
-        <span class="p-input-icon-left mb-3">
+        <span class="p-input-icon-left mb-1">
             <i class="pi pi-key"></i>
             <input
                 type="password"
                 pInputText
-                placeholder="Password"
+                placeholder="{{ 'FIELDS.PASSWORD' | translate }}"
                 required
                 [(ngModel)]="password"
                 name="password"
                 class="w-full border-round-2xl"
             />
         </span>
-
-        <div class="text-xl text-right">
-            <span>Don't have an account? </span>
-            <span class="text-blue-600 cursor-pointer sign-up ml-2" (click)="navigateSignup()">Sign up</span>
+        <div class="text-right mt-1">
+            <span class="cursor-pointer forgot-password underline text-blue-600 text-xl" (click)="navigateToForgotPassword()">{{
+                "AUTH.FORGOT_PASSWORD" | translate
+            }}</span>
         </div>
-        <div class="mb-4 text-right">
-            <span class="cursor-pointer forgot-password underline text-blue-600 text-lg" (click)="navigateToForgotPassword()">Forgot password?</span>
+
+        <div class="text-xl text-right mb-5">
+            <span>{{ "AUTH.DO_NOT_HAVE_ACCOUNT" | translate }} </span>
+            <span class="text-blue-600 cursor-pointer sign-up ml-2" (click)="navigateSignup()">{{ "TRANSLATOR.SIGN_UP" | translate }}</span>
         </div>
         <div class="flex justify-content-center">
-            <button type="submit" [loading]="isLoadingSubmit" pButton pRipple label="Login" class="mb-5 border-round-2xl text-xl w-full"></button>
+            <button
+                type="submit"
+                [loading]="isLoadingSubmit"
+                pButton
+                pRipple
+                label="{{ 'TRANSLATOR.SIGN_IN' | translate }}"
+                class="mb-5 border-round-2xl text-xl w-full"
+            ></button>
         </div>
     </div>
 </form>
