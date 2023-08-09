@@ -46,4 +46,7 @@ export class CustomerService extends CrudBaseService {
     deleteCustomer(id: string): Observable<ApiResponse> {
         return this.delete(id, 'id');
     }
+    filterCustomer(body: any): Observable<any[]> {
+        return this.filter(body);
+    }
 }

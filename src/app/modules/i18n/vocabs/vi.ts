@@ -19,7 +19,8 @@ export const locale = {
             Move: 'Di chuyển',
             DEFAULT: 'Mặc định',
             LIST: 'Danh sách',
-            SETTINGS: 'Cài đặt'
+            SETTINGS: 'Cài đặt',
+            DELETE_CONDITION: 'Xoá điều kiện',
         },
         BTN: {
             SAVE: 'Lưu',
@@ -33,7 +34,7 @@ export const locale = {
         },
         TOOLTIP: {
             DETAIL: 'Chi tiết',
-            ADD: 'Thêm',
+            EDIT: 'Sửa',
             DELETE: 'Xoá',
         },
         MANAGE_BRANCH: {
@@ -61,7 +62,7 @@ export const locale = {
             LOCATION: 'Địa điểm',
         },
         FIELDS: {
-            PHONE: 'Điện thoại',
+            PHONE: 'Số điện thoại',
             NAME: 'Tên',
             ADDRESS: 'Địa chỉ',
             USERNAME: 'Tên tài khoản',
@@ -106,7 +107,7 @@ export const locale = {
             NOT_MATCH_PASSWORD: 'Mật khẩu nhập lại không trùng khớp',
         },
         AUTH: {
-            PROFILE:"Hồ sơ",
+            PROFILE: 'Hồ sơ',
             CREATE_ACCOUNT: 'Tạo tại khoản',
             RESET_PASSWORD: 'Đặt lại mật khẩu',
             FORGOT_PASSWORD: 'Quên mật khẩu?',

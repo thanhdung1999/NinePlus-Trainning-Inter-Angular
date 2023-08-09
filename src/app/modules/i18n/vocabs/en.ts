@@ -19,6 +19,7 @@ export const locale = {
             DEFAULT: 'Default',
             LIST: 'List',
             SETTINGS: 'Settings',
+            DELETE_CONDITION: 'Delete condition',
         },
         BTN: {
             SAVE: 'Save',
