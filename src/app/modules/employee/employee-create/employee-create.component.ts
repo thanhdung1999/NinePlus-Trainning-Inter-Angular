@@ -37,7 +37,7 @@ export class EmployeeCreateComponent {
         private _uploadService: UploadService,
         private _notificationService: NotificationService,
         private _workShiftService: WorkShiftService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.getListWorkShift();
@@ -69,7 +69,7 @@ export class EmployeeCreateComponent {
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
             address: [''],
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
-            image: [null],
+            imageFile: [null],
             username: ['', Validators.compose([Validators.required])],
             password: ['', Validators.compose([Validators.required, Validators.pattern(password)])],
             workShiftId: ['', Validators.compose([Validators.required])],
@@ -82,9 +82,6 @@ export class EmployeeCreateComponent {
         formData.append('filePath', event.files[0].name);
         this._uploadService.upLoadFile(formData).subscribe({
             next: (res: any) => {
-                console.log(res.data);
-                console.log(res.data.filePath);
-                console.log(res.data.fileUrl);
                 this.form.patchValue({
                     image: res.data.filePath,
                 });
@@ -129,10 +126,6 @@ export class EmployeeCreateComponent {
                                     error.error.messages.forEach((item: string) => {
                                         this._toastService.showErrorNoKey(item);
                                     });
-                                } else {
-                                    error.error.Messages.forEach((item: string) => {
-                                        this._toastService.showErrorNoKey(item);
-                                    });
                                 }
                             },
                         });
@@ -150,10 +143,6 @@ export class EmployeeCreateComponent {
                         this.form.patchValue({ birthday: new Date(this.form.get('birthday')?.value) });
                         if (error.error.messages) {
                             error.error.messages.forEach((item: string) => {
-                                this._toastService.showErrorNoKey(item);
-                            });
-                        } else {
-                            error.error.Messages.forEach((item: string) => {
                                 this._toastService.showErrorNoKey(item);
                             });
                         }

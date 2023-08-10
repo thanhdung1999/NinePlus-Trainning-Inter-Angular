@@ -29,4 +29,4 @@ const routes: Routes = [];
     ],
     exports: [RouterModule],
 })
-export class EmployeeRoutingModule {}
+export class EmployeeRoutingModule { }

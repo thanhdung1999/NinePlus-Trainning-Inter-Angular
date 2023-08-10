@@ -1,45 +1,60 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
-    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.EDIT" | translate }}</span>
+    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.EDIT" |
+        translate }}</span>
     <div class="grid">
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
             <div class="col-12 lg:col-12">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="id" class="font-medium text-900">ID<span style="color: red"> *</span></label>
-                        <input id="id" type="text" pInputText [value]="idEmployeeInit" [disabled]="true" />
-                        <p style="color: red" *ngIf="form.get('id')?.errors?.['required'] && form.get('id')?.touched">* Không được để trống</p>
+                        <label for="id" class="font-medium text-900">ID<span
+                                style="color: red"> *</span></label>
+                        <input id="id" type="text" pInputText
+                            [value]="idEmployeeInit" [disabled]="true" />
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="name" class="font-medium text-900">{{ "FIELDS.NAME" | translate }}<span style="color: red"> *</span></label>
-                        <input id="name" type="text" pInputText formControlName="name" />
-                        <p style="color: red" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">* Không được để trống</p>
-                        <p style="color: red" *ngIf="form.get('name')?.errors?.['pattern'] && form.get('name')?.touched">
-                            * Chữ cái đầu phải viết hoa
+                        <label for="name" class="font-medium text-900">{{
+                            "FIELDS.NAME" | translate }}<span style="color: red">
+                                *</span></label>
+                        <input id="name" type="text" pInputText
+                            formControlName="name" />
+                        <p style="color: red"
+                            *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">*
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="email" class="font-medium text-900">Email<span
+                                style="color: red"> *</span></label>
+                        <input id="email" type="text" pInputText
+                            formControlName="email" />
+                        <p style="color: red"
+                            *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">*
+                            {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
+                        <p style="color: red"
+                            *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
+                            * {{ "MANAGE_BRANCH.VALID_EMAIL" | translate }}
                         </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="email" class="font-medium text-900">Email<span style="color: red"> *</span></label>
-                        <input id="email" type="text" pInputText formControlName="email" />
-                        <p style="color: red" *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">* Không được để trống</p>
-                        <p style="color: red" *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
-                            * Email chưa đúng định dạng. Ex: abc12@gmail.com
+                        <label for="phone" class="font-medium text-900">{{
+                            "FIELDS.PHONE" | translate }}<span
+                                style="color: red"> *</span></label>
+                        <input id="phone" type="text" pInputText
+                            formControlName="phoneNumber" />
+                        <p style="color: red"
+                            *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
+                            * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                         </p>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="phone" class="font-medium text-900">{{ "FIELDS.PHONE" | translate }}<span style="color: red"> *</span></label>
-                        <input id="phone" type="text" pInputText formControlName="phoneNumber" />
-                        <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
-                            * Không được để trống
-                        </p>
-                        <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
-                            * Số điện thoại bao gồm 10 số và không chứ kí tự
+                        <p style="color: red"
+                            *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
+                            * {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}
                         </p>
                     </div>
                     <div class="col-12 md:col-6">
                         <div class="grid field">
                             <div class="field col-12 md:col-5">
-                                <label for="gender" class="font-medium text-900">{{ "FIELDS.GENDER" | translate }}</label>
+                                <label for="gender" class="font-medium text-900">{{
+                                    "FIELDS.GENDER" | translate }}</label>
                                 <p-dropdown
                                     inputId="gender"
                                     [options]="genders"
@@ -48,10 +63,9 @@
                                     filterBy="name"
                                     optionValue="code"
                                     [showClear]="true"
-                                    placeholder="Select a Gender"
+                                    placeholder="{{ 'MANAGE_BRANCH.SELECT' | translate }}{{ 'FIELDS.GENDER' | translate }}"
                                     formControlName="gender"
-                                    [(ngModel)]="defaultGender"
-                                >
+                                    [(ngModel)]="defaultGender">
                                     <ng-template let-genders pTemplate="item">
                                         <div class="flex align-items-center">
                                             <div>{{ genders.name }}</div>
@@ -60,22 +74,27 @@
                                 </p-dropdown>
                             </div>
                             <div class="field col-12 md:col-7">
-                                <label for="birthday" class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
-                                <p-calendar [(ngModel)]="birthdayInit" id="birthday" [showIcon]="true" formControlName="birthday"></p-calendar>
+                                <label for="birthday"
+                                    class="font-medium text-900">{{
+                                    "FIELDS.BIRTH_DAY" | translate }}</label>
+                                <p-calendar [(ngModel)]="birthdayInit"
+                                    id="birthday" [showIcon]="true"
+                                    formControlName="birthday"></p-calendar>
                             </div>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="avatar" class="font-medium text-900">{{ "FIELDS.AVATAR" | translate }}</label>
+                        <label for="avatar" class="font-medium text-900">{{
+                            "FIELDS.AVATAR" | translate }}</label>
                         <div class="flex align-items-center">
-                            <div class="flex align-items-center" style="position: relative">
+                            <div class="flex align-items-center"
+                                style="position: relative">
                                 <div class="img-container mr-4">
                                     <img
                                         #image
                                         (error)="image.src = 'assets/layout/images/blank.png'"
                                         [src]="fileUrl ? fileUrl : 'assets/layout/images/blank.png'"
-                                        alt="Trống"
-                                    />
+                                        alt="Trống" />
                                     <!-- <span *ngIf="fileUrl" class="pi pi-times hoverClick" (click)="setImageDefault()"></span> -->
                                 </div>
                                 <div style="position: relative">
@@ -85,9 +104,7 @@
                                         class="w-100 opacity-0 cursor-pointer"
                                         accept="image/*"
                                         style="position: absolute; width: 39px; height: 39px; right: 50%; top: 50%; z-index: 20; translate: 50% -50%"
-                                        (change)="uploadFile($event)"
-                                    />
-
+                                        (change)="uploadFile($event)" />
                                     <button
                                         class="p-button-primary change-input-image w-10rem"
                                         pButton
@@ -95,13 +112,12 @@
                                         icon="pi pi-check"
                                         label="Upload file"
                                         pTooltip="Chọn ảnh đại diện"
-                                        tooltipPosition="top"
-                                    >
+                                        tooltipPosition="top">
                                         <div
                                             style="position: absolute"
-                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                        >
-                                            <i class="fa fa-pen icon-sm text-muted"></i>
+                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow">
+                                            <i
+                                                class="fa fa-pen icon-sm text-muted"></i>
                                         </div>
                                     </button>
                                 </div>
@@ -109,9 +125,9 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="workshiftId" class="font-medium text-900"
-                            >{{ "FIELDS.WORKSHIFT_ID" | translate }}<span style="color: red"> *</span></label
-                        >
+                        <label for="workshiftId" class="font-medium text-900">{{
+                            "EMPLOYEE_FIELDS.WORKSHIFT_ID" | translate }}<span
+                                style="color: red"> *</span></label>
                         <p-dropdown
                             placeholder="{{ 'FIELDS.TIME_WORK' | translate }}"
                             formControlName="workShiftId"
@@ -122,21 +138,25 @@
                             [options]="workShifts"
                             [filter]="true"
                             filterBy="name"
-                            [showClear]="true"
-                        >
+                            [showClear]="true">
                         </p-dropdown>
-                        <p style="color: red" *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
-                            * Không được để trống
+                        <p style="color: red"
+                            *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
+                            * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                         </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
-                        <input id="address" type="text" pInputText formControlName="address" />
+                        <label for="address" class="font-medium text-900">{{
+                            "FIELDS.ADDRESS" | translate }}</label>
+                        <input id="address" type="text" pInputText
+                            formControlName="address" />
                     </div>
                     <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
-                                <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}" icon="pi pi-check" type="submit"></button>
+                                <button pButton pRipple
+                                    label="{{ 'BTN.SAVE' | translate }}"
+                                    icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
                                 <button
@@ -145,8 +165,7 @@
                                     label="{{ 'BTN.RETURN' | translate }}"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"
-                                    class="p-button-outlined"
-                                ></button>
+                                    class="p-button-outlined"></button>
                             </div>
                         </div>
                     </div>

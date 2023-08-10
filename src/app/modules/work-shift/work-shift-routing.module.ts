@@ -30,4 +30,4 @@ const routes: Routes = [];
     ],
     exports: [RouterModule],
 })
-export class WorkShiftRoutingModule {}
+export class WorkShiftRoutingModule { }

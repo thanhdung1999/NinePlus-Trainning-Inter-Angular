@@ -112,7 +112,6 @@ export class WorkshiftEditComponent {
         return dateFormatRegex.test(dateString);
     }
 
-
     toggleObject(id: number): void {
         this.workdaySelected = this.form.get('workDays') ? this.form.get('workDays')?.value : [];
         if (this.isSelected(id)) {
@@ -128,7 +127,6 @@ export class WorkshiftEditComponent {
     isSelected(id: number): boolean {
         return this.form.value.workDays.includes(id);
     }
-
 
     isSelectedAnyWorkday(): boolean {
         return this.workdaySelected.length > 0;

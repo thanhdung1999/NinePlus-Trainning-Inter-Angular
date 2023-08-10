@@ -53,7 +53,7 @@ export class WorkshiftEditComponent {
     }
 
     updateWorkshiftById() {
-        if (this.form.valid) {
+        if (this.form.valid && this.workdaySelected.length) {
             this.convertDataBeforeCreate();
             this._workShiftService.updateWorkshiftById(this.form.value).subscribe({
                 next: (res) => {
@@ -111,7 +111,6 @@ export class WorkshiftEditComponent {
         return dateFormatRegex.test(dateString);
     }
 
-
     toggleObject(id: number): void {
         this.workdaySelected = this.form.get('workDays') ? this.form.get('workDays')?.value : [];
         if (this.isSelected(id)) {
@@ -128,7 +127,6 @@ export class WorkshiftEditComponent {
         return this.form.value.workDays.includes(id);
     }
 
-
     isSelectedAnyWorkday(): boolean {
         return this.workdaySelected.length > 0;
     }
@@ -136,5 +134,4 @@ export class WorkshiftEditComponent {
     navigateBackToListWorkshift() {
         this._router.navigate([ROUTER.LIST_WORK_SHIFT]);
     }
-
 }

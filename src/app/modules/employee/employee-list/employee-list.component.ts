@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { er } from '@fullcalendar/core/internal-common';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
@@ -60,12 +61,13 @@ export class EmployeeListComponent {
         });
     }
     getListWorkShift() {
-        this._workShiftService.getListWorkShift().subscribe({
+        this._employeeService.getListEmployee().subscribe({
             next: (res) => {
-                this.workshifts = res.data as Workshift[];
-                if (this.workshifts.length === 0) {
+                this.employees = res.data as Employee[];
+                if (this.employees.length === 0) {
                     this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
+                this.toastFormAnotherScreen();
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
@@ -149,7 +151,6 @@ export class EmployeeListComponent {
                     this.employee = {};
                 },
                 error: (error) => {
-                    console.log(error)
                     this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
                 },
             });
@@ -165,7 +166,14 @@ export class EmployeeListComponent {
                     this.employee = {};
                 },
                 error: (error) => {
-                    this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_ERR);
+                    if (error.error.messages) {
+                        error.error.messages.forEach((item: string) => {
+                            this._toastService.showErrorNoKey(item);
+                        });
+                    }
+                    else {
+                        this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_ERR);
+                    }
                 },
             });
         }
