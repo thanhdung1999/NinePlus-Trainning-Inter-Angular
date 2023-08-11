@@ -4,7 +4,7 @@ export interface BookingCreate{
     customerId?: number;
     bookingDate?: string;
     fromTime?: string;
-    totime?: string;
+    toTime?: string;
     note?: string;
     servicesId?: number[];
 }

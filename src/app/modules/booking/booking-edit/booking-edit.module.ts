@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { BookingEditRoutingModule } from './booking-edit-routing.module';
 import { BookingEditComponent } from './booking-edit.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { SharedModule } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
+import { SharedModule } from 'src/app/shared';
 
 @NgModule({
     declarations: [BookingEditComponent],

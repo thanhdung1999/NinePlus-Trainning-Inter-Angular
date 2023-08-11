@@ -39,6 +39,7 @@ export enum MESSAGE_TITLE {
     RESET_PASS_ERR = 'Reset password error',
     LIST_EMPTY = 'Empty list',
     CHANGE = 'Successfully changed',
+    CONFIRM_DELETE_BOOKING = 'Are you sure delete booking by customer: ',
 }
 
 export enum MESSAGE_ERROR_INPUT {
