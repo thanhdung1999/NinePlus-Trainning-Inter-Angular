@@ -32,7 +32,6 @@ export class BookingDetailComponent {
             names[index] = item.name;
         });
         this.serviceName = names.join(' , ');
-        console.log(this.serviceName);
     }
 
     getIdRequestParam() {

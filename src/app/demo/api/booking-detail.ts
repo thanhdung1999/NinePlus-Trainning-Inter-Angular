@@ -1,6 +1,6 @@
 export interface BookingDetail {
     id?: number;
-    cutomerName?: string;
+    customerName?: string;
     phoneNumber?: string;
     bookingDate?: string;
     fromTime?: string;

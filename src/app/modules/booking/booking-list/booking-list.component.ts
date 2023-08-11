@@ -114,8 +114,7 @@ export class BookingListComponent implements OnInit {
 
     showConfirmDelete(booking: Booking) {
         this._confirmationService.confirm({
-            message: `${MESSAGE_TITLE.CONFIRM_DELETE} ${booking.customerName}?`,
-            header: 'Confirmation',
+            message: `${MESSAGE_TITLE.CONFIRM_DELETE_BOOKING} ${booking.customerName}?`,
             icon: 'pi pi-exclamation-triangle',
             key: 'confirm',
             accept: () => {

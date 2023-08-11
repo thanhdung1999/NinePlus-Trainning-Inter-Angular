@@ -6,7 +6,7 @@
         [rows]="5"
         [showCurrentPageReport]="true"
         responsiveLayout="scroll"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate= "{{'TRANSLATOR.CURRENTPAGE' | translate}}"
         [rowsPerPageOptions]="[5, 15, 25]"
         [globalFilterFields]="['id', 'customerName', 'bookingDate', 'status']"
         [resetPageOnSort]="resetPageOnSort"
@@ -69,17 +69,17 @@
                     <td>{{ booking.bookingDate | date : "dd/MM/yyyy" }}</td>
                     <td>
                         {{ booking.fromTime | date : "hh:mm" }} -
-                        {{ booking.totime | date : "hh:mm" }}
+                        {{ booking.toTime | date : "hh:mm" }}
                         {{ booking.fromTime | date : "dd/MM/yyyy" }}
                     </td>
                     <td>{{ booking.status === 1 ? "Waiting" : booking.status === 2 ? "Inprogress" : "Done" }}</td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
                             <p-confirmDialog
-                                header="Delete booking with name = {{ booking.name }}"
+                                header="Xác nhận lại"
                                 key="confirm"
                                 icon="pi pi-exclamation-triangle"
-                                message="Are you sure you want to proceed?"
+                                message="Bạn có muốn xóa đặt lịch của khách hàng {{booking.customerName}}?"
                                 [style]="{ width: '350px' }"
                                 acceptButtonStyleClass="p-button-text"
                                 rejectButtonStyleClass="p-button-text"

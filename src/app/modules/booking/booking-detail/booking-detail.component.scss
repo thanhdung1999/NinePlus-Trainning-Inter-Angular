@@ -1,9 +1,16 @@
-.w-field > label {
-    min-width: 82px;
+.card {
+    padding: 5%;
 }
-.field > input {
-    opacity: 1 !important;
+.label-container {
+    left: auto;
+    display: table;
+    table-layout: fixed;
 }
-.field > textarea {
-    opacity: 1 !important;
+
+.label-container label {
+    display: table-cell;
+    width: 40%;
+}
+label{
+margin-left: 10px;
 }

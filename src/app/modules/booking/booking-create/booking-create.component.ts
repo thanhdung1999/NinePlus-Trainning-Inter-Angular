@@ -54,7 +54,6 @@ export class BookingCreateComponent implements OnInit {
 
     createBooking() {
         if (this.form.valid) {
-
             const bookingClone = _.cloneDeep(this.form.value)
             if(this.form.value.serviceId.length > 0) {
                 for (let i = 0; i < this.form.value.serviceId.length; i++) {
