@@ -1,15 +1,10 @@
-body {
-    background: unset !important;
-}
 .layout-container {
-    background: #fff !important;
     .layout-content-wrapper {
-        overflow: hidden;
         background-color: #92c884;
         .layout-content {
-            height: auto !important;
+            height: 100%;
             border-top-right-radius: 30px;
-            background-color: #fff !important;
+            background-color: var(--surface-ground);
             border-top: unset !important;
             box-shadow: unset !important;
         }

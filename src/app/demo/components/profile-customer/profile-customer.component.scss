@@ -11,10 +11,15 @@
 }
 @media (max-width: 768px) {
     .card-form {
-        border-radius: unset;
-        border: unset;
+        padding: 3rem;
+        border-radius: 30px;
         .wrapper-profile {
             padding: 0;
+        }
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
         }
     }
 }

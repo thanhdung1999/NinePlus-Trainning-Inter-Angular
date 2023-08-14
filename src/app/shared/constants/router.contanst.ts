@@ -21,4 +21,7 @@ export enum ROUTER {
     DETAIL_WORKSHIFT = 'work-shift/detail/',
     CREATE_WORKSHIFT = 'work-shift/create',
     UPDATE_WORKSHIFT = 'work-shift/edit/',
+    CLIENT_BOOKING = 'account/booking',
+    MY_BOOKING = 'account/my-booking',
+    EDIT_CLIENT_BOOKING = 'account/my-booking',
 }

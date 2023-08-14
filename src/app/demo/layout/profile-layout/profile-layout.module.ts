@@ -8,10 +8,11 @@ import { ProfileSidebarComponent } from './profile-sidebar.component';
 import { ProfileHeaderComponent } from './profile-header.component';
 import { BadgeModule } from 'primeng/badge';
 import { TopbarProfileModule } from './topbar-profile/topbar-profile.module';
+import { AppConfigModule } from 'src/app/layout/config/config.module';
 
 @NgModule({
     declarations: [ProfileLayoutComponent, ProfileSidebarComponent, ProfileHeaderComponent],
-    imports: [CommonModule, RouterModule, BrowserModule, TopbarProfileModule, BadgeModule,],
+    imports: [CommonModule, RouterModule, BrowserModule, TopbarProfileModule, BadgeModule, AppConfigModule],
     exports: [ProfileLayoutComponent],
 })
 export class ProfileLayoutModule {}

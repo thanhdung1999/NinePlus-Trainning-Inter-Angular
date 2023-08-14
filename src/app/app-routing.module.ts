@@ -100,6 +100,10 @@ const routes: Routes = [
                 path: 'change-password',
                 loadChildren: () => import('./demo/components/auth/changepassword/changepassword.module').then((m) => m.ChangePasswordModule),
             },
+            {
+                path: 'booking',
+                loadChildren: () => import('./demo/components/client-booking/client-booking.module').then((m) => m.ClientBookingModule),
+            },
         ],
     },
     {
