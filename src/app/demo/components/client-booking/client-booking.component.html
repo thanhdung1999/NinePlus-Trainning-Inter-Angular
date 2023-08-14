@@ -1,0 +1,117 @@
+<div class="card p-3">
+    <p-toast [key]="keyToast"></p-toast>
+    <ng-template [ngIf]="form">
+        <form [formGroup]="form" (ngSubmit)="createBooking()" class="card-form w-full h-full" [ngClass]="{ 'p-input-filled': filledInput }">
+            <h5 class="flex justify-content-center mt-5 text-4xl font-medium">{{ "CLIENT_BOOKING.TITLE" | translate }}</h5>
+            <div class="p-fluid mt-5 mb-8 overflow-hidden">
+                <div class="flex flex-column">
+                    <div class="field mb-4 flex justify-content-center">
+                        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+                            <label for="bookingDate" class="font-medium text-900">
+                                {{ "FIELDS.BOOKING_DATE" | translate }}: <span style="color: red"> *</span></label
+                            >
+                            <p-calendar
+                                dateFormat="dd/mm/yy"
+                                [showIcon]="true"
+                                [minDate]="minDate"
+                                [maxDate]="maxDate"
+                                [required]="true"
+                                formControlName="bookingDate"
+                                [readonlyInput]="true"
+                            ></p-calendar>
+                            <div *ngIf="f['bookingDate'].invalid && submitted && f['bookingDate'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['bookingDate'].errors['required']">
+                                    {{ "INVALID.DATE" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 flex justify-content-center flex">
+                        <div class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-4">
+                            <label for="fromTime" class="font-medium text-900"
+                                >{{ "FIELDS.FROM" | translate }}<span style="color: red"> *</span></label
+                            >
+                            <p-dropdown [options]="startTime" formControlName="fromTime" placeholder="..:.." optionLabel="time"></p-dropdown>
+                            <div *ngIf="f['fromTime'].invalid && submitted && f['fromTime'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['fromTime'].errors['required']">
+                                    {{ "INVALID.TIME" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 sm:col-6 md:col-6 lg:col-4 xl:col-4">
+                            <label for="totime" class="font-medium text-900">{{ "FIELDS.TO" | translate }}<span style="color: red"> *</span></label>
+                            <p-dropdown [options]="endTime" formControlName="toTime" placeholder="..:.." optionLabel="time"></p-dropdown>
+                            <div *ngIf="f['toTime'].errors?.['toTimeValidator']" class="text-red-500 mt-2 block">
+                                {{ "INVALID.EQUAL_TIME" | translate }}
+                            </div>
+                            <div *ngIf="f['toTime'].invalid && submitted && f['toTime'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['toTime'].errors['required']">
+                                    {{ "INVALID.TIME" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 flex justify-content-center">
+                        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+                            <label for="serviceId" class="font-medium text-900"
+                                >{{ "FIELDS.SERVICE" | translate }}<span style="color: red"> *</span></label
+                            >
+                            <p-multiSelect
+                                [options]="service"
+                                optionLabel="name"
+                                display="chip"
+                                [showClear]="true"
+                                defaultLabel="Chọn dịch vụ"
+                                [(ngModel)]="selectedServices"
+                                [required]="true"
+                                formControlName="serviceId"
+                            >
+                                <ng-template let-value pTemplate="selectedItems">
+                                    <div class="flex align-items-center gap-2" *ngFor="let option of selectedServices">
+                                        <img
+                                            src="https://www.huongnghiepaau.com/wp-content/uploads/2020/08/di-spa-la-lam-gi.jpg"
+                                            [class]="'flag flag-'"
+                                            style="width: 40px"
+                                        />
+                                        <div>{{ option.name }}</div>
+                                    </div>
+                                    <div *ngIf="!selectedServices || selectedServices.length === 0">Select Countries</div>
+                                </ng-template>
+                                <ng-template let-service pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <img
+                                            src="https://www.huongnghiepaau.com/wp-content/uploads/2020/08/di-spa-la-lam-gi.jpg"
+                                            [class]="'flag flag-'"
+                                            style="width: 40px"
+                                        />
+                                        <div class="ml-2">{{ service.name }}</div>
+                                        <div class="ml-2">{{ service.time }} phút</div>
+                                        <div class="ml-2">{{ service.price }} VND</div>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+
+                            <div *ngIf="f['serviceId'].invalid && submitted && f['serviceId'].errors" class="text-red-500 mt-2 block">
+                                <div *ngIf="f['serviceId'].errors['required']">
+                                    {{ "INVALID.SERVICE" | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 flex justify-content-center">
+                        <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8">
+                            <label for="note" class="font-medium text-900">{{ "FIELDS.NOTE" | translate }} </label>
+                            <textarea rows="1" [autoResize]="true" pInputTextarea formControlName="note"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 flex justify-content-center">
+                    <div class="col-12 sm:col-12 md:col-12 lg:col-8 xl:col-8 flex justify-content-start">
+                        <p-button type="submit" [loading]="isLoading" class="mr-5 btn-booking" label="{{ 'BTN.BOOKING' | translate }}"></p-button>
+                        <p-button class="btn-cancle" label="{{ 'BTN.CANCEL' | translate }}"></p-button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</div>

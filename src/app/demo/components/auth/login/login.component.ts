@@ -22,12 +22,19 @@ export class LoginComponent {
     keyToast = TOAST.KEY_BC;
     constructor(private _authenticateService: AuthenticateService, private _toastService: ToastService, private _router: Router) {}
 
-    submit() {
+    async submit() {
         this.isLoadingSubmit = true;
-        if (!this.username || !this.password) {
-            this._toastService.showError(MESSAGE_ERROR_INPUT.INCORRECT_ACCOUNT, this.keyToast);
+        if (!this.username || !this.password || this.password.length < 8) {
+            if (this.password.length <= 8) {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD, this.keyToast);
+            } else {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.INCORRECT_ACCOUNT, this.keyToast);
+            }
+            setTimeout(() => {
+                this.isLoadingSubmit = false;
+            }, 1000);
         } else {
-            this._authenticateService.login(this.username, this.password).subscribe({
+            await this._authenticateService.login(this.username, this.password).subscribe({
                 next: (res) => {
                     let role = res.data.role;
                     this._toastService.showSuccess(MESSAGE_TITLE.LOGIN_SUCC, this.keyToast);
@@ -40,15 +47,18 @@ export class LoginComponent {
                             window.location.href = '';
                         }, 1000);
                     }
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
                 },
                 error: (err) => {
                     this.showErrorResponse(err);
                 },
             });
+            setTimeout(() => {
+                this.isLoadingSubmit = false;
+            }, 1500);
         }
-        setTimeout(() => {
-            this.isLoadingSubmit = false;
-        }, 1000);
     }
 
     showErrorResponse(err: HttpErrorResponse): void {

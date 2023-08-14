@@ -33,6 +33,7 @@ export const locale = {
             BACK: 'Back',
             MOVE: 'Move',
             REMOVE_CONDITION: 'Remove condition',
+            BOOKING: 'Booking',
         },
         TOOLTIP: {
             DETAIL: 'Detail',
@@ -134,6 +135,10 @@ export const locale = {
             MIN_LENGTH_USERNAME: 'Username enter at least 8 characters',
             MIN_LENGTH_PHONE: 'Phone enter at least 10 characters',
             NOT_MATCH_PASSWORD: 'Password does not match',
+            DATE: 'Date is required',
+            TIME: 'Time is required',
+            EQUAL_TIME: 'Please double check your booking time',
+            SERVICE: 'Service is required',
         },
         AUTH: {
             PROFILE: 'Profile',
@@ -158,6 +163,9 @@ export const locale = {
             TITLE_DETAIL: 'Detail Profile Customer',
             TITLE_EDIT: 'Edit Profile Customer',
             BOOKING_HISTORY: 'Booking History',
+        },
+        CLIENT_BOOKING: {
+            TITLE: 'Booking',
         },
     },
 };

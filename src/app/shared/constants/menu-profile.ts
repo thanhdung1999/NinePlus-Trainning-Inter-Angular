@@ -9,7 +9,7 @@ export const menuProfile = [
                 label: 'Tài khoản',
                 items: [
                     {
-                        label: 'Profile',
+                        label: 'Hồ sơ',
                         routerLink: ROUTER.PROFILE,
                         visible: false,
                     },
@@ -23,7 +23,18 @@ export const menuProfile = [
             {
                 icon: 'pi pi-book',
                 label: 'Dịch vụ',
-                items: [],
+                items: [
+                    {
+                        label: 'Đặt lịch',
+                        routerLink: ROUTER.CLIENT_BOOKING,
+                        visible: false,
+                    },
+                    {
+                        label: 'Lịch đặt của tôi',
+                        routerLink: ROUTER.MY_BOOKING,
+                        visible: false,
+                    },
+                ],
             },
             {
                 icon: 'pi pi-ticket',
@@ -54,7 +65,18 @@ export const menuProfile = [
             {
                 icon: 'pi pi-book',
                 label: 'My Booking',
-                items: [],
+                items: [
+                    {
+                        label: 'Booking',
+                        routerLink: ROUTER.CLIENT_BOOKING,
+                        visible: false,
+                    },
+                    {
+                        label: 'My booking',
+                        routerLink: ROUTER.MY_BOOKING,
+                        visible: false,
+                    },
+                ],
             },
             {
                 icon: 'pi pi-ticket',

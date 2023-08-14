@@ -34,6 +34,7 @@ export const locale = {
             BACK: 'Trở lại',
             MOVE: 'Chuyển',
             REMOVE_CONDITION: 'Xoá điều kiện',
+            BOOKING : "Đặt lịch"
         },
         TOOLTIP: {
             DETAIL: 'Chi tiết',
@@ -137,6 +138,10 @@ export const locale = {
             MIN_LENGTH_USERNAME: 'Tên tài khoản ít nhất 8 ký tự',
             MIN_LENGTH_PHONE: 'Số điện thoại ít nhất 10 ký tự',
             NOT_MATCH_PASSWORD: 'Mật khẩu nhập lại không trùng khớp',
+            DATE : "Vui lòng chọn ngày",
+            TIME : "Vui lòng chọn giờ",
+            EQUAL_TIME : "Vui lòng kiểm tra lại thời gian đặt lịch",
+            SERVICE : "Vui lòng chọn dịch vụ"
         },
         AUTH: {
             PROFILE: 'Hồ sơ',
@@ -163,5 +168,8 @@ export const locale = {
             TITLE_EDIT: 'Chỉnh sửa hồ sơ khách hàng',
             BOOKING_HISTORY: 'Lịch sử đặt lịch',
         },
+        CLIENT_BOOKING : {
+            TITLE : 'Đặt Lịch',
+        }
     },
 };
