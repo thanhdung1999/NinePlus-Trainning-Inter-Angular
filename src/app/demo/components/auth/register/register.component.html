@@ -12,7 +12,7 @@
                 <div class="align-items-center flex signin">
                     <span class="text-color-secondary title-no-account"> {{ "AUTH.YOU_HAVE_ACCOUNT" | translate }} </span>
                     <button type="'button" class="btn btn-secondary ml-3" (click)="navigateToLanding()">
-                        {{ "TRANSLATOR.SIGN_UP" | translate }}
+                        {{ "TRANSLATOR.SIGN_IN" | translate }}
                     </button>
                 </div>
             </div>
@@ -52,8 +52,8 @@
                         [maxlength]="11"
                     ></p-inputMask>
                     <div *ngIf="f['phoneNumber'].invalid && submitted && f['phoneNumber'].errors" class="text-red-500 mt-2 block">
-                        <div *ngIf="f['phoneNumber'].errors['required']">{{'INVALID.PHONE' | translate}}</div>
-                        <div *ngIf="f['phoneNumber'].hasError('pattern')">{{'INVALID.MIN_LENGTH_PHONE' | translate}}</div>
+                        <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
+                        <div *ngIf="f['phoneNumber'].hasError('pattern')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
                     </div>
                 </div>
 

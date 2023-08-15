@@ -9,10 +9,10 @@ import { ProfileHeaderComponent } from './profile-header.component';
 import { BadgeModule } from 'primeng/badge';
 import { TopbarProfileModule } from './topbar-profile/topbar-profile.module';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [ProfileLayoutComponent, ProfileSidebarComponent, ProfileHeaderComponent],
-    imports: [CommonModule, RouterModule, BrowserModule, TopbarProfileModule, BadgeModule, AppConfigModule],
-    exports: [ProfileLayoutComponent],
+    imports: [CommonModule, RouterModule, BrowserModule, TopbarProfileModule, BadgeModule, TranslateModule],
 })
 export class ProfileLayoutModule {}

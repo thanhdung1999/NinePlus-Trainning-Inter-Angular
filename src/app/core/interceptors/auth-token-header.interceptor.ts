@@ -5,15 +5,16 @@ import { Observable, EMPTY, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { SessionService } from '../services';
+import { ROUTER } from 'src/app/shared';
 
 @Injectable()
 export class AuthTokenHeaderInterceptor implements HttpInterceptor {
     constructor(private sessionService: SessionService, private router: Router) {}
 
     private handleAuthError(err: HttpErrorResponse): Observable<any> {
-        if (err.status === 403 && !this.router.url.endsWith('/landing')) {
+        if (err.status === 403 && !this.router.url.endsWith('landing')) {
             this.sessionService.destroySession();
-            this.router.navigate(['/', 'landing'], {
+            this.router.navigate([ROUTER.LANDING], {
                 queryParams: { returnUrl: this.router.url },
             });
             return EMPTY;

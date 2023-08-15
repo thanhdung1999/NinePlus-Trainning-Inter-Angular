@@ -22,6 +22,7 @@ export const locale = {
             SETTINGS: 'Cài đặt',
             DELETE_CONDITION: 'Xoá điều kiện',
             CONFIRM_PASSWORD: 'Bạn có chắc muốn đặt lại mật khẩu',
+            MANAGE : "Quản lý"
         },
         BTN: {
             SAVE: 'Lưu',
@@ -170,6 +171,7 @@ export const locale = {
         },
         CLIENT_BOOKING : {
             TITLE : 'Đặt Lịch',
+            SELECT_SERVICE: "Chọn dịch vụ"
         }
     },
 };

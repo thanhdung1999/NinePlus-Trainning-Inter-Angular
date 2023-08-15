@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { cloneDeep, isEmpty } from 'lodash';
 import { MenuItem } from 'primeng/api';
+import { SessionService } from 'src/app/core';
 import { TranslationService } from 'src/app/modules/i18n';
 import { menuProfile } from 'src/app/shared/constants/menu-profile';
+import { ROLE } from 'src/app/shared/constants/role';
 interface Toggle {
     toggle?: boolean;
 }
@@ -18,10 +20,13 @@ export class ProfileSidebarComponent {
 
     menuToggle: Toggle[] = [];
 
-    constructor(private _router: Router, private _translationService: TranslationService) {}
+    isRoleCustomer = false;
+
+    constructor(private _router: Router, private _translationService: TranslationService, private _sessionService: SessionService) {}
 
     ngOnInit(): void {
         this.initMenu();
+        this.getRole();
     }
 
     initMenu() {
@@ -38,6 +43,13 @@ export class ProfileSidebarComponent {
             };
             this.menuToggle.push(item);
         });
+    }
+
+    getRole() {
+        const role = this._sessionService.userAuthenticate?.role ? this._sessionService.userAuthenticate.role : '';
+        if (role === ROLE.CUSTOMER) {
+            this.isRoleCustomer = true;
+        }
     }
 
     navigateAndToggleMenuItem(path: string, indexItem: number, indexMenuItem: number) {
