@@ -22,7 +22,7 @@ export class AppTopBarComponent {
     constructor(
         public layoutService: LayoutService,
         private _translationService: TranslationService,
-        private _authenticateService: AuthenticateService,
+        private _authenticateService: AuthenticateService
     ) {}
 
     ngOnInit(): void {
@@ -34,6 +34,7 @@ export class AppTopBarComponent {
 
     logout() {
         this._authenticateService.logOut();
+        window.location.reload();
     }
 
     activateSearch() {
@@ -62,12 +63,7 @@ export class AppTopBarComponent {
 
     get logo(): string {
         const path = 'assets/layout/images/logo-';
-        const logo =
-            this.layoutTheme === 'primaryColor'
-                ? 'light.png'
-                : this.colorScheme === 'light'
-                ? 'dark.png'
-                : 'light.png';
+        const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : this.colorScheme === 'light' ? 'dark.png' : 'light.png';
         return path + logo;
     }
 

@@ -6,30 +6,31 @@ import { MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/share
 import { cloneDeep } from 'lodash';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { Services } from 'src/app/demo/api/booking-detail';
 import { ServicesService } from 'src/app/shared/services/service.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { SessionService } from 'src/app/core';
 import { EqualsDateTime } from 'src/app/shared/validator/equal-date';
 import { BookingCreate } from '../../api/booking-create';
 import { Time, TimeActive } from 'src/app/shared/constants/active-time-spa';
+import { Service } from '../../api/service';
 
 @Component({
     selector: 'app-client-booking',
     templateUrl: './client-booking.component.html',
+    styleUrls: ['./client-booking.component.scss'],
     providers: [ToastService, MessageService],
 })
 export class ClientBookingComponent {
     submitted: boolean = false;
-    service: Services[] = [];
-    name: Services[] = [];
+    service: Service[] = [];
+    name: Service[] = [];
     form!: FormGroup;
     keyToast: string = TOAST.KEY_BC;
     minDate!: Date;
     maxDate!: Date;
     customerId = '';
     isLoading = false;
-    selectedServices!: Services[];
+    selectedServices!: Service[];
     startTime!: Time[];
     endTime!: Time[];
 
@@ -83,7 +84,7 @@ export class ClientBookingComponent {
     getAllService() {
         this._serviceService.getListServices().subscribe((res) => {
             if (res.data && res.data.length) {
-                this.service = res.data as Services[];
+                this.service = res.data as Service[];
             }
         });
     }
@@ -109,9 +110,14 @@ export class ClientBookingComponent {
             this._bookingService.addBooking(bookingClone as BookingCreate).subscribe({
                 next: (res) => {
                     this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
-                    this._router.navigate([ROUTER.MY_BOOKING]);
+                    setTimeout(() => {
+                        this._router.navigate([ROUTER.MY_BOOKING]);
+                    }, 1000);
                 },
                 error: (error) => {
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 1000);
                     if (error.error.messages && error.error.messages.length > 0) {
                         error.error.messages.forEach((item: string) => {
                             this._toastService.showError(item, this.keyToast);
@@ -119,14 +125,17 @@ export class ClientBookingComponent {
                     }
                 },
             });
-            setTimeout(() => {
-                this.isLoading = false;
-            }, 1000);
         } else {
             setTimeout(() => {
                 this.isLoading = false;
             }, 1000);
         }
+    }
+
+    handleDelete(service: Service) {
+        this.selectedServices = this.selectedServices.filter((item) => {
+            return item !== service;
+        });
     }
 
     convertDate(booking: BookingCreate) {

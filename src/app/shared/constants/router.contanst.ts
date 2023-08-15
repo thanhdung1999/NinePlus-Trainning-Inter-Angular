@@ -10,7 +10,7 @@ export enum ROUTER {
     LIST_EMPLOYEE = 'employee/list',
     EDIT_EMPLOYEE = 'employee/edit/',
     CREATE_EMPLOYEE = 'employee/create',
-    PROFILE = 'account/profile',
+    PROFILE = 'account',
     CHANGE_PASSWORD = 'account/change-password',
     FORGOT_PASSWORD = 'auth/forgot-password',
     RESET_PASSWORD = 'auth/reset-password',
@@ -24,4 +24,6 @@ export enum ROUTER {
     CLIENT_BOOKING = 'account/booking',
     MY_BOOKING = 'account/my-booking',
     EDIT_CLIENT_BOOKING = 'account/my-booking',
+    ACCOUNT = 'account',
+    DASHBOARD = 'dashboard',
 }

@@ -6,6 +6,7 @@ import { LANGUAGES, LanguageFlag, ROUTER } from 'src/app/shared';
 import { Router } from '@angular/router';
 import { TranslationService } from 'src/app/modules/i18n';
 import { ROLE } from 'src/app/shared/constants/role';
+import { menuProfile } from 'src/app/shared/constants/menu-profile';
 @Component({
     selector: 'app-topbar-profile',
     templateUrl: './topbar-profile.component.html',
@@ -13,8 +14,10 @@ import { ROLE } from 'src/app/shared/constants/role';
 })
 export class TopbarProfileComponent {
     language: LanguageFlag | undefined;
+    dropdown: MenuItem[] = [];
     langs = LANGUAGES;
-
+    isRoleEmployee = false;
+    isRoleAdmin = false;
     constructor(
         public _layoutService: LayoutService,
         private _router: Router,
@@ -25,11 +28,26 @@ export class TopbarProfileComponent {
 
     ngOnInit(): void {
         this.setLanguage(this._translationService.getSelectedLanguage());
+        this.getRole();
+        this.initDropdown();
     }
 
-    navigateProfile() {
-        if (this._sessionService.userAuthenticate.role === ROLE.CUSTOMER) {
-            this._router.navigate([ROUTER.PROFILE]);
+    initDropdown() {
+        const lang: string = this._translationService.getSelectedLanguage();
+
+        menuProfile.forEach((item) => {
+            if (item.lang === lang) {
+                this.dropdown = item.menu as MenuItem[];
+            }
+        });
+    }
+
+    getRole() {
+        const role = this._sessionService.userAuthenticate?.role ? this._sessionService.userAuthenticate.role : '';
+        if (role === ROLE.SUPERADMIN) {
+            this.isRoleAdmin = true;
+        } else if (role === ROLE.EMPLOYEE) {
+            this.isRoleEmployee = true;
         }
     }
 
@@ -58,5 +76,16 @@ export class TopbarProfileComponent {
                 language.active = false;
             }
         });
+    }
+    navigateToManage() {
+        this._router.navigate([ROUTER.DASHBOARD]);
+    }
+    navigateToLink(link: string) {
+        this._router.navigate([link]);
+    }
+    navigateToChangePassword() {
+        setTimeout(() => {
+            this._router.navigate([ROUTER.CHANGE_PASSWORD]);
+        }, 1000);
     }
 }

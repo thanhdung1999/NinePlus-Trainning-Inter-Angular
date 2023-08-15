@@ -61,35 +61,52 @@
                                 optionLabel="name"
                                 display="chip"
                                 [showClear]="true"
-                                defaultLabel="Chọn dịch vụ"
+                                defaultLabel="{{ 'CLIENT_BOOKING.SELECT_SERVICE' | translate }}"
                                 [(ngModel)]="selectedServices"
                                 [required]="true"
                                 formControlName="serviceId"
                             >
                                 <ng-template let-value pTemplate="selectedItems">
                                     <div class="flex align-items-center gap-2" *ngFor="let option of selectedServices">
-                                        <img
-                                            src="https://www.huongnghiepaau.com/wp-content/uploads/2020/08/di-spa-la-lam-gi.jpg"
-                                            [class]="'flag flag-'"
-                                            style="width: 40px"
-                                        />
-                                        <div>{{ option.name }}</div>
+                                        <img [src]="option.image" [alt]="option.name" [class]="" style="width: 40px" />
+                                        <div class="capitalize">{{ option.name }}</div>
                                     </div>
-                                    <div *ngIf="!selectedServices || selectedServices.length === 0">Select Countries</div>
+                                    <div *ngIf="!selectedServices || selectedServices.length === 0">{{ 'CLIENT_BOOKING.SELECT_SERVICE' | translate }}</div>
                                 </ng-template>
                                 <ng-template let-service pTemplate="item">
                                     <div class="flex align-items-center gap-2">
-                                        <img
-                                            src="https://www.huongnghiepaau.com/wp-content/uploads/2020/08/di-spa-la-lam-gi.jpg"
-                                            [class]="'flag flag-'"
-                                            style="width: 40px"
-                                        />
-                                        <div class="ml-2">{{ service.name }}</div>
-                                        <div class="ml-2">{{ service.time }} phút</div>
-                                        <div class="ml-2">{{ service.price }} VND</div>
+                                        <img [src]="service.image" [alt]="service.name" [class]="" style="width: 40px" />
+                                        <div class="ml-2 capitalize">{{ service.name }}</div>
                                     </div>
                                 </ng-template>
                             </p-multiSelect>
+                            <div
+                                *ngIf="selectedServices && selectedServices.length > 0"
+                                class="flex flex-wrap card w-full px-5 pb-5 pt-0 mt-5 card-service"
+                            >
+                                <div class="flex align-items-center mt-4 h-5rem content" *ngFor="let option of selectedServices">
+                                    <img [src]="option.image" alt="service" class="w-5rem h-full mr-3 flex-shrink-0 img-service border-round-lg" />
+                                    <div class="description flex flex-column justify-content-between my-auto text-center md:text-left h-full">
+                                        <span class="text-900 font-medium capitalize">{{ option.name }}</span>
+                                        <div
+                                            pRipple
+                                            tabindex="0"
+                                            class="p-2 select-none cursor-pointer w-10rem mx-auto border-round font-medium text-center border-1 border-primary text-primary transition-duration-150"
+                                        >
+                                            {{ option.price }}
+                                        </div>
+                                    </div>
+                                    <button
+                                        pButton
+                                        pRipple
+                                        icon="pi pi-trash"
+                                        tooltipPosition="top"
+                                        pTooltip="{{ 'TOOLTIP.DELETE' | translate }}"
+                                        class="p-button-rounded p-button-warning ml-auto"
+                                        (click)="handleDelete(option)"
+                                    ></button>
+                                </div>
+                            </div>
 
                             <div *ngIf="f['serviceId'].invalid && submitted && f['serviceId'].errors" class="text-red-500 mt-2 block">
                                 <div *ngIf="f['serviceId'].errors['required']">
