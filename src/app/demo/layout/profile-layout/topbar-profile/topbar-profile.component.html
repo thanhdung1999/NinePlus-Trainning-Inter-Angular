@@ -13,14 +13,54 @@
     <ul class="list-none p-3 m-0 border-round shadow-2 hidden absolute surface-overlay origin-top sm:w-12rem mt-2 right-0 top-auto list-profile">
         <li>
             <a
-                (click)="navigateProfile()"
-                routerLinkActive="router-link-active"
+                *ngIf="isRoleAdmin"
                 pRipple
                 class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                (click)="navigateToManage()"
             >
                 <i class="pi pi-user mr-3"></i>
-                <span>{{ "AUTH.PROFILE" | translate }}</span>
+                <span>{{ "TRANSLATOR.MANAGE" | translate }}</span>
             </a>
+            <a
+                *ngIf="isRoleAdmin || isRoleEmployee"
+                pRipple
+                class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                (click)="navigateToChangePassword()"
+            >
+                <i class="pi pi-user mr-3"></i>
+                <span>{{ "AUTH.CHANGE_PASSWORD" | translate }}</span>
+            </a>
+            <div
+                *ngFor="let item of dropdown"
+                class="menu-item"
+                data-kt-menu-trigger="hover"
+                data-kt-menu-placement="left-start"
+                data-kt-menu-flip="bottom"
+            >
+                <a
+                    *ngIf="!isRoleAdmin"
+                    class="menu-link cursor-pointer p-2 hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                >
+                    <i class="pi {{ item.icon }} rounded-1 mr-3"></i>
+                    <span class="position-relative">
+                        {{ item.label }}
+                    </span>
+                </a>
+
+                <div
+                    *ngIf="!isRoleAdmin && !isRoleEmployee && item.items && item.items.length > 0"
+                    class="menu-sub menu-sub-dropdown w-175px py-2 shadow-2"
+                >
+                    <div
+                        *ngFor="let menuItem of item.items"
+                        class="menu-item cursor-pointer hover:surface-hover transition-colors transition-duration-150 cursor-pointer"
+                        style="min-width: 12rem"
+                    >
+                        <a class="menu-link d-flex px-5" (click)="navigateToLink(menuItem.routerLink)"> {{ menuItem.label }}</a>
+                    </div>
+                </div>
+            </div>
+
             <a pRipple class="flex p-2 border-round align-items-center hover:surface-hover transition-colors transition-duration-150 cursor-pointer">
                 <i class="pi pi-cog mr-3"></i>
                 <span>{{ "TRANSLATOR.SETTINGS" | translate }}</span>

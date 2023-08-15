@@ -8,11 +8,22 @@ import { DefaultLayoutComponent } from './demo/layout/default-layout/default-lay
 const routes: Routes = [
     {
         path: '',
+        component: DefaultLayoutComponent,
+        children: [
+            {
+                path: 'landing',
+                loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
+            },
+            { path: '', redirectTo: 'landing', pathMatch: 'full' },
+        ],
+    },
+    {
+        path: '',
         component: AppLayoutComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                path: '',
+                path: 'dashboard',
                 loadChildren: () => import('./demo/components/dashboards/dashboards.module').then((m) => m.DashboardsModule),
             },
             {
@@ -72,16 +83,7 @@ const routes: Routes = [
             },
         ],
     },
-    {
-        path: '',
-        component: DefaultLayoutComponent,
-        children: [
-            {
-                path: 'landing',
-                loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
-            },
-        ],
-    },
+
     {
         path: 'auth',
         data: { breadcrumb: 'Auth' },
@@ -93,7 +95,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             {
-                path: 'profile',
+                path: '',
                 loadChildren: () => import('./demo/components/profile-customer/profile-customer.module').then((m) => m.ProfileCustomerModule),
             },
             {
@@ -110,6 +112,7 @@ const routes: Routes = [
         path: 'notfound',
         loadChildren: () => import('./demo/components/notfound/notfound.module').then((m) => m.NotfoundModule),
     },
+
     { path: '**', redirectTo: '/notfound' },
 ];
 

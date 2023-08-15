@@ -21,6 +21,7 @@ export const locale = {
             SETTINGS: 'Settings',
             DELETE_CONDITION: 'Delete condition',
             CONFIRM_PASSWORD: 'Are you sure you want to reset your password',
+            MANAGE: 'Manage',
         },
         BTN: {
             SAVE: 'Save',
@@ -166,6 +167,7 @@ export const locale = {
         },
         CLIENT_BOOKING: {
             TITLE: 'Booking',
+            SELECT_SERVICE: 'Select Services',
         },
     },
 };

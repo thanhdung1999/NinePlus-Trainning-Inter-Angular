@@ -1,4 +1,4 @@
-<div class="layout-menu-container">
+<div class="layout-menu-container" *ngIf="isRoleCustomer === true">
     <div class="flex flex-column justify-content-center">
         <div *ngFor="let menu of menus; let i = index" class="mb-5">
             <div class="flex align-items-center hover">
@@ -16,6 +16,16 @@
                         >
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layout-menu-container" *ngIf="isRoleCustomer === false">
+    <div class="flex flex-column justify-content-center">
+        <div class="mb-5">
+            <div class="flex align-items-center hover">
+                <i class="pi pi-wrench text-2xl cursor-pointer"></i>
+                <span class="block ml-3 font-medium text-xl cursor-pointer">{{ "AUTH.CHANGE_PASSWORD" | translate }}</span>
             </div>
         </div>
     </div>
