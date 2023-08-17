@@ -1,3 +1,7 @@
+@import "../../layout/default-layout/default-layout.component.scss";
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Birthstone&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Birthstone&family=Nanum+Gothic+Coding&display=swap");
+
 .back-to-top {
     position: fixed;
     display: none;
@@ -5,6 +9,36 @@
     bottom: 20px;
     z-index: 999;
     background-color: #4c63b6;
+}   
+
+.title {
+    position: absolute;
+    top: 40%;
+    width: 50%;
+    transform: translate(-25%, -100%);
+    left: 50%;
+    text-align: center;
+    div {
+        h1 {
+            margin: 0;
+            color: #1e3e86;
+            font-size: 3rem;
+            font-family: "STIX Two Text", serif;
+            h3 {
+                font-size: 3rem;
+                margin-bottom: 0;
+                font-family: "STIX Two Text", serif;
+            }
+        }
+        p {
+            font-family: "Birthstone", cursive;
+            font-size: 1.5rem;
+        }
+        span {
+            font-size: 1rem;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+    }
 }
 
 .btn-lg-square {
@@ -21,10 +55,8 @@
     font-weight: normal;
 }
 
-
-
 .card-header {
-    display: inline-block; 
+    display: inline-block;
     border: 0px solid #f5efef;
     padding: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); /* Thêm bóng cho viền */
@@ -456,4 +488,74 @@ ul li {
     border: 0px solid #d2d1d1ce;
     background-color: white;
     padding: 12px;
+}
+
+// mobile
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .title {
+        top: 30%;
+        div {
+            h1 {
+                font-size: 1.5rem;
+                h3 {
+                    margin-left: 0.5rem !important;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 576px) {
+    .title {
+        top: 20%;
+        .des {
+            span {
+                display: none;
+            }
+            p {
+                display: none;
+            }
+            h1 {
+                font-size: 1rem !important;
+                h3 {
+                    font-size: 1rem !important;
+                    margin-left: 0 !important;
+                }
+            }
+        }
+    }
+    .hover-zoom {
+        max-width: 25%;
+    }
+}
+
+// tablet
+@media (min-width: 768px) and (max-width: 992px) {
+    .title {
+        top: 35%;
+    }
+}
+// mobile and tablet
+@media (max-width: 992px) {
+    .title {
+        div {
+            h1 {
+                font-size: 2rem !important;
+                h3 {
+                    font-size: 2rem !important;
+                    margin-left: 1rem !important;
+                }
+            }
+            p {
+                line-height: unset;
+                margin: 0;
+                position: relative;
+                top: -0.5rem;
+            }
+        }
+    }
+}
+// pc
+@media (min-width: 992px) and (max-width: 1200px) {
 }

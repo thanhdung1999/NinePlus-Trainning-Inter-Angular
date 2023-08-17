@@ -11,25 +11,25 @@
                     <div class="container">
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav">
-                                <li class="nav-item dropdown mx-3">
+                                <li class="nav-item dropdown mx-5">
                                     <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                      Về chúng tôi
+                                        Về chúng tôi
                                     </a>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu dropdown">
                                         <li>
-                                            <a class="dropdown-item" href="#"> About Us</a>
+                                            <a class="dropdown-item" href="#">Về chúng tôi</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Vision, Mission, Core Values</a>
+                                            <a class="dropdown-item" href="#">Tầm nhìn, sứ mệnh</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#"> About the president</a>
+                                            <a class="dropdown-item" href="#">Về chủ tịch</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Team of doctors</a>
+                                            <a class="dropdown-item" href="#">Đội ngũ bác sĩ</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Achievement</a>
+                                            <a class="dropdown-item" href="#">Thành tựu</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -39,16 +39,16 @@
                                     </a>
                                     <ul class="dropdown-menu mx-5">
                                         <li>
-                                            <a class="dropdown-item" href="#"> Skin Care treatment</a>
+                                            <a class="dropdown-item" href="#">Chăm sóc điều trị da</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Body treatment</a>
+                                            <a class="dropdown-item" href="#">Chăm sóc điều trị cơ thể</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Facial treatment</a>
+                                            <a class="dropdown-item" href="#">Chăm sóc điều trị mặt</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Hair care</a>
+                                            <a class="dropdown-item" href="#">Chăm sóc tóc</a>
                                         </li>
                                         <li><a class="dropdown-item" href="#">Nail</a></li>
                                     </ul>
@@ -59,13 +59,13 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#"> Cosmetics</a>
+                                            <a class="dropdown-item" href="#"> Mỹ phẩm</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Health protection products</a>
+                                            <a class="dropdown-item" href="#">Sản phẩm bảo vệ sức khỏe</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Hair Care</a>
+                                            <a class="dropdown-item" href="#">Dược liệu tóc</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -81,10 +81,7 @@
 
         <div *ngIf="!isAuth">
             <a class="nav-link" (click)="showPopupLogin()">
-                <button class="btn btn-primary btn-md">
-                    <i class="pi pi-user-plus"></i>
-                    Đăng nhập
-                </button>
+                <button pButton pRipple label="Đăng nhập" icon="pi pi-user" class="w-auto"></button>
             </a>
         </div>
         <div *ngIf="isAuth">
