@@ -106,6 +106,14 @@ const routes: Routes = [
                 path: 'booking',
                 loadChildren: () => import('./demo/components/client-booking/client-booking.module').then((m) => m.ClientBookingModule),
             },
+            {
+                path: 'my-booking',
+                loadChildren: () => import('./demo/components/my-booking/my-booking.module').then((m) => m.MyBookingModule),
+            },
+            {
+                path: 'edit-booking',
+                loadChildren: () => import('./demo/components/edit-my-booking/edit-my-booking.module').then((m) => m.EditMyBookingModule),
+            },  
         ],
     },
     {

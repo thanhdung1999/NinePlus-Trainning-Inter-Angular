@@ -73,6 +73,11 @@ export const locale = {
             DEPARTEMENT: 'Departement',
             LOCATION: 'Location',
         },
+        STATUS: {
+            WAITING: 'Waiting',
+            INPROGRESS: 'Inprogress',
+            DONE: 'Done',
+        },
         FIELDS: {
             PHONE: 'Phone Number',
             NAME: 'Name',
@@ -104,6 +109,7 @@ export const locale = {
             PRICE: 'Price',
             DATE_TIME: 'Date Time',
             NOTE: 'Note',
+            TOTAL_AMOUNT : "Total Amount"
         },
         EMPLOYEE_FIELDS: {
             WORKSHIFT_ID: 'Workshift_ID',
@@ -168,6 +174,8 @@ export const locale = {
         CLIENT_BOOKING: {
             TITLE: 'Booking',
             SELECT_SERVICE: 'Select Services',
+            MY_BOOKING: 'My Booking',
+            ALL: 'All',
         },
     },
 };

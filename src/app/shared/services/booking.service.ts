@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { CrudBaseService } from 'src/app/core';
+import { CrudBaseService, HttpHelper } from 'src/app/core';
 import { ApiResponse } from 'src/app/core/http/api-response';
 import { Booking } from 'src/app/demo/api/booking';
 import { BookingCreate } from 'src/app/demo/api/booking-create';
 import { BookingUpdate } from 'src/app/demo/api/booking-update';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -45,6 +46,10 @@ export class BookingService extends CrudBaseService {
         return this.get(id);
     }
 
+    getListBookingWithIdCustomer(id: string): Observable<ApiResponse> {
+        return this._httpClient.get(`${this.basePath}/customer?CustomerId=${id}`);
+    }
+
     updateBooking(booking: BookingUpdate): Observable<ApiResponse> {
         return this._httpClient.put(`${this.basePath}`, booking);
     }
@@ -59,7 +64,14 @@ export class BookingService extends CrudBaseService {
         return this.updateByPut(booking);
     }
 
-    updateStatusBooking(body : any){
-        return this._httpClient.patch(`${this.basePath}/update-status`, body)
+    updateStatusBooking(body: any) {
+        return this._httpClient.patch(`${this.basePath}/update-status`, body);
+    }
+    filterMyBooking(filterParams: any, id: string): Observable<any[]> {
+        return this.httpClient
+            .get<any[]>(`${this.basePath}/customer?CustomerId=${id}`, {
+                params: HttpHelper.objectToHttpParams({ ...filterParams }),
+            })
+            .pipe(map((res: any) => res));
     }
 }
