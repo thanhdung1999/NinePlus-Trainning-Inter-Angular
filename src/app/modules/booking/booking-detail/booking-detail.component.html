@@ -17,9 +17,31 @@
                 <input id="name" type="text" [value]="bookingId" class="w-6" pInputText [disabled]="true" />
             </div>
             <div class="field mb-4 col-12 md:col-6 label-container">
-                <label for="phone-number" class="font-medium text-900 mr-3">{{ "FIELDS.BOOKING_DATE" | translate }}: </label>
+                <label for="customerName" class="font-medium text-900 mr-3">{{ "FIELDS.NAME" | translate }}: </label>
                 <input
-                    id="phone-number"
+                    id="customerName"
+                    type="text"
+                    value="{{ bookingDetail.customerName}}"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field mb-4 col-12 md:col-6 label-container">
+                <label for="phoneNumber" class="font-medium text-900 mr-3">{{ "FIELDS.PHONE" | translate }}: </label>
+                <input
+                    id="phoneNumber"
+                    type="text"
+                    value="{{ bookingDetail.phoneNumber }}"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field mb-4 col-12 md:col-6 label-container">
+                <label for="bookingDate" class="font-medium text-900 mr-3">{{ "FIELDS.BOOKING_DATE" | translate }}: </label>
+                <input
+                    id="bookingDate"
                     type="text"
                     value="{{ bookingDetail.bookingDate | date : 'dd/MM/yyyy' }}"
                     class="w-6"
