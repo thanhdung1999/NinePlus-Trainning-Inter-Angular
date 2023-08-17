@@ -1,3 +1,23 @@
-.btn-scroll-top {
-    background: var(--primary-color) !important;
+$header-height: 6rem;
+$backgroud-header: #eff3f8;
+$green-color: #76c044;
+$bg-body: #f5f5f5;
+$white-color: #fff;
+.layout-container {
+    background-color: $bg-body;
+}
+@media (max-width: 992px) {
+    .hidden-mobile-tablet {
+        display: none !important;
+    }
+}
+@media (max-width: 768px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+}
+@media (min-width: 992px) and (max-width: 1200px) {
 }

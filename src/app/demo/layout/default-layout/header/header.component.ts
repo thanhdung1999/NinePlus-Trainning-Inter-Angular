@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { isEmpty, isNil } from 'lodash';
 import { AuthenticateService, SessionService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { ROUTER } from 'src/app/shared';
+import { listNavbar } from 'src/app/shared/constants/list-navbar';
+import { ROLE } from 'src/app/shared/constants/role';
 
 @Component({
     selector: 'app-header',
@@ -13,7 +17,18 @@ export class HeaderComponent {
 
     isAuth = false;
 
-    constructor(private _layoutService: LayoutService, private _sessionService: SessionService, private _authenticateService: AuthenticateService) {}
+    isShowListCategoryMobiletTablet = false;
+
+    listNavbarHeader = listNavbar;
+
+    role = '';
+
+    constructor(
+        private _layoutService: LayoutService,
+        private _sessionService: SessionService,
+        private _authenticateService: AuthenticateService,
+        private _router: Router
+    ) {}
 
     ngOnInit(): void {
         this.getRole();
@@ -22,6 +37,7 @@ export class HeaderComponent {
     getRole() {
         if (!isNil(this._sessionService.userInformation) && !isEmpty(this._sessionService.userInformation)) {
             this.isAuth = true;
+            this.role = this._sessionService.userAuthenticate.role;
         }
     }
 
@@ -43,8 +59,27 @@ export class HeaderComponent {
         this.isPopupLogin = false;
         document.body.style['overflow'] = 'unset';
     }
+
     showPopupLogin() {
         this.isPopupLogin = true;
         document.body.style['overflow'] = 'hidden';
+    }
+
+    showListCategory() {
+        this.isShowListCategoryMobiletTablet = true;
+    }
+    hiddenListCategory() {
+        this.isShowListCategoryMobiletTablet = false;
+    }
+
+    navigateToRegister() {
+        this._router.navigate([ROUTER.SIGNUP]);
+    }
+    navigateToBooking() {
+        if (this.isAuth === false) {
+            this.showPopupLogin();
+        } else if (this.isAuth && this.role === ROLE.CUSTOMER) {
+            this._router.navigate([ROUTER.CLIENT_BOOKING]);
+        }
     }
 }

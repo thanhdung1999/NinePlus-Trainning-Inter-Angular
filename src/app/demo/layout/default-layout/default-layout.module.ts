@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TopbarProfileModule } from '../profile-layout/topbar-profile/topbar-profile.module';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     declarations: [DefaultLayoutComponent, HeaderComponent, FooterComponent, LoginComponent],
@@ -25,6 +26,7 @@ import { TopbarProfileModule } from '../profile-layout/topbar-profile/topbar-pro
         TranslateModule,
         ScrollTopModule,
         TopbarProfileModule,
+        TooltipModule,
     ],
     exports: [DefaultLayoutComponent],
 })

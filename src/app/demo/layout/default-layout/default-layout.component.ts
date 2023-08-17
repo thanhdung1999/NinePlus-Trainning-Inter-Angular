@@ -37,4 +37,18 @@ export class DefaultLayoutComponent {
         const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : this.colorScheme === 'light' ? 'dark.png' : 'light.png';
         return path + logo;
     }
+
+    get containerClass() {
+        return {
+            'layout-slim': this.layoutService.config.menuMode === 'slim',
+            'layout-static': this.layoutService.config.menuMode === 'static',
+            'layout-mobile-active': this.layoutService.state.staticMenuMobileActive,
+            'layout-static-inactive': this.layoutService.state.staticMenuDesktopInactive && this.layoutService.config.menuMode === 'static',
+            'p-input-filled': this.layoutService.config.inputStyle === 'filled',
+            'p-ripple-disabled': !this.layoutService.config.ripple,
+            'layout-light': this.layoutService.config.layoutTheme === 'colorScheme' && this.layoutService.config.colorScheme === 'light',
+            'layout-dark': this.layoutService.config.layoutTheme === 'colorScheme' && this.layoutService.config.colorScheme === 'dark',
+            'layout-primary': this.layoutService.config.colorScheme !== 'dark' && this.layoutService.config.layoutTheme === 'primaryColor',
+        };
+    }
 }

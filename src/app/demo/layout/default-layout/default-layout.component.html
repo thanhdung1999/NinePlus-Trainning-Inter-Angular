@@ -1,5 +1,9 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<div class="layout-container" [ngClass]="containerClass">
+    <app-header></app-header>
+    <div class="wrapper">
+        <router-outlet></router-outlet>
+        <app-footer></app-footer>
+    </div>
+</div>
 <p-scrollTop icon="pi pi-arrow-up" [style]="{ background: 'var(--primary-color) !important' }"></p-scrollTop>
 <app-config [minimal]="true"></app-config>
