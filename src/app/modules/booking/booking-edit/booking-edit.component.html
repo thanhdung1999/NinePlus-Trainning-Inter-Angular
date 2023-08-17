@@ -18,7 +18,7 @@
                             <label for="bookingDate" class="font-medium text-900"
                                 >{{ "FIELDS.BOOKING_DATE" | translate }}:<span style="color: red"> *</span></label
                             >
-                            <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" formControlName="bookingDate" [readonlyInput]="true"></p-calendar>
+                            <p-calendar [showIcon]="true" formControlName="bookingDate" [readonlyInput]="true"></p-calendar>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
                             <label for="fromTime" class="font-medium text-900"
@@ -41,12 +41,13 @@
                             <p-multiSelect
                                 id="serviceId"
                                 [options]="service"
-                                [(ngModel)]="name"
                                 optionLabel="name"
                                 optionValue="id"
                                 display="chip"
                                 formControlName="serviceId"
+                                [showClear]="true"
                             ></p-multiSelect>
+                           
                             <p style="color: red" *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
                                 * Không được để trống
                             </p>

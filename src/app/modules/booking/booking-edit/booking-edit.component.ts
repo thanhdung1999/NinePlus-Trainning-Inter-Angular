@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 import * as _ from 'lodash';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MessageService } from 'primeng/api';
 import { BookingService } from 'src/app/shared/services/booking.service';
@@ -32,7 +32,7 @@ export class BookingEditComponent implements OnInit {
     service: Services[] = [];
     name: Services[] = [];
     bookingUpdate: BookingUpdate[] = [];
-    hourFormat: string = '12';
+    hourFormat: string = '24';
 
     constructor(
         private _activatedRoute: ActivatedRoute,
@@ -47,7 +47,6 @@ export class BookingEditComponent implements OnInit {
         this.getAllService();
         this.getIdParamRequest();
         this.initFormUpdateBooking();
-        console.log();
     }
 
     getIdParamRequest() {
@@ -57,11 +56,9 @@ export class BookingEditComponent implements OnInit {
     }
 
     initFormUpdateBooking() {
-
         this._bookingService.getBookingById(this.bookingId).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
-                    console.log(data);
                     const booking = data as Booking;
                     this.form = this._fb.group({
                         id: [this.bookingId],
@@ -69,12 +66,12 @@ export class BookingEditComponent implements OnInit {
                         fromTime: [new Date(booking?.fromTime + ''), [Validators.required]],
                         toTime: [new Date(booking?.toTime + ''), [Validators.required]],
                         note: [booking?.note],
-                        serviceId: [booking.services, Validators.required],
+                        serviceId: [[], Validators.compose([Validators.required])],
                     });
                 }
+
             },
             error: (err) => {
-                console.log(err);
             },
         });
     }
@@ -90,7 +87,6 @@ export class BookingEditComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    console.log(err);
                     this._toastService.showError(MESSAGE_ERROR.CHECK_ID_BOOKING, this.keyToast);
                 },
             });
@@ -106,7 +102,11 @@ export class BookingEditComponent implements OnInit {
                 for (let i = 0; i < this.form.value.serviceId.length; i++) {
                     bookingClone.serviceId[i] = this.form.value.serviceId[i].id;
                 }
+            }  if (this.form.get('bookingDate')?.value) {
+                this.convertBookingDate();
             }
+
+          
             this._bookingService.updateBooking(booking).subscribe({
                 next: (res) => {
                     if (res.succeeded && res.data) {
@@ -117,17 +117,24 @@ export class BookingEditComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    console.log(err);
                     this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
                 },
             });
         }
     }
     getAllService() {
-        this._serviceService.getListServices().subscribe((res) => {
-            if (res.data && res.data.length) {
+        this._serviceService.getListServices().subscribe({
+            next: (res) => {
                 this.service = res.data as Services[];
-            }
+                if (this.service.length === 0) {
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                }
+            },
+            error: (error) => {
+                error.error.messages.forEach((item: string) => {
+                    this._toastService.showErrorNoKey(item);
+                });
+            },
         });
     }
     loadingSubmit() {
@@ -139,5 +146,23 @@ export class BookingEditComponent implements OnInit {
     }
     get f() {
         return this.form.controls;
+    }
+
+    convertBookingDate() {
+        const bookingPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+        if (!bookingPattern.test(this.form.get('bookingDate')?.value)) this.convertBookingDateFormat();
+    }
+
+    convertBookingDateFormat() {
+        const originalDate = new Date(this.form.get('bookingDate')?.value);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        this.form.patchValue({
+            bookingDate: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
+        });
     }
 }
