@@ -1,22 +1,69 @@
+<p-toast></p-toast>
+<div class="card">
+    <form [formGroup]="formFilter">
+        <div class="row grid p-fluid">
+            <div class="col-12 sm:col-4">
+                <p >{{ 'FIELDS.BOOKING_DATE' | translate }}</p>
+                <input pInputText type="date" formControlName="bookingDate" date="dd/MM/yyyy">
+            </div>
+
+            <div class="col-12 sm:col-4">
+                <p>{{ 'FIELDS.FROM_TO' | translate }}</p>
+                <input pInputText type="date"  formControlName="fromToTime" date="dd/MM/yyyy hh:mm" />
+            </div>
+            <div class="col-12 sm:col-4">
+               <p>Tình trạng</p>
+                <p-dropdown
+                placeholder="Nhấn để chọn"
+                    formControlName="status"
+                    optionLabel="name"
+                    optionValue="id"
+                    [options]="status"
+                    [showClear]="true"
+                >
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 group-button-filter">
+                <button
+                    pButton
+                    pRipple
+                    label="{{ 'TRANSLATOR.SEARCH' | translate }}"
+                    class="w-auto mr-2 mb-2"
+                    icon="pi pi-search"
+                    (click)="filterBooking()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="{{ 'BTN.REMOVE_CONDITION' | translate }}"
+                    class="w-auto mr-2 mb-2"
+                    (click)="clearFilter()"
+                    icon="pi pi-exclamation-triangle"
+                ></button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="card">
     <p-table
         #dt
         [value]="bookings"
         [paginator]="true"
         [rows]="5"
+        [lazy]="true"
+        (onLazyLoad)="filter($event)"
+        [totalRecords]="totalRecords"
+        [first]="firstPaging"
         [showCurrentPageReport]="true"
         responsiveLayout="scroll"
-        currentPageReportTemplate= "{{'TRANSLATOR.CURRENTPAGE' | translate}}"
+        currentPageReportTemplate="{{ 'TRANSLATOR.CURRENTPAGE' | translate }}"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['id', 'customerName', 'bookingDate', 'status']"
-        [resetPageOnSort]="resetPageOnSort"
+        [globalFilterFields]="['status', 'fromToTime', 'status']"
     >
         <ng-template pTemplate="caption">
-            <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" class="w-full" />
-                </span>
+            <div class="flex flex-wrap gap-2 align-items-end justify-content-end">
                 <button pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-calendar" label="Lịch"></button>
                 <button
                     (click)="navigateToCreateBooking()"
@@ -30,7 +77,9 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" class="white-space-nowrap" style="width: 15%"> {{ "MANAGE_BRANCH.CODE" | translate }}<p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="id" style="width: 10%">
+                    {{ "MANAGE_BRANCH.CODE" | translate }}<p-sortIcon field="id"></p-sortIcon>
+                </th>
                 <th pSortableColumn="customerName" class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.NAME" | translate }}<p-sortIcon field="customerName"></p-sortIcon>
                 </th>
@@ -40,10 +89,10 @@
                 <th pSortableColumn="bookingDate" class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.BOOKING_DATE" | translate }}<p-sortIcon field="bookingDate"></p-sortIcon>
                 </th>
-                <th pSortableColumn="date_of_birth" class="white-space-nowrap" style="width: 25%">
+                <th pSortableColumn="date_of_birth" class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.FROM_TO" | translate }}<p-sortIcon></p-sortIcon>
                 </th>
-                <th pSortableColumn="status" class="white-space-nowrap" style="width: 25%"></th>
+                <th pSortableColumn="status" class="white-space-nowrap" style="width: 15%"></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -68,22 +117,21 @@
                     <td>{{ booking.phoneNumber }}</td>
                     <td>{{ booking.bookingDate | date : "dd/MM/yyyy" }}</td>
                     <td>
-                        {{ booking.fromTime | date : "hh:mm" }} -
-                        {{ booking.toTime | date : "hh:mm" }}
+                        {{ booking.fromTime | date : "hh:mm aa" }} -
+                        {{ booking.toTime | date : "hh:mm aa" }}
                         {{ booking.fromTime | date : "dd/MM/yyyy" }}
                     </td>
-                    <td>{{ booking.status === 1 ? "Waiting" : booking.status === 2 ? "Inprogress" : "Done" }}</td>
+                    <td >
+                        <p-dropdown
+                            [(ngModel)]="booking.status"
+                            (onChange)="onSelectionChange($event, booking.id)"
+                            optionLabel="name"
+                            optionValue="id"
+                            [options]="status">
+                        </p-dropdown>
+                    </td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
-                            <p-confirmDialog
-                                header="Xác nhận lại"
-                                key="confirm"
-                                icon="pi pi-exclamation-triangle"
-                                message="Bạn có muốn xóa đặt lịch của khách hàng {{booking.customerName}}?"
-                                [style]="{ width: '350px' }"
-                                acceptButtonStyleClass="p-button-text"
-                                rejectButtonStyleClass="p-button-text"
-                            ></p-confirmDialog>
                             <button
                                 pButton
                                 pRipple
@@ -100,7 +148,7 @@
                                 tooltipPosition="top"
                                 pTooltip="Delete"
                                 class="p-button-rounded p-button-warning"
-                                (click)="showConfirmDelete(booking)"
+                                (click)="confirmDelete(booking)"
                             ></button>
                         </div>
                     </td>
@@ -108,4 +156,31 @@
             </ng-template>
         </ng-template>
     </p-table>
+    <p-dialog [(visible)]="deleteProductsDialog" header="{{ 'MANAGE_BRANCH.CONFIRM' | translate }}" [modal]="true" [style]="{ width: '450px' }">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span *ngIf="booking">
+                {{ "TRANSLATOR.CONFIRM_DELETE_BOOKING" | translate }} <b>{{ booking.customerName }}</b
+                >?</span
+            >
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="{{ 'BTN.CANCEL' | translate }}"
+                (click)="deleteProductsDialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="deleteConfirmed()"
+                label="{{ 'BTN.DELETE' | translate }}"
+            ></button>
+        </ng-template>
+    </p-dialog>
 </div>

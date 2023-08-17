@@ -7,12 +7,24 @@
                 <div class="col-12 lg:col-10">
                     <div class="grid formgrid p-fluid">
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="name" class="font-medium text-900">
+                            <label for="customerId" class="font-medium text-900">
                                 {{ "FIELDS.NAME" | translate }}: <span style="color: red"> *</span></label
                             >
-                            <input id="customerId" type="text" pInputText formControlName="customerId" />
+                            <p-dropdown
+                            placeholder="{{ 'MANAGE_BOOKING.NAME' | translate }}"
+                            formControlName="customerId"
+                            optionValue="id"
+                            optionLabel="customerName"
+                            emptyFilterMessage="Không tìm thấy dữ liệu"
+                            emptyMessage="Không tìm thấy dữ liệu"
+                            [options]="customer"
+                            [filter]="true"
+                            filterBy="name"
+                            [showClear]="true">
+                        </p-dropdown>
                             <p style="color: red" *ngIf="form.get('customerId')?.errors?.['required'] && form.get('customerId')?.touched">
-                                * Không được để trống.
+                                * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                            }}
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
@@ -36,6 +48,9 @@
                         <div class="field mb-4 col-12 md:col-6">
                             <label for="totime" class="font-medium text-900">{{ "FIELDS.TO" | translate }}<span style="color: red"> *</span></label>
                             <p-calendar [showTime]="true" [showIcon]="true" formControlName="totime" [readonlyInput]="true"></p-calendar>
+                            <p style="color: red" *ngIf="form.get('toTime')?.errors?.['required'] && form.get('toTime')?.touched">
+                                * Không được để trống
+                            </p>
                         </div>
                         <div class="field mb-4 col-12">
                             <label for="serviceId" class="font-medium text-900"
@@ -48,7 +63,7 @@
                                 display="chip"
                                 formControlName="serviceId"
                             ></p-multiSelect>
-                            <p style="color: red" *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
+                            <p style="color: red" *ngIf="form.get('serviceId')?.errors?.['required'] && form.get('serviceId')?.touched">
                                 * Không được để trống
                             </p>
                         </div>

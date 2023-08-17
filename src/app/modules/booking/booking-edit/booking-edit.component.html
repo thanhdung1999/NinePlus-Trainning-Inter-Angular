@@ -41,12 +41,13 @@
                             <p-multiSelect
                                 id="serviceId"
                                 [options]="service"
-                                [(ngModel)]="name"
                                 optionLabel="name"
                                 optionValue="id"
                                 display="chip"
                                 formControlName="serviceId"
+                                [showClear]="true"
                             ></p-multiSelect>
+                           
                             <p style="color: red" *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
                                 * Không được để trống
                             </p>

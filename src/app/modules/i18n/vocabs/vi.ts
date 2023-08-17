@@ -22,7 +22,8 @@ export const locale = {
             SETTINGS: 'Cài đặt',
             DELETE_CONDITION: 'Xoá điều kiện',
             CONFIRM_PASSWORD: 'Bạn có chắc muốn đặt lại mật khẩu',
-            MANAGE : "Quản lý"
+            MANAGE : "Quản lý",
+            CONFIRM_DELETE_BOOKING: 'Bạn có chắc muốn xóa đặt lịch của khách hàng ',
         },
         BTN: {
             SAVE: 'Lưu',
@@ -97,7 +98,7 @@ export const locale = {
             TIME: 'Thời gian',
             CALENDER: 'Lịch',
             BOOKING_DATE: 'Ngày đặt lịch',
-            FROM_TO: 'Thời gian từ - Đến',
+            FROM_TO: 'Thời gian sử dụng',
             FROM: 'Thời gian bắt đầu',
             TO: 'Thời gian kết thúc',
             SERVICE: 'Dịch vụ',
@@ -171,7 +172,9 @@ export const locale = {
         },
         CLIENT_BOOKING : {
             TITLE : 'Đặt Lịch',
-            SELECT_SERVICE: "Chọn dịch vụ"
+            SELECT_SERVICE: "Chọn dịch vụ"},
+        MANAGE_BOOKING:{
+            NAME: 'Chọn khách hàng'
         }
     },
 };

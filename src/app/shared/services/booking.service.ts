@@ -52,4 +52,14 @@ export class BookingService extends CrudBaseService {
     deleteBooking(id: string): Observable<ApiResponse> {
         return this.delete(id, 'id');
     }
+    filterBooking(body: any): Observable<any[]> {
+        return this.filter(body);
+    }
+    updateBookingById(booking: BookingUpdate): Observable<BookingUpdate> {
+        return this.updateByPut(booking);
+    }
+
+    updateStatusBooking(body : any){
+        return this._httpClient.patch(`${this.basePath}/update-status`, body)
+    }
 }
