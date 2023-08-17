@@ -50,7 +50,6 @@ export class CustomerListComponent implements OnInit {
     initForm(): void {
         this.formFilter = this._fb.group({
             keyword: [''],
-
             pageNumber: [1],
             pageSize: [5],
             isExport: false,
@@ -118,7 +117,12 @@ export class CustomerListComponent implements OnInit {
                     });
                 }
             },
-            error: (err) => {},
+            error: (error) => {
+                error.error.messages.length > 0 &&
+                    error.error.messages?.forEach((messsage: string) => {
+                        this._toastService.showError(messsage, this.keyToast);
+                    });
+            },
         });
     }
 

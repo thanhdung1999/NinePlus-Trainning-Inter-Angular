@@ -22,7 +22,7 @@ export const locale = {
             SETTINGS: 'Cài đặt',
             DELETE_CONDITION: 'Xoá điều kiện',
             CONFIRM_PASSWORD: 'Bạn có chắc muốn đặt lại mật khẩu',
-            MANAGE : "Quản lý",
+            MANAGE: 'Quản lý',
             CONFIRM_DELETE_BOOKING: 'Bạn có chắc muốn xóa đặt lịch của khách hàng ',
         },
         BTN: {
@@ -36,7 +36,7 @@ export const locale = {
             BACK: 'Trở lại',
             MOVE: 'Chuyển',
             REMOVE_CONDITION: 'Xoá điều kiện',
-            BOOKING : "Đặt lịch"
+            BOOKING: 'Đặt lịch',
         },
         TOOLTIP: {
             DETAIL: 'Chi tiết',
@@ -74,6 +74,11 @@ export const locale = {
             DEPARTEMENT: 'Bộ phận',
             LOCATION: 'Địa điểm',
         },
+        STATUS: {
+            WAITING: 'Chờ',
+            INPROGRESS: 'Đang tiến trình',
+            DONE: 'Hoàn thành',
+        },
         FIELDS: {
             PHONE: 'Số điện thoại',
             NAME: 'Tên',
@@ -106,6 +111,7 @@ export const locale = {
             STATUS: 'Tình trạng',
             DATE_TIME: 'Ngày giờ',
             PRICE: 'Giá',
+            TOTAL_AMOUNT: 'Tổng cộng',
         },
         EMPLOYEE_FIELDS: {
             WORKSHIFT_ID: 'Mã ca',
@@ -140,10 +146,10 @@ export const locale = {
             MIN_LENGTH_USERNAME: 'Tên tài khoản ít nhất 8 ký tự',
             MIN_LENGTH_PHONE: 'Số điện thoại ít nhất 10 ký tự',
             NOT_MATCH_PASSWORD: 'Mật khẩu nhập lại không trùng khớp',
-            DATE : "Vui lòng chọn ngày",
-            TIME : "Vui lòng chọn giờ",
-            EQUAL_TIME : "Vui lòng kiểm tra lại thời gian đặt lịch",
-            SERVICE : "Vui lòng chọn dịch vụ"
+            DATE: 'Vui lòng chọn ngày',
+            TIME: 'Vui lòng chọn giờ',
+            EQUAL_TIME: 'Vui lòng kiểm tra lại thời gian đặt lịch',
+            SERVICE: 'Vui lòng chọn dịch vụ',
         },
         AUTH: {
             PROFILE: 'Hồ sơ',
@@ -170,11 +176,14 @@ export const locale = {
             TITLE_EDIT: 'Chỉnh sửa hồ sơ khách hàng',
             BOOKING_HISTORY: 'Lịch sử đặt lịch',
         },
-        CLIENT_BOOKING : {
-            TITLE : 'Đặt Lịch',
-            SELECT_SERVICE: "Chọn dịch vụ"},
-        MANAGE_BOOKING:{
-            NAME: 'Chọn khách hàng'
-        }
+        CLIENT_BOOKING: {
+            TITLE: 'Đặt Lịch',
+            SELECT_SERVICE: 'Chọn dịch vụ',
+            MY_BOOKING: 'Lịch Đặt Của Tôi',
+            ALL: 'Tất cả',
+        },
+        MANAGE_BOOKING: {
+            NAME: 'Chọn khách hàng',
+        },
     },
 };

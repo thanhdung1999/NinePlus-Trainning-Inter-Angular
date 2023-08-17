@@ -23,7 +23,7 @@ export enum ROUTER {
     UPDATE_WORKSHIFT = 'work-shift/edit/',
     CLIENT_BOOKING = 'account/booking',
     MY_BOOKING = 'account/my-booking',
-    EDIT_CLIENT_BOOKING = 'account/my-booking',
+    EDIT_CLIENT_BOOKING = 'account/edit-booking',
     ACCOUNT = 'account',
     DASHBOARD = 'dashboard',
 }
