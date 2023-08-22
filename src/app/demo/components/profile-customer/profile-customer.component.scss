@@ -24,6 +24,9 @@
     }
 }
 @media (max-width: 576px) {
+    .card-form {
+        padding: 1.5rem !important;
+    }
     .phone-number,
     .birth-day {
         width: 100%;

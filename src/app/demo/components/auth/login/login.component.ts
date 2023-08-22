@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { AuthenticateService, SessionService } from 'src/app/core';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ROLE } from 'src/app/shared/constants/role';
@@ -20,7 +20,7 @@ export class LoginComponent {
     formLogin!: FormGroup;
     isLoadingSubmit = false;
     keyToast = TOAST.KEY_BC;
-    submitted = false;
+    rgPassword : RegExp = REGIX.password
     constructor(
         private _authenticateService: AuthenticateService,
         private _toastService: ToastService,
@@ -31,18 +31,24 @@ export class LoginComponent {
         this.initFormLogIn();
     }
 
-    async submit() {
+    submit() {
         this.isLoadingSubmit = true;
-        this.submitted = true;
         if (this.formLogin.valid) {
-            await this._authenticateService.login(this.valueForm.employeeNo, this.valueForm.password).subscribe({
+            this._authenticateService.login(this.valueForm.employeeNo, this.valueForm.password).subscribe({
                 next: (res) => {
                     const role = res.data.role;
                     this._toastService.showSuccess(MESSAGE_TITLE.LOGIN_SUCC, this.keyToast);
                     if (role === ROLE.CUSTOMER || role === ROLE.EMPLOYEE) {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);
+                        this.isLoadingSubmit = false;
+                        if (window.location.pathname.endsWith('landing')) {
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            setTimeout(() => {
+                                this._router.navigate([ROUTER.LANDING]);
+                            }, 1000);
+                        }
                     } else if (role === ROLE.SUPERADMIN) {
                         setTimeout(() => {
                             this._router.navigate([ROUTER.DASHBOARD]);
@@ -57,14 +63,14 @@ export class LoginComponent {
                 },
             });
         } else {
-            if (this.valueForm.password.length <= 8) {
-                this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD, this.keyToast);
-            } else {
-                this._toastService.showError(MESSAGE_ERROR_INPUT.INCORRECT_ACCOUNT, this.keyToast);
-            }
             setTimeout(() => {
                 this.isLoadingSubmit = false;
             }, 1000);
+            if (!this.valueForm.employeeNo) {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.USERNAME_REQUIRED, this.keyToast);
+            } else if (this.valueForm.password.length <= 8) {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD, this.keyToast);
+            }
         }
     }
 

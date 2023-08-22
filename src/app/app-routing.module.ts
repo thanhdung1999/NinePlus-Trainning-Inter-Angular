@@ -7,16 +7,16 @@ import { DefaultLayoutComponent } from './demo/layout/default-layout/default-lay
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'spa',
         component: DefaultLayoutComponent,
         children: [
             {
                 path: 'landing',
                 loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
             },
-            { path: '', redirectTo: 'landing', pathMatch: 'full' },
         ],
     },
+    { path: '', redirectTo: 'spa/landing', pathMatch: 'full' },
     {
         path: '',
         component: AppLayoutComponent,
@@ -88,7 +88,6 @@ const routes: Routes = [
             },
         ],
     },
-
     {
         path: 'auth',
         data: { breadcrumb: 'Auth' },
@@ -118,7 +117,7 @@ const routes: Routes = [
             {
                 path: 'edit-booking',
                 loadChildren: () => import('./demo/components/edit-my-booking/edit-my-booking.module').then((m) => m.EditMyBookingModule),
-            },  
+            },
         ],
     },
     {

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -25,9 +25,15 @@ export class CustomerEditComponent implements OnInit {
 
     isLoadingSubmit: boolean = false;
 
+    minDate!: Date;
+
+    maxDate!: Date;
+
     keyToast = TOAST.KEY_BC;
 
-    patternPhoneNumber = '[0-9]{10,11}';
+    rgName: RegExp = REGIX.name;
+
+    rgAddress: RegExp = REGIX.address;
 
     formUpdateCustomer!: FormGroup;
 
@@ -42,6 +48,7 @@ export class CustomerEditComponent implements OnInit {
     ngOnInit(): void {
         this.getIdParamRequest();
         this.initFormUpdateCustomer();
+        this.initMinAndMaxDateOfBirth();
     }
 
     getIdParamRequest() {
@@ -49,26 +56,39 @@ export class CustomerEditComponent implements OnInit {
             this.customerId = params.get('id') + '';
         });
     }
-
     initFormUpdateCustomer() {
+        this.formUpdateCustomer = this._fb.group({
+            id: [''],
+            customerName: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+            address: [''],
+            dateOfBirth: [''],
+            totalMoney: [0],
+        });
         this._customerService.getCustomerById(this.customerId).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
                     const customer = data as Customer;
-                    this.formUpdateCustomer = this._fb.group({
-                        id: [this.customerId],
-                        customerName: [customer?.customerName, [Validators.required, Validators.minLength(4)]],
-                        phoneNumber: [customer?.phoneNumber, [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
-                        address: [customer?.address],
-                        dateOfBirth: [customer?.dateOfBirth ? new Date(customer.dateOfBirth) : ''],
-                        totalMoney: [customer?.totalMoney],
-                    });
+                    customer.id = Number(this.customerId);
+                    this.formUpdateCustomer.patchValue(customer);
+                    if (customer.dateOfBirth) {
+                        this.formUpdateCustomer.patchValue({
+                            dateOfBirth: new Date(customer.dateOfBirth),
+                        });
+                    }
                 }
             },
             error: (err) => {
                 this._router.navigate([ROUTER.LIST_CUSTOMER]);
             },
         });
+    }
+
+    initMinAndMaxDateOfBirth() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
+        this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
     }
 
     trimValueCustomer(customer: Customer): Customer {

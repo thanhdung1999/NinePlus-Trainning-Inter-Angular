@@ -8,7 +8,8 @@ import { CustomerEditRoutingModule } from './customer-edit-routing.module';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputMaskModule } from 'primeng/inputmask';
-
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { PasswordModule } from 'primeng/password';
 @NgModule({
     declarations: [CustomerEditComponent],
     imports: [
@@ -20,6 +21,8 @@ import { InputMaskModule } from 'primeng/inputmask';
         InputNumberModule,
         InputMaskModule,
         TranslateModule,
+        KeyFilterModule,
+        PasswordModule,
     ],
 })
 export class CustomerEditModule {}

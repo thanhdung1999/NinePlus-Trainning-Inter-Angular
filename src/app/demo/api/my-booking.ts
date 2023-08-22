@@ -3,6 +3,8 @@ export interface MyBooking {
     bookingDate?: string;
     bookingStatus?: number;
     totalMoney?: number;
+    fromTime?: string;
+    toTime?: string;
     lastModifiedOn?: string;
     bookingDetailResponses: BookingDetailResponses[];
 }

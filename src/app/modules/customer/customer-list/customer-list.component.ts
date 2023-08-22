@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Customer } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/shared/services/customer.service';
-import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { isEmpty } from 'lodash';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -32,6 +32,8 @@ export class CustomerListComponent implements OnInit {
 
     firstPaging = 0;
 
+    rgSearch: RegExp = REGIX.search;
+
     constructor(
         private _router: Router,
         private _confirmationService: ConfirmationService,
@@ -53,24 +55,31 @@ export class CustomerListComponent implements OnInit {
             pageNumber: [1],
             pageSize: [5],
             isExport: false,
+            orderBy: [null],
         });
     }
 
     filter(event: any): void {
+
         if (event && event.first) {
             this.firstPaging = event.first;
         }
-        event.sortField && FilterHelper.sortOrderByNoneMulti(this.formFilter, event.sortField, event.sortOrder);
         event.rows && FilterHelper.setPagingSize(this.formFilter, event.rows);
         (event.first || event.first === 0) &&
             event.rows &&
             FilterHelper.setPageNumber(this.formFilter, FilterHelper.getPageNumber(event.first, event.rows));
+        event.sortField && FilterHelper.sortOrderByNoneMulti(this.formFilter, event.sortField, event.sortOrder);
         this.filterCustomer();
     }
 
-    filterCustomer() {
+    filterCustomerNoOrderBy() {
         this.isSkeleton = true;
         let param = FilterHelper.removeNullValue(this.formFilter.value);
+        if (param.orderBy) {
+            delete param['orderBy'];
+            this.resetPageOnSort = true;
+        }
+        this.firstPaging = 0;
         this._customerService.filterCustomer(param).subscribe({
             next: (res: any) => {
                 this.customers = res.data as Customer[];
@@ -82,10 +91,37 @@ export class CustomerListComponent implements OnInit {
                 this._detect.detectChanges();
             },
             error: (error) => {
-                error.error.messages.forEach((item: string) => {
-                    this._toastService.showError(item, this.keyToast);
-                    this.isSkeleton = false;
-                });
+                if (error.error.messages && error.error.messages.length > 0) {
+                    error.error.messages.forEach((item: string) => {
+                        this._toastService.showError(item, this.keyToast);
+                        this.isSkeleton = false;
+                    });
+                }
+            },
+        });
+    }
+
+    filterCustomer() {
+        this.isSkeleton = true;
+        let param = FilterHelper.removeNullValue(this.formFilter.value);
+        this.firstPaging = 0;
+        this._customerService.filterCustomer(param).subscribe({
+            next: (res: any) => {
+                this.customers = res.data as Customer[];
+                this.totalRecords = res.totalCount as number;
+                if (this.customers.length === 0) {
+                    this._toastService.showWarning(MESSAGE_TITLE.LIST_EMPTY, this.keyToast);
+                }
+                this.showSkeleton();
+                this._detect.detectChanges();
+            },
+            error: (error) => {
+                if (error.error.messages && error.error.messages.length > 0) {
+                    error.error.messages.forEach((item: string) => {
+                        this._toastService.showError(item, this.keyToast);
+                        this.isSkeleton = false;
+                    });
+                }
             },
         });
     }
@@ -107,19 +143,28 @@ export class CustomerListComponent implements OnInit {
         this._customerService.getCustomerById(id).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
-                    this._customerService.deleteCustomer(id).subscribe((res) => {
-                        this.resetPageOnSort = true;
-                        if (!isEmpty(res.messages)) {
-                            res.messages?.forEach((string: string) => {
-                                this._toastService.showSuccess(string, this.keyToast);
-                            });
-                        }
+                    this._customerService.deleteCustomer(id).subscribe({
+                        next: (res) => {
+                            this.resetPageOnSort = true;
+                            if (!isEmpty(res.messages)) {
+                                res.messages?.forEach((string: string) => {
+                                    this._toastService.showSuccess(string, this.keyToast);
+                                });
+                                this.filterCustomer();
+                            }
+                        },
+                        error: (error) => {
+                            error.error.messages.length > 0 &&
+                                error.error.messages.forEach((messsage: string) => {
+                                    this._toastService.showError(messsage, this.keyToast);
+                                });
+                        },
                     });
                 }
             },
             error: (error) => {
                 error.error.messages.length > 0 &&
-                    error.error.messages?.forEach((messsage: string) => {
+                    error.error.messages.forEach((messsage: string) => {
                         this._toastService.showError(messsage, this.keyToast);
                     });
             },

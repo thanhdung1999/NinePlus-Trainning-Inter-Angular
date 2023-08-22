@@ -6,16 +6,16 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { DefaultLayoutComponent } from './default-layout.component';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
-import { LoginComponent } from '../../components/auth/login/login.component';
 import { SharedModule } from 'src/app/shared';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TopbarProfileModule } from '../profile-layout/topbar-profile/topbar-profile.module';
 import { TooltipModule } from 'primeng/tooltip';
+import { LoginModule } from '../../components/auth/login/login.module';
 
 @NgModule({
-    declarations: [DefaultLayoutComponent, HeaderComponent, FooterComponent, LoginComponent],
+    declarations: [DefaultLayoutComponent, HeaderComponent, FooterComponent],
     imports: [
         CommonModule,
         RouterModule,
@@ -27,6 +27,7 @@ import { TooltipModule } from 'primeng/tooltip';
         ScrollTopModule,
         TopbarProfileModule,
         TooltipModule,
+        LoginModule,
     ],
     exports: [DefaultLayoutComponent],
 })

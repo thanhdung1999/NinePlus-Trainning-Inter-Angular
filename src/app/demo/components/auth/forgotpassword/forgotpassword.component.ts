@@ -20,6 +20,8 @@ export class ForgotPasswordComponent {
 
     isLoading = false;
 
+    submitted = false;
+
     constructor(
         private _layoutService: LayoutService,
         private _authenticateService: AuthenticateService,
@@ -33,6 +35,7 @@ export class ForgotPasswordComponent {
 
     sendMail() {
         this.isLoading = true;
+        this.submitted = true;
         if (this.isCheckEmail(this.email)) {
             const payload = {
                 email: this.email,
@@ -40,22 +43,26 @@ export class ForgotPasswordComponent {
             };
             this._authenticateService.sendMailForGot(payload).subscribe({
                 next: (res) => {
+                    this.isLoading = false;
                     this.isShowForgotSuccess = true;
                 },
                 error: (err) => {
-                    if (err.status === 400 && err.error?.Messages?.length > 0) {
-                        err.error.Messages?.forEach((ms: string) => {
+                    if (err.error.messages?.length > 0) {
+                        err.error.messages?.forEach((ms: string) => {
                             this._toastService.showError(ms, this.keyToast);
                         });
                     }
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 1000);
                 },
             });
         } else {
             this._toastService.showError(MESSAGE_ERROR_INPUT.EMAIL_INVALID, this.keyToast);
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 1000);
         }
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000);
     }
 
     isCheckEmail(email: string): boolean {

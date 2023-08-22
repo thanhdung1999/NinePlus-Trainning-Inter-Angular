@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Customer } from '../../api/customer';
@@ -26,9 +26,15 @@ export class ProfileCustomerComponent {
 
     keyToast = TOAST.KEY_BC;
 
-    customerId = '';
+    minDate!: Date;
 
-    patternPhoneNumber = '[0-9]{10,11}';
+    maxDate!: Date;
+
+    rgName: RegExp = REGIX.name;
+
+    rgAddress: RegExp = REGIX.address;
+
+    customerId = '';
 
     constructor(
         private _layoutService: LayoutService,
@@ -42,6 +48,7 @@ export class ProfileCustomerComponent {
     ngOnInit(): void {
         this.getIdCustomer();
         this.initFormUpdateCustomer();
+        this.initMinAndMaxDateOfBirth();
     }
 
     getIdCustomer() {
@@ -49,19 +56,32 @@ export class ProfileCustomerComponent {
     }
 
     initFormUpdateCustomer() {
+        this.formUpdateCustomer = this._fb.group({
+            id: [this.customerId],
+            customerName: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+            address: [''],
+            dateOfBirth: [''],
+            totalMoney: [0],
+        });
         this._customerService.getCustomerById(this.customerId).subscribe((data) => {
-            const customer = data as Customer;
-            if (!isEmpty(customer)) {
-                this.formUpdateCustomer = this._fb.group({
-                    id: [this.customerId],
-                    customerName: [customer?.customerName, [Validators.required, Validators.minLength(4)]],
-                    phoneNumber: [customer?.phoneNumber, [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
-                    address: [customer?.address],
-                    dateOfBirth: [customer?.dateOfBirth ? new Date(customer.dateOfBirth) : ''],
-                    totalMoney: [customer?.totalMoney],
-                });
+            if (!isEmpty(data)) {
+                const customer = data as Customer;
+                this.formUpdateCustomer.patchValue(customer);
+                if (customer.dateOfBirth) {
+                    this.formUpdateCustomer.patchValue({
+                        dateOfBirth: new Date(customer.dateOfBirth),
+                    });
+                }
             }
         });
+    }
+
+    initMinAndMaxDateOfBirth() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
+        this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
     }
 
     trimValueCustomer(customer: Customer): Customer {
@@ -80,11 +100,15 @@ export class ProfileCustomerComponent {
         return customer;
     }
     onSubmit() {
+        this.isLoading = true;
         this.submitted = true;
         if (this.formUpdateCustomer.valid) {
             const updateCustomer = this.trimValueCustomer(this.valueFormUpdateCustomer);
             this.saveCustomer(updateCustomer);
         } else {
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 1000);
             this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
     }
@@ -93,11 +117,19 @@ export class ProfileCustomerComponent {
         this._customerService.updateCustomer(customer).subscribe({
             next: (res) => {
                 if (!isEmpty(res.data)) {
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 1000);
                     this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
-                    this.navigateToLanding();
+                    setTimeout(() => {
+                        this.navigateToLanding();
+                    }, 1000);
                 }
             },
             error: (err) => {
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 1000);
                 this.showErrorResponse(err);
             },
         });

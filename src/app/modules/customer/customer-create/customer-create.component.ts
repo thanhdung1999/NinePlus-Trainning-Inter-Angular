@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE,  REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,15 @@ export class CustomerCreateComponent implements OnInit {
 
     isLoadingSubmit = false;
 
-    patternPhoneNumber = '[0-9]{10,11}';
+    minDate!: Date;
+
+    maxDate!: Date;
+
+    rgName: RegExp = REGIX.name;
+
+    rgAddress: RegExp = REGIX.address;
+
+    rgPassword: RegExp = REGIX.password;
 
     formAddNewCustomer!: FormGroup;
 
@@ -28,12 +36,13 @@ export class CustomerCreateComponent implements OnInit {
 
     ngOnInit(): void {
         this.initFormAddNewCustomer();
+        this.initMinAndMaxDateOfBirth();
     }
 
     initFormAddNewCustomer() {
         this.formAddNewCustomer = this._fb.group({
-            customerName: ['', [Validators.required, Validators.minLength(4)]],
-            phoneNumber: ['', [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
+            customerName: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
             address: [''],
             dateOfBirth: [''],
             username: [''],
@@ -42,18 +51,21 @@ export class CustomerCreateComponent implements OnInit {
         });
     }
 
+    initMinAndMaxDateOfBirth () {
+         this.minDate = new Date();
+         this.maxDate = new Date();
+         this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
+         this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
+    }
+
     onSubmit() {
         this.submitted = true;
         this.loadingSubmit();
         if (this.formAddNewCustomer.valid) {
             let newCustomer = this.trimValueCustomer(this.valueFormAddNewCustomer);
-            this._customerService.getListCustomer().subscribe((res) => {
-                if (res.data && res.data.length > 0) {
-                    if (this.isValidUsernameAndPassword(newCustomer, res.data as Customer[]) === true) {
-                        this.saveCustomer(newCustomer);
-                    }
-                }
-            });
+            if (this.isValidUsernameAndPassword(newCustomer) === true) {
+                this.saveCustomer(newCustomer);
+            }
         } else {
             this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
@@ -67,7 +79,6 @@ export class CustomerCreateComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        // "The JSON value could not be co  nverted to System.Nullable`1[System.DateTime]
         if (!customer.dateOfBirth) {
             delete customer['dateOfBirth'];
         } else {
@@ -76,7 +87,7 @@ export class CustomerCreateComponent implements OnInit {
         return customer;
     }
 
-    isValidUsernameAndPassword(customer: Customer, customers: Customer[]): boolean {
+    isValidUsernameAndPassword(customer: Customer): boolean {
         const password = customer?.password;
         const username = customer?.username;
 
@@ -91,16 +102,6 @@ export class CustomerCreateComponent implements OnInit {
 
             if (password && password.length < 8) {
                 this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD, this.keyToast);
-                return false;
-            }
-
-            // check username exists
-            let index = customers.findIndex((item) => {
-                return item.username === customer.username;
-            });
-
-            if (index > -1) {
-                this._toastService.showError(MESSAGE_ERROR_INPUT.USERNAME_EXISTS, this.keyToast);
                 return false;
             }
         }
@@ -128,22 +129,6 @@ export class CustomerCreateComponent implements OnInit {
             err.error.messages?.forEach((ms: string) => {
                 this._toastService.showError(ms, this.keyToast);
             });
-        }
-    }
-
-    keyPressUsername(event: any) {
-        let pattern = /[a-zA-Z0-9]/;
-        let inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
-
-    keyPressPassword(event: any) {
-        let pattern = /[a-zA-Z0-9\+\-@\!\$\&\*]/;
-        let inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
         }
     }
 

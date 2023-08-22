@@ -15,7 +15,7 @@ export enum ROUTER {
     FORGOT_PASSWORD = 'auth/forgot-password',
     RESET_PASSWORD = 'auth/reset-password',
     SIGNUP = 'auth/register',
-    LANDING = 'landing',
+    LANDING = 'spa/landing',
     AUTH_ERROR = 'auth/error',
     LIST_WORK_SHIFT = 'work-shift/list',
     DETAIL_WORKSHIFT = 'work-shift/detail/',

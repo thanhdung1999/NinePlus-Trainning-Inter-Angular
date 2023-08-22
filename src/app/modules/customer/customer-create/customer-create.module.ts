@@ -9,7 +9,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputMaskModule } from 'primeng/inputmask';
-
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { PasswordModule } from 'primeng/password';
 @NgModule({
     declarations: [CustomerCreateComponent],
     imports: [
@@ -22,6 +23,8 @@ import { InputMaskModule } from 'primeng/inputmask';
         FormsModule,
         InputMaskModule,
         TranslateModule,
+        KeyFilterModule,
+        PasswordModule,
     ],
 })
 export class CustomerCreateModule {}
