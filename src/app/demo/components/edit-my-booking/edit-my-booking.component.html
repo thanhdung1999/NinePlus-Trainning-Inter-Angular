@@ -1,1 +1,137 @@
-<p>edit-my-booking works!</p>
+<div class="surface-section px-4 py-8 md:px-6 lg:px-8 border-1 surface-border border-round overflow-y-scroll w-full" style="height: 50rem">
+    <p-toast [key]="keyToast"></p-toast>
+    <div class="flex flex-column text-center md:text-left mb-3">
+        <span class="text-900 text-2xl">{{ "CLIENT_BOOKING.MY_BOOKING" | translate }}</span>
+    </div>
+
+    <form [formGroup]="formUpdateBooking" (ngSubmit)="updateBooking()">
+        <div class="surface-card grid-nogutter border-round shadow-2 mb-6 title w-full">
+            <div class="p-fluid">
+                <div class="col-12 flex p-2 surface-100 border-round-top">
+                    <div class="p-2 flex-auto text-center md:text-left">
+                        <span class="text-700 block">ID</span>
+                        <span class="text-900 font-medium block mt-2">{{ myBooking.id }}</span>
+                    </div>
+                    <p-divider align="center" layout="vertical" styleClass="h-full  mx-0 lg:mx-3 surface-border"></p-divider>
+                    <div class="p-2 flex-auto flex text-center md:text-left justify-content-between">
+                        <div>
+                            <span class="text-700 block">{{ "FIELDS.BOOKING_DATE" | translate }}</span>
+                            <span class="text-900 font-medium block mt-2">{{ myBooking.bookingDate | date : "dd/MM/YYYY" }}</span>
+                        </div>
+                    </div>
+                    <p-divider align="center" layout="vertical" styleClass="h-full  mx-0 lg:mx-3 surface-border"></p-divider>
+                    <div class="p-2 flex-auto text-center md:text-left">
+                        <span class="text-700 block">{{ "FIELDS.TOTAL_AMOUNT" | translate }}</span>
+                        <span class="text-900 font-medium block mt-2">{{ totalMoney }}</span>
+                    </div>
+                </div>
+                <div class="field px-2 mt-3 col-12 mb-0">
+                    <div class="col-6">
+                        <p-multiSelect
+                            [options]="services"
+                            optionLabel="name"
+                            display="chip"
+                            [showClear]="true"
+                            defaultLabel="{{ 'CLIENT_BOOKING.SELECT_SERVICE' | translate }}"
+                            [(ngModel)]="selectedServices"
+                            [required]="true"
+                            (onChange)="handleChangeService($event)"
+                            (onClear)="handleRemoveServices()"
+                            formControlName="serviceId"
+                        >
+                            <ng-template let-value pTemplate="selectedItems">
+                                <div class="flex align-items-center gap-2" *ngFor="let option of selectedServices">
+                                    <img
+                                        [src]="option.image"
+                                        [class]=""
+                                        style="width: 40px"
+                                        onerror="this.src='https:png.pngtree.com/png-clipart/20210905/original/pngtree-beauty-spa-png-image_6689902.jpg'"
+                                    />
+                                    <div class="capitalize">{{ option.name }}</div>
+                                </div>
+                                <div *ngIf="!selectedServices || selectedServices.length === 0">
+                                    {{ "CLIENT_BOOKING.SELECT_SERVICE" | translate }}
+                                </div>
+                            </ng-template>
+                            <ng-template let-service pTemplate="item">
+                                <div class="flex align-items-center gap-2">
+                                    <img
+                                        [src]="service.image"
+                                        onerror="this.src='https:png.pngtree.com/png-clipart/20210905/original/pngtree-beauty-spa-png-image_6689902.jpg'"
+                                        [class]=""
+                                        style="width: 40px"
+                                    />
+                                    <div class="ml-2 capitalize">{{ service.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </div>
+                </div>
+                <div class="col-12 p-4">
+                    <div
+                        class="card my-4 flex flex-column lg:flex-row justify-content-between align-items-center"
+                        *ngFor="let service of selectedServices; let i = index"
+                    >
+                        <div class="flex flex-column lg:flex-row justify-content-center align-items-center px-2">
+                            <img
+                                [src]="service.image"
+                                alt="bookingDetail"
+                                class="w-8rem h-8rem mr-0 sm:mr-0 md:mr-0 lg:mr-3 xl:mr-3 flex-shrink-0"
+                                style="border-radius: 0.5rem"
+                                onerror="this.src='https:png.pngtree.com/png-clipart/20210905/original/pngtree-beauty-spa-png-image_6689902.jpg'"
+                            />
+                            <div class="flex flex-column my-auto text-center sm:text-center md:text-center lg:text-left">
+                                <span class="text-900 font-medium mb-3 mt-3 lg:mt-0 capitalize">{{ service.name }}</span>
+                                <span class="text-900 text-sm mb-3"
+                                    ><i class="pi pi-clock mr-2" style="color: 'var(--primary-color)'"></i> {{ fromTime }} -
+                                    {{ toTime }}
+                                </span>
+                                <a
+                                    pRipple
+                                    tabindex="0"
+                                    class="p-2 select-none cursor-pointer w-10rem mx-auto lg:mx-0 border-round font-medium text-center border-1 border-primary text-primary transition-duration-150"
+                                >
+                                    {{ service.price }}</a
+                                >
+                            </div>
+                        </div>
+                        <button
+                            pButton
+                            pRipple
+                            icon="pi pi-trash"
+                            tooltipPosition="top"
+                            pTooltip="{{ 'TOOLTIP.DELETE' | translate }}"
+                            class="p-button-rounded p-button-warning mt-4 sm:mt-4 md:mt-4 lg:mt-0 xl:mt-0"
+                            (click)="handleDeleteService(service)"
+                        ></button>
+                    </div>
+                </div>
+                <div class="col-12 p-0 flex border-top-1 surface-border">
+                    <button
+                        type="submit"
+                        class="cursor-pointer py-4 flex flex-column md:flex-row text-center justify-content-center align-items-center text-primary hover:bg-primary hover:text-0 transition-duration-150 w-full"
+                        style="border-bottom-left-radius: 6px; border: none"
+                    >
+                        <i class="pi pi-folder mr-2 mb-2 md:mb-1"></i>{{ "BTN.UPDATE" | translate }}
+                    </button>
+                    <a
+                        tabindex="0"
+                        class="cursor-pointer py-4 flex flex-column md:flex-row text-center justify-content-center align-items-center text-primary hover:bg-primary hover:text-0 transition-duration-150 w-full"
+                        (click)="showConfirmDelete(myBooking)"
+                        ><i class="pi pi-refresh mr-2 mb-2 md:mb-1"></i>{{ "BTN.DELETE" | translate }}</a
+                    >
+                    <p-confirmDialog
+                        header="Delete booking with id = {{ myBooking.id }}"
+                        key="confirm"
+                        icon="pi pi-exclamation-triangle"
+                        message="Are you sure you want to proceed?"
+                        [style]="{ width: '350px' }"
+                        acceptButtonStyleClass="p-button-text"
+                        rejectButtonStyleClass="p-button-text"
+                    ></p-confirmDialog>
+                </div>
+            </div>
+        </div>
+    </form>
+    <app-config></app-config>
+</div>

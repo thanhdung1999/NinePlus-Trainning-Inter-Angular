@@ -1,12 +1,13 @@
 <div class="card">
-    <form [formGroup]="formFilter">
+    <form [formGroup]="formFilter" (ngSubmit)="filterCustomerNoOrderBy()">
         <div class="row grid p-fluid">
-            <div class="col-12 sm:col-3">
+            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
                 <input
                     pInputText
                     type="text"
                     placeholder="{{ 'FIELDS.NAME' | translate }}, {{ 'FIELDS.PHONE' | translate }}"
                     formControlName="keyword"
+                    [pKeyFilter]="rgSearch"
                 />
             </div>
         </div>
@@ -14,14 +15,15 @@
         <div class="row">
             <div class="col-12 group-button-filter">
                 <button
+                    type="submit"
                     pButton
                     pRipple
                     label="{{ 'TRANSLATOR.SEARCH' | translate }}"
                     class="w-auto mr-2 mb-2"
                     icon="pi pi-search"
-                    (click)="filterCustomer()"
                 ></button>
                 <button
+                    type="button"
                     pButton
                     pRipple
                     label="Xóa điều kiện"
@@ -48,7 +50,7 @@
         responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['id', 'customerName', 'phoneNumber','dateOfBirth', 'totalMoney']"
+        [globalFilterFields]="['id', 'customerName', 'phoneNumber', 'dateOfBirth', 'totalMoney']"
         [resetPageOnSort]="resetPageOnSort"
     >
         <ng-template pTemplate="caption">
@@ -66,15 +68,11 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap" style="width: 14.28%">ID<p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="customerName" class="white-space-nowrap" style="width: 14.28%">
+                <th class="white-space-nowrap" style="width: 14.28%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="customerName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="phoneNumber" class="white-space-nowrap" style="width: 14.28%">
-                    {{ "FIELDS.PHONE" | translate }}<p-sortIcon field="phoneNumber"></p-sortIcon>
-                </th>
-                <th pSortableColumn="address" class="white-space-nowrap" style="width: 14.28%">
-                    {{ "FIELDS.ADDRESS" | translate }} <p-sortIcon field="address"></p-sortIcon>
-                </th>
+                <th class="white-space-nowrap" style="width: 14.28%">{{ "FIELDS.PHONE" | translate }}<p-sortIcon></p-sortIcon></th>
+                <th class="white-space-nowrap" style="width: 14.28%">{{ "FIELDS.ADDRESS" | translate }} <p-sortIcon></p-sortIcon></th>
                 <th pSortableColumn="dateOfBirth" class="white-space-nowrap" style="width: 14.28%">
                     {{ "FIELDS.BIRTH_DAY" | translate }}<p-sortIcon field="dateOfBirth"></p-sortIcon>
                 </th>
@@ -99,12 +97,34 @@
             </ng-container>
             <ng-template #elseTemplate>
                 <tr>
-                    <td>{{ customer.id }}</td>
-                    <td>{{ customer.customerName }}</td>
-                    <td>{{ customer.phoneNumber }}</td>
-                    <td>{{ customer.address }}</td>
-                    <td>{{ customer.dateOfBirth | date : "dd/MM/yyyy" }}</td>
-                    <td>{{ customer.totalMoney | CurrencyVND }}</td>
+                    <td>
+                        <span class="two-row-line-height">
+                            {{ customer.id }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="two-row-line-height">
+                            {{ customer.customerName }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="two-row-line-height">
+                            {{ customer.phoneNumber }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="two-row-line-height">
+                            {{ customer.address }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="two-row-line-height">
+                            {{ customer.dateOfBirth | date : "dd/MM/yyyy" }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="two-row-line-height"> {{ customer.totalMoney | CurrencyVND }}</span>
+                    </td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
                             <p-confirmDialog

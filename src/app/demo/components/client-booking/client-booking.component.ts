@@ -22,7 +22,7 @@ import { Service } from '../../api/service';
 })
 export class ClientBookingComponent {
     submitted: boolean = false;
-    service: Service[] = [];
+    services: Service[] = [];
     name: Service[] = [];
     form!: FormGroup;
     keyToast: string = TOAST.KEY_BC;
@@ -31,6 +31,8 @@ export class ClientBookingComponent {
     customerId = '';
     isLoading = false;
     selectedServices!: Service[];
+    totalMoney = 0;
+    totalTime = 0;
     startTime!: Time[];
     endTime!: Time[];
 
@@ -46,7 +48,7 @@ export class ClientBookingComponent {
 
     ngOnInit(): void {
         this.getCustomerId();
-        this.getAllService();
+        this.getListService();
         this.initFormAddBooking();
         this.initMinAndMaxDateBooking();
         this.initStartTimeAndEndTime();
@@ -63,7 +65,7 @@ export class ClientBookingComponent {
                 serviceId: [[], Validators.required],
             },
             {
-                validator: EqualsDateTime.equalTime('fromTime', 'toTime'),
+                validator: [EqualsDateTime.equalTime('fromTime', 'toTime')],
             }
         );
     }
@@ -81,10 +83,10 @@ export class ClientBookingComponent {
         this.startTime = TimeActive.startTime() as Time[];
     }
 
-    getAllService() {
+    getListService() {
         this._serviceService.getListServices().subscribe((res) => {
-            if (res.data && res.data.length) {
-                this.service = res.data as Service[];
+            if (res.data && res.data.length > 0) {
+                this.services = res.data as Service[];
             }
         });
     }
@@ -94,6 +96,19 @@ export class ClientBookingComponent {
         booking.toTime = this.convertTime(String(booking.bookingDate), booking.toTime as Time);
         booking.bookingDate = this.convertDate(booking);
         return booking;
+    }
+
+    onChangeService() {
+        this.handleSumMoneyAndTimeServices(this.selectedServices);
+    }
+
+    handleSumMoneyAndTimeServices(services: Service[]) {
+        this.totalMoney = services.reduce((accumulator: number, currentValue: Service) => {
+            return accumulator + Number(currentValue.price);
+        }, 0);
+        this.totalTime = services.reduce((accumulator: number, currentValue: Service) => {
+            return accumulator + Number(currentValue.time);
+        }, 0);
     }
 
     createBooking() {
@@ -132,10 +147,12 @@ export class ClientBookingComponent {
         }
     }
 
-    handleDelete(service: Service) {
-        this.selectedServices = this.selectedServices.filter((item) => {
+    handleDeleteOneService(service: Service) {
+        const services: Service[] = this.selectedServices.filter((item) => {
             return item !== service;
         });
+        this.handleSumMoneyAndTimeServices(services);
+        this.selectedServices = services;
     }
 
     convertDate(booking: BookingCreate) {
@@ -162,8 +179,9 @@ export class ClientBookingComponent {
         return '';
     }
 
-    convertIdService() {}
-
+    naviagateToLanding() {
+        this._router.navigate([ROUTER.LANDING]);
+    }
     get f() {
         return this.form.controls;
     }

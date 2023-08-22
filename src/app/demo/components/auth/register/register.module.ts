@@ -12,6 +12,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputMaskModule } from 'primeng/inputmask';
+import { LoginModule } from '../login/login.module';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
     imports: [
@@ -28,6 +31,9 @@ import { InputMaskModule } from 'primeng/inputmask';
         ToastModule,
         InputMaskModule,
         TranslateModule,
+        KeyFilterModule,
+        PasswordModule,
+        LoginModule,
     ],
     declarations: [RegisterComponent],
 })

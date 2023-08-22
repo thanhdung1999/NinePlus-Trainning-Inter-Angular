@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,11 +20,21 @@ export class RegisterComponent {
 
     isLoadingSubmit = false;
 
-    patternPhoneNumber = '[0-9]{10,11}';
-
     formCreateCustomer!: FormGroup;
 
     keyToast = TOAST.KEY_BC;
+
+    isPopupLogin = false;
+
+    minDate!: Date;
+
+    maxDate!: Date;
+
+    rgName: RegExp = REGIX.name;
+
+    rgAddress: RegExp = REGIX.address;
+
+    rgPassword: RegExp = REGIX.password;
 
     constructor(
         private _layoutService: LayoutService,
@@ -36,15 +46,16 @@ export class RegisterComponent {
 
     ngOnInit(): void {
         this.initFormCreateCustomer();
+        this.initMinAndMaxDateOfBirth();
     }
 
     initFormCreateCustomer() {
         this.formCreateCustomer = this._fb.group({
-            customerName: ['', [Validators.required, Validators.minLength(4)]],
-            phoneNumber: ['', [Validators.required, Validators.pattern(this.patternPhoneNumber)]],
+            customerName: ['', [Validators.required]],
+            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
             address: [''],
             dateOfBirth: [''],
-            username: ['', [Validators.required, Validators.minLength(8)]],
+            username: ['', [Validators.required]],
             password: ['', [Validators.required, Validators.minLength(8)]],
         });
     }
@@ -58,10 +69,18 @@ export class RegisterComponent {
             if (this.isValidUsernameAndPassword(newCustomer) === true) {
                 this.saveCustomer(newCustomer);
             }
+        } else {
+            setTimeout(() => {
+                this.isLoadingSubmit = false;
+            }, 1000);
         }
-        setTimeout(() => {
-            this.isLoadingSubmit = false;
-        }, 1000);
+    }
+
+    initMinAndMaxDateOfBirth() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
+        this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
     }
 
     trimValueCustomer(customer: Customer): Customer {
@@ -103,12 +122,18 @@ export class RegisterComponent {
     saveCustomer(newCustomer: Customer) {
         this._customerService.postCustomer(newCustomer).subscribe({
             next: (res) => {
+                this.isLoadingSubmit = false;
+                this.submitted = false;
                 this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
                 setTimeout(() => {
-                    this.navigateToLanding();
-                }, 1500);
+                    this.initFormCreateCustomer();
+                    this.showPopupLogin();
+                }, 1000);
             },
             error: (err) => {
+                setTimeout(() => {
+                    this.isLoadingSubmit = false;
+                }, 1000);
                 this.showErrorResponse(err);
             },
         });
@@ -119,22 +144,6 @@ export class RegisterComponent {
             err.error.messages?.forEach((ms: string) => {
                 this._toastService.showError(ms, this.keyToast);
             });
-        }
-    }
-
-    keyPressUsername(event: any) {
-        let pattern = /[a-zA-Z0-9]/;
-        let inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
-
-    keyPressPassword(event: any) {
-        let pattern = /[a-zA-Z0-9\+\-@\!\$\&\*]/;
-        let inputChar = String.fromCharCode(event.charCode);
-        if (event.keyCode != 8 && !pattern.test(inputChar)) {
-            event.preventDefault();
         }
     }
 
@@ -163,5 +172,13 @@ export class RegisterComponent {
 
     get filledInput(): boolean {
         return this._layoutService.config.inputStyle === 'filled';
+    }
+
+    hidePopupLogin() {
+        this.isPopupLogin = false;
+    }
+
+    showPopupLogin() {
+        this.isPopupLogin = true;
     }
 }

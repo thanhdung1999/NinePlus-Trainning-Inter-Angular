@@ -57,12 +57,10 @@ export class HeaderComponent {
 
     hidePopupLogin() {
         this.isPopupLogin = false;
-        document.body.style['overflow'] = 'unset';
     }
 
     showPopupLogin() {
         this.isPopupLogin = true;
-        document.body.style['overflow'] = 'hidden';
     }
 
     showListCategory() {

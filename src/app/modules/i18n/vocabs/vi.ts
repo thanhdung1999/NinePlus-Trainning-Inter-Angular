@@ -141,6 +141,7 @@ export const locale = {
         },
         INVALID: {
             EMAIL: 'Email bắt buộc',
+            FORMAT_EMAIL: 'Email chưa đúng định dạng',
             PHONE: 'Số điện thoại là bắt buộc',
             NAME: 'Tên bắt buộc',
             PASSWORD: 'Mật khẩu bắt buộc',
@@ -150,6 +151,7 @@ export const locale = {
             MIN_LENGTH_USERNAME: 'Tên tài khoản ít nhất 8 ký tự',
             MIN_LENGTH_PHONE: 'Số điện thoại ít nhất 10 ký tự',
             NOT_MATCH_PASSWORD: 'Mật khẩu nhập lại không trùng khớp',
+            NEWPASSWORD_MATCH_PASSWORD: 'Mật khẩu mới không được trùng với mật khẩu cũ',
             DATE: 'Vui lòng chọn ngày',
             TIME: 'Vui lòng chọn giờ',
             EQUAL_TIME: 'Vui lòng kiểm tra lại thời gian đặt lịch',
@@ -185,6 +187,9 @@ export const locale = {
             SELECT_SERVICE: 'Chọn dịch vụ',
             MY_BOOKING: 'Lịch Đặt Của Tôi',
             ALL: 'Tất cả',
+            TOTAL_MONEY: 'Tổng tiền',
+            MINUTES: 'phút',
+            ESTIMATED_TIME: 'Thời gian dự kiến',
         },
         MANAGE_BOOKING: {
             NAME: 'Chọn khách hàng',

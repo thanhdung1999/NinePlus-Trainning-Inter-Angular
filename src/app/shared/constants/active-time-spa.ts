@@ -13,11 +13,19 @@ const start: HoursBooking[] = [
     },
     {
         hours: 7,
+        minutes: 15,
+    },
+    {
+        hours: 7,
         minutes: 30,
     },
     {
         hours: 8,
         minutes: 0,
+    },
+    {
+        hours: 8,
+        minutes: 15,
     },
     {
         hours: 8,
@@ -29,7 +37,15 @@ const start: HoursBooking[] = [
     },
     {
         hours: 9,
+        minutes: 15,
+    },
+    {
+        hours: 9,
         minutes: 30,
+    },
+    {
+        hours: 9,
+        minutes: 45,
     },
     {
         hours: 10,
@@ -37,19 +53,39 @@ const start: HoursBooking[] = [
     },
     {
         hours: 10,
+        minutes: 15,
+    },
+    {
+        hours: 10,
         minutes: 30,
+    },
+    {
+        hours: 10,
+        minutes: 45,
     },
     {
         hours: 11,
         minutes: 0,
     },
     {
+        hours: 11,
+        minutes: 15,
+    },
+    {
         hours: 13,
         minutes: 0,
     },
     {
         hours: 13,
+        minutes: 15,
+    },
+    {
+        hours: 13,
         minutes: 30,
+    },
+    {
+        hours: 13,
+        minutes: 45,
     },
     {
         hours: 14,
@@ -57,7 +93,15 @@ const start: HoursBooking[] = [
     },
     {
         hours: 14,
+        minutes: 15,
+    },
+    {
+        hours: 14,
         minutes: 30,
+    },
+    {
+        hours: 14,
+        minutes: 45,
     },
     {
         hours: 15,
@@ -65,7 +109,15 @@ const start: HoursBooking[] = [
     },
     {
         hours: 15,
+        minutes: 15,
+    },
+    {
+        hours: 15,
         minutes: 30,
+    },
+    {
+        hours: 15,
+        minutes: 45,
     },
     {
         hours: 16,
@@ -73,10 +125,38 @@ const start: HoursBooking[] = [
     },
     {
         hours: 16,
+        minutes: 15,
+    },
+    {
+        hours: 16,
         minutes: 30,
+    },
+    {
+        hours: 16,
+        minutes: 45,
     },
     {
         hours: 17,
+        minutes: 0,
+    },
+    {
+        hours: 19,
+        minutes: 0,
+    },
+    {
+        hours: 19,
+        minutes: 15,
+    },
+    {
+        hours: 19,
+        minutes: 30,
+    },
+    {
+        hours: 19,
+        minutes: 45,
+    },
+    {
+        hours: 20,
         minutes: 0,
     },
 ];
@@ -92,6 +172,10 @@ const end: HoursBooking[] = [
     },
     {
         hours: 8,
+        minutes: 15,
+    },
+    {
+        hours: 8,
         minutes: 30,
     },
     {
@@ -100,7 +184,15 @@ const end: HoursBooking[] = [
     },
     {
         hours: 9,
+        minutes: 15,
+    },
+    {
+        hours: 9,
         minutes: 30,
+    },
+    {
+        hours: 9,
+        minutes: 45,
     },
     {
         hours: 10,
@@ -108,7 +200,15 @@ const end: HoursBooking[] = [
     },
     {
         hours: 10,
+        minutes: 15,
+    },
+    {
+        hours: 10,
         minutes: 30,
+    },
+    {
+        hours: 10,
+        minutes: 45,
     },
     {
         hours: 11,
@@ -116,19 +216,39 @@ const end: HoursBooking[] = [
     },
     {
         hours: 11,
-        minutes: 30,
+        minutes: 15,
+    },
+    {
+        hours: 13,
+        minutes: 0,
+    },
+    {
+        hours: 13,
+        minutes: 15,
     },
     {
         hours: 13,
         minutes: 30,
     },
     {
+        hours: 13,
+        minutes: 45,
+    },
+    {
         hours: 14,
         minutes: 0,
     },
     {
         hours: 14,
+        minutes: 15,
+    },
+    {
+        hours: 14,
         minutes: 30,
+    },
+    {
+        hours: 14,
+        minutes: 45,
     },
     {
         hours: 15,
@@ -136,7 +256,15 @@ const end: HoursBooking[] = [
     },
     {
         hours: 15,
+        minutes: 15,
+    },
+    {
+        hours: 15,
         minutes: 30,
+    },
+    {
+        hours: 15,
+        minutes: 45,
     },
     {
         hours: 16,
@@ -144,15 +272,71 @@ const end: HoursBooking[] = [
     },
     {
         hours: 16,
+        minutes: 15,
+    },
+    {
+        hours: 16,
         minutes: 30,
+    },
+    {
+        hours: 16,
+        minutes: 45,
     },
     {
         hours: 17,
         minutes: 0,
     },
     {
-        hours: 17,
+        hours: 19,
+        minutes: 0,
+    },
+    {
+        hours: 19,
+        minutes: 15,
+    },
+    {
+        hours: 19,
         minutes: 30,
+    },
+    {
+        hours: 19,
+        minutes: 45,
+    },
+    {
+        hours: 20,
+        minutes: 0,
+    },
+    {
+        hours: 20,
+        minutes: 15,
+    },
+    {
+        hours: 20,
+        minutes: 30,
+    },
+    {
+        hours: 20,
+        minutes: 45,
+    },
+    {
+        hours: 21,
+        minutes: 0,
+    },
+    {
+        hours: 21,
+        minutes: 15,
+    },
+    {
+        hours: 21,
+        minutes: 30,
+    },
+    {
+        hours: 21,
+        minutes: 45,
+    },
+    {
+        hours: 22,
+        minutes: 0,
     },
 ];
 export class TimeActive {

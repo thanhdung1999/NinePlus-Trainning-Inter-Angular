@@ -6,7 +6,7 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { SessionService } from 'src/app/core';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { BookingDetailResponses, MyBooking } from '../../api/my-booking';
-import { chain } from 'lodash';
+import { chain, isEmpty } from 'lodash';
 import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
@@ -61,8 +61,8 @@ export class MyBookingComponent {
     getListMyBooking() {
         this._bookingService.getListBookingWithIdCustomer(this.customerId).subscribe({
             next: (res) => {
-                const data = this.handleSumMoneyBooking(res.data as MyBooking[]);
-                this.groupByDateBooking(data);
+                const myBooking = this.handleTotalMoneyAndTimeMyBooking(res.data as MyBooking[]);
+                this.groupByDateBooking(myBooking);
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
@@ -82,7 +82,7 @@ export class MyBookingComponent {
         this.myBooking = result as Booking[];
     }
 
-    handleSumMoneyBooking(data: MyBooking[]) {
+    handleTotalMoneyAndTimeMyBooking(data: MyBooking[]): MyBooking[] {
         data.forEach((booking, index) => {
             if (booking.bookingDetailResponses && booking.bookingDetailResponses.length > 0) {
                 data[index].totalMoney = booking.bookingDetailResponses?.reduce((accumulator: number, currentValue: BookingDetailResponses) => {
@@ -90,10 +90,18 @@ export class MyBookingComponent {
                 }, 0);
             }
         });
-        return data;
+        const result = data.map((booking) => {
+            booking.fromTime = this.handleHoursMinutes(booking.fromTime + '');
+            booking.toTime = this.handleHoursMinutes(booking.toTime + '');
+            return booking;
+        });
+        return result;
     }
 
     getBookingWithStatus(status: string) {
+        this.formFilter.patchValue({
+            keyword: '',
+        });
         this.statusPage = status;
         if (status === '4') {
             this.getListMyBooking();
@@ -124,6 +132,7 @@ export class MyBookingComponent {
                             res.messages.forEach((messsage: string) => {
                                 this._toastService.showSuccess(messsage, this.keyToast);
                             });
+                        this.filterBooking();
                         setTimeout(() => {
                             this.getListMyBooking();
                         }, 1000);
@@ -135,7 +144,6 @@ export class MyBookingComponent {
             },
             error: (error) => {
                 this.showErrorResponse(error);
-                window.location.reload();
             },
         });
     }
@@ -169,12 +177,14 @@ export class MyBookingComponent {
         let param = FilterHelper.removeNullValue(this.formFilter.value);
         this._bookingService.filterMyBooking(param, this.customerId).subscribe({
             next: (res: any) => {
-                const data = this.handleSumMoneyBooking(res.data as MyBooking[]);
-                this.groupByDateBooking(data);
-                if (this.myBooking.length === 0) {
+                if (!isEmpty(res.data)) {
+                    const myBooking = this.handleTotalMoneyAndTimeMyBooking(res.data as MyBooking[]);
+                    this.groupByDateBooking(myBooking);
+                    this._detect.detectChanges();
+                } else {
                     this._toastService.showWarning(MESSAGE_TITLE.LIST_EMPTY, this.keyToast);
+                    this.myBooking = [];
                 }
-                this._detect.detectChanges();
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
@@ -183,11 +193,20 @@ export class MyBookingComponent {
             },
         });
     }
-    
+
+    handleHoursMinutes(string: string): string {
+        const date = new Date(string);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const time = (hours > 9 ? String(hours) : '0' + String(hours)) + 'h' + (minutes > 9 ? String(minutes) : '0' + String(minutes));
+        return time;
+    }
+
     clearFilter(): void {
         this.formFilter.reset();
         this.initForm();
         this.getListMyBooking();
+        this.statusPage = '4';
     }
 
     get filledInput(): boolean {

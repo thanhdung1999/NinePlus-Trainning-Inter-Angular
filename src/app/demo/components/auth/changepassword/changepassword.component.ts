@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { AuthenticateService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { MatchPassword, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, MatchPassword, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 class ChangePassword {
@@ -30,6 +30,8 @@ export class ChangePasswordComponent {
 
     isLoading = false;
 
+    rgPassword : RegExp = REGIX.password
+
     constructor(
         private _layoutService: LayoutService,
         private _router: Router,
@@ -45,38 +47,54 @@ export class ChangePasswordComponent {
     initFormChangePassword() {
         this.formChangePassword = this._fb.group(
             {
-                password: ['', [Validators.minLength(8), Validators.required]],
-                newPassword: ['', [Validators.minLength(8), Validators.required]],
-                confirmNewPassword: ['', [Validators.minLength(8), Validators.required]],
+                password: ['', [Validators.required, Validators.minLength(8)]],
+                newPassword: ['', [Validators.required, Validators.minLength(8)]],
+                confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]],
             },
             {
-                validator: MatchPassword.confirmedValidator('newPassword', 'confirmNewPassword'),
+                validator: [
+                    MatchPassword.newPasswordValidator('password', 'newPassword'),
+                    MatchPassword.confirmedValidator('newPassword', 'confirmNewPassword'),
+                ],
             }
         );
     }
 
     changePassword() {
-        this.submitted = true;
+        this.submitted = true;      
         this.isLoading = true;
         const changePassword: ChangePassword = cloneDeep(this.formChangePassword.value) as ChangePassword;
         if (this.formChangePassword.valid) {
-            this._authenticateService.changePassword(changePassword).subscribe({
-                next: (res) => {
-                    // Show success change password
-                    this.isSuccessChangePassword = true;
-                },
-                error: (err) => {
-                    if (err.error?.messages?.length > 0) {
-                        err.error.messages?.forEach((ms: string) => {
-                            this._toastService.showError(ms, this.keyToast);
-                        });
-                    }
-                },
-            });
+            if (this.formChangePassword.value.password !== this.formChangePassword.value.newPassword) {
+                this._authenticateService.changePassword(changePassword).subscribe({
+                    next: (res) => {
+                        // Show success change password
+                        this.isLoading = false;
+                        this.isSuccessChangePassword = true;
+                    },
+                    error: (err) => {
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 1000);
+                        if (err.error?.messages?.length > 0) {
+                            err.error.messages?.forEach((ms: string) => {
+                                this._toastService.showError(ms, this.keyToast);
+                            });
+                        }
+                    },
+                });
+            } else {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.MATCH_CHANGE_PASSWORD, this.keyToast);
+                setTimeout(() => {
+                    this.isLoading = false;
+                }, 1000);
+            }
+        } else {
+            this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 1000);
         }
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000);
     }
 
     navigateToLanding() {

@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { AuthenticateService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { MESSAGE_ERROR_INPUT, MatchPassword, ROUTER, TOAST } from 'src/app/shared';
+import { MatchPassword, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 interface ResetPassword {
@@ -32,6 +32,8 @@ export class ResetPasswordComponent {
     patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
     formReset!: FormGroup;
+
+    rgPassword: RegExp = REGIX.password;
 
     keyToast = TOAST.KEY_BC;
 
@@ -79,9 +81,13 @@ export class ResetPasswordComponent {
             this._authenticateService.resestPasword(resetPassword).subscribe({
                 next: (res) => {
                     // Show success reset password
+                    this.isLoading = false;
                     this.isSuccessReset = true;
                 },
                 error: (err) => {
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 1000);
                     if (err.status === 400 && err.error?.messages?.length > 0) {
                         err.error.messages?.forEach((ms: string) => {
                             this._toastService.showError(ms, this.keyToast);
@@ -89,10 +95,11 @@ export class ResetPasswordComponent {
                     }
                 },
             });
+        } else {
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 1000);
         }
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000);
     }
 
     get filledInput(): boolean {

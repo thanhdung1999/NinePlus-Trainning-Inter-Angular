@@ -1,0 +1,47 @@
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+}
+
+@media (max-width: 576px) {
+    .card-service {
+        padding: 0 1rem 1rem 1rem !important;
+        .content {
+            height: 3rem !important;
+            .img-service {
+                height: 100% !important;
+                width: 3rem !important;
+            }
+            .description {
+                div {
+                    width: unset !important;
+                    min-width: 5rem !important;
+                }
+            }
+        }
+    }
+}
+.dialog-booking {
+    left: 7% !important;
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .dialog-booking {
+        left: 11.5% !important;
+    }
+}
+@media (max-width: 768px) {
+    .dialog-booking {
+        left: unset !important;
+        width: 70vw !important;
+    }
+}

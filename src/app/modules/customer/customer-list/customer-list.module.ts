@@ -11,6 +11,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
 import { CurrencyVND } from 'src/app/shared/pipe/currencyVND.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import { KeyFilterModule } from 'primeng/keyfilter';
 @NgModule({
     declarations: [CustomerListComponent, CurrencyVND],
     imports: [
@@ -23,7 +24,8 @@ import { TranslateModule } from '@ngx-translate/core';
         FormsModule,
         SkeletonModule,
         TooltipModule,
-        TranslateModule
+        TranslateModule,
+        KeyFilterModule,
     ],
 })
 export class CustomerlistModule {}

@@ -1,6 +1,3 @@
-body {
-    overflow: hidden !important;
-}
 .form-login {
     position: fixed;
     top: 10%;
@@ -44,6 +41,9 @@ body {
 }
 .p-component-overlay {
     z-index: 9999 !important;
+}
+.top-icon {
+    top: 30%;
 }
 @media (min-width: 576px) and (max-width: 768px) {
     .form-login {

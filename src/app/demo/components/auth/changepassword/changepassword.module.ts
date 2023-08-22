@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { TranslateModule } from '@ngx-translate/core';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { PasswordModule } from 'primeng/password';
 import { ChangePasswordRoutingModule } from './changepassword-routing.module';
 
 @NgModule({
@@ -25,6 +27,8 @@ import { ChangePasswordRoutingModule } from './changepassword-routing.module';
         ChangePasswordRoutingModule,
         AppConfigModule,
         TranslateModule,
+        KeyFilterModule,
+        PasswordModule,
     ],
 })
 export class ChangePasswordModule {}

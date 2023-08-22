@@ -43,34 +43,20 @@ export enum MESSAGE_TITLE {
 }
 
 export enum MESSAGE_ERROR_INPUT {
-    VALID = 'Input fields are incorrect',
-    MIN_LENGTH_NAME = 'Name enter at least 4 characters',
-    MIN_LENGTH_PASSWORD = 'Password enter at least 8 characters',
-    MIN_LENGTH_USERNAME = 'Username enter at least 8 characters',
-    USERNAME_EXISTS = 'Username already exists',
-    PASSWORD_OR_USERNAME_EMPTY = 'username or password not entered',
-    ID_ALREADY_EXISTS = 'Id already exists',
-    ID_DOES_NOT_EXISTS = "Id doesn't exist",
-    EMAIL_ALREADY_EXISTS = 'Email already exists',
-    EMAIL_INVALID = 'Invalid email',
-    INCORRECT_ACCOUNT = 'Incorrect account',
-    MATCH_PASSWORD = 'Password does not match',
+    VALID = 'Vui lòng nhập các trường chính xác',
+    USERNAME_REQUIRED = 'Vui lòng nhập tên tài khoản ',
+    MIN_LENGTH_PASSWORD = 'Mật khẩu nhập ít nhất 8 ký tự',
+    MATCH_CHANGE_PASSWORD = "Mật khẩu mới không được trùng với mật khẩu cũ",
+    MIN_LENGTH_USERNAME = 'Tên tài khoản nhập ít nhất 8 ký tự',
+    USERNAME_EXISTS = 'Tên tài khoản đã tồn tại',
+    PASSWORD_OR_USERNAME_EMPTY = 'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu',
+    ID_ALREADY_EXISTS = 'ID đã tồn tại',
+    ID_DOES_NOT_EXISTS = 'ID không tồn tại',
+    EMAIL_ALREADY_EXISTS = 'Email đã tồn tại',
+    EMAIL_INVALID = 'Email không hợp lệ',
+    INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
+    MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
 }
-// TODO
-// export enum MESSAGE_ERROR_INPUT {
-//     VALID = 'Vui lòng nhập các trường chính xác',
-//     MIN_LENGTH_NAME = 'Tên nhập ít nhất 4 ký tự',
-//     MIN_LENGTH_PASSWORD = 'Mật khẩu nhập ít nhất 8 ký tự',
-//     MIN_LENGTH_USERNAME = 'Tên tài khoản nhập ít nhất 8 ký tự',
-//     USERNAME_EXISTS = 'Tên tài khoản đã tồn tại',
-//     PASSWORD_OR_USERNAME_EMPTY = 'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu',
-//     ID_ALREADY_EXISTS = 'ID đã tồn tại',
-//     ID_DOES_NOT_EXISTS = 'ID không tồn tại',
-//     EMAIL_ALREADY_EXISTS = 'Email đã tồn tại',
-//     EMAIL_INVALID = 'Email không hợp lệ',
-//     INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
-//     MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
-// }
 
 export const MESSAGE_ERROR = [
     {

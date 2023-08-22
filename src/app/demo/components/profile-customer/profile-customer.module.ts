@@ -13,6 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TranslateModule } from '@ngx-translate/core';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @NgModule({
     declarations: [ProfileCustomerComponent],
@@ -30,7 +31,8 @@ import { TranslateModule } from '@ngx-translate/core';
         CalendarModule,
         InputTextareaModule,
         InputMaskModule,
-        TranslateModule
+        TranslateModule,
+        KeyFilterModule,
     ],
 })
 export class ProfileCustomerModule {}
