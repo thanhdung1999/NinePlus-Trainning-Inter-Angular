@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 import * as _ from 'lodash';
-import { MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT,MESSAGE_ERROR_INPUT_VN, MESSAGE_TITLE,MESSAGE_TITLE_VN, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MessageService } from 'primeng/api';
 import { BookingService } from 'src/app/shared/services/booking.service';
@@ -12,6 +12,8 @@ import { ServicesService } from 'src/app/shared/services/service.service';
 import { Services } from 'src/app/demo/api/booking-detail';
 import { BookingUpdate } from 'src/app/demo/api/booking-update';
 import { Booking } from 'src/app/demo/api/booking';
+import { Time, TimeActive } from 'src/app/shared/constants/active-time-spa';
+import { EqualsDateTime } from 'src/app/shared/validator/equal-date';
 
 const MESSAGE_ERROR = {
     CHECK_ID_BOOKING: 'Booking does not exist or recheck internet connection',
@@ -33,6 +35,10 @@ export class BookingEditComponent implements OnInit {
     name: Services[] = [];
     bookingUpdate: BookingUpdate[] = [];
     hourFormat: string = '24';
+    minDate!: Date;
+    maxDate!: Date;
+    startTime!: Time[];
+    endTime!: Time[];
 
     constructor(
         private _activatedRoute: ActivatedRoute,
@@ -47,6 +53,8 @@ export class BookingEditComponent implements OnInit {
         this.getAllService();
         this.getIdParamRequest();
         this.initFormUpdateBooking();
+        this.initMinAndMaxDateBooking();
+        this.initStartTimeAndEndTime();
     }
 
     getIdParamRequest() {
@@ -67,9 +75,10 @@ export class BookingEditComponent implements OnInit {
                         toTime: [new Date(booking?.toTime + ''), [Validators.required]],
                         note: [booking?.note],
                         serviceId: [[], Validators.compose([Validators.required])],
+                    }, {
+                        validator: EqualsDateTime.equalTime('fromTime', 'toTime'),
                     });
                 }
-
             },
             error: (err) => {
             },
@@ -91,43 +100,45 @@ export class BookingEditComponent implements OnInit {
                 },
             });
         } else {
-            this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
+            this._toastService.showError(MESSAGE_ERROR_INPUT_VN.VALID, this.keyToast);
         }
     }
 
     saveBooking(booking: BookingUpdate) {
+        console.log(this.form.value);
         if (this.form.valid) {
-            const bookingClone = _.cloneDeep(this.form.value);
+            this.convertBookingDateFormat();
+            let bookingClone = _.cloneDeep(this.form.value);
             if (this.form.value.serviceId.length > 0) {
                 for (let i = 0; i < this.form.value.serviceId.length; i++) {
                     bookingClone.serviceId[i] = this.form.value.serviceId[i].id;
                 }
-            }  if (this.form.get('bookingDate')?.value) {
-                this.convertBookingDate();
-            }
+            } 
 
-          
+            bookingClone = this.handleValueDate(bookingClone as BookingUpdate);
             this._bookingService.updateBooking(booking).subscribe({
                 next: (res) => {
                     if (res.succeeded && res.data) {
-                        this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
+                        this._toastService.showSuccess(MESSAGE_TITLE_VN.EDIT_SUCC, this.keyToast);
                         setTimeout(() => {
                             this.navigateBackAllBooking();
                         }, 1500);
                     }
                 },
                 error: (err) => {
-                    this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
+                    this._toastService.showError(MESSAGE_TITLE_VN.EDIT_ERR, this.keyToast);
                 },
             });
         }
     }
+   
+
     getAllService() {
         this._serviceService.getListServices().subscribe({
             next: (res) => {
                 this.service = res.data as Services[];
                 if (this.service.length === 0) {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
                 }
             },
             error: (error) => {
@@ -148,21 +159,53 @@ export class BookingEditComponent implements OnInit {
         return this.form.controls;
     }
 
-    convertBookingDate() {
-        const bookingPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
-        if (!bookingPattern.test(this.form.get('bookingDate')?.value)) this.convertBookingDateFormat();
+    handleValueDate(booking: BookingUpdate) {
+        booking.fromTime = this.convertTime(String(booking.bookingDate), booking.fromTime as Time);
+        booking.toTime = this.convertTime(String(booking.bookingDate), booking.toTime as Time);
+        booking.bookingDate = this.convertDate(booking);
+        return booking;
     }
 
+    initMinAndMaxDateBooking() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.maxDate.setDate(this.maxDate.getDate() + 30);
+    }
+
+    initStartTimeAndEndTime() {
+        this.endTime = TimeActive.endTime() as Time[];
+        this.startTime = TimeActive.startTime() as Time[];
+    }
     convertBookingDateFormat() {
         const originalDate = new Date(this.form.get('bookingDate')?.value);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        this.form.patchValue({
+            bookingDate: `${year}-${month}-${day}T00:00:00`,
+        });
+    }
+    convertDate(booking: BookingUpdate) {
+        const originalDate = new Date(booking.bookingDate + '');
         const year = originalDate.getFullYear();
         const month = String(originalDate.getMonth() + 1).padStart(2, '0');
         const day = String(originalDate.getDate()).padStart(2, '0');
         const hours = String(originalDate.getHours()).padStart(2, '0');
         const minutes = String(originalDate.getMinutes()).padStart(2, '0');
         const seconds = String(originalDate.getSeconds()).padStart(2, '0');
-        this.form.patchValue({
-            bookingDate: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
-        });
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
+
+    convertTime(date: string, time: Time): string {
+        const originalDate = new Date(date);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        if (time && time.data) {
+            const hours = String(time.data.getHours()).padStart(2, '0');
+            const minutes = String(time.data.getMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}:00`;
+        }
+        return '';
     }
 }

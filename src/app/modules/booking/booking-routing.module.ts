@@ -22,6 +22,11 @@ const routes: Routes = [
         data: { breadcrumb: 'Chi tiết' },
         loadChildren: () => import('./booking-detail/booking-detail.module').then((m) => m.BookingDetailModule),
     },
+    {
+        path: 'calendar',
+        data: { breadcrumb: 'Lịch' },
+        loadChildren: () => import('./calendar/calendar.app.module').then((m) => m.CalendarAppModule),
+    },
 ];
 
 @NgModule({

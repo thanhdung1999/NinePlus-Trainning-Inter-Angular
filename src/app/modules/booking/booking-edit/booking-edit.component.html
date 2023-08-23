@@ -18,7 +18,14 @@
                             <label for="bookingDate" class="font-medium text-900"
                                 >{{ "FIELDS.BOOKING_DATE" | translate }}:<span style="color: red"> *</span></label
                             >
-                            <p-calendar [showIcon]="true" formControlName="bookingDate" [readonlyInput]="true"></p-calendar>
+                            <p-calendar dateFormat="dd/mm/yy"
+                            [showIcon]="true"
+                            [minDate]="minDate"
+                            [maxDate]="maxDate"
+                            [required]="true"
+                            formControlName="bookingDate"
+                            [readonlyInput]="true"></p-calendar>
+
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
                             <label for="fromTime" class="font-medium text-900"
@@ -35,7 +42,7 @@
                             <input id="note" type="text" pInputText formControlName="note" />
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="serviceId" class="font-medium text-900"
+                            <label for="serviceId" class="font-medium text-900" 
                                 >{{ "FIELDS.SERVICE" | translate }}:<span style="color: red"> *</span></label
                             >
                             <p-multiSelect

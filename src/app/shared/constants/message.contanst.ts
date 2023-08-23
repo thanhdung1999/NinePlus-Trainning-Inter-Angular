@@ -42,6 +42,48 @@ export enum MESSAGE_TITLE {
     CONFIRM_DELETE_BOOKING = 'Are you sure delete booking by customer: ',
 }
 
+export enum MESSAGE_TITLE_VN {
+    SUCCESS = 'Thành công',
+    ADD_SUCCESS = 'Thêm mới thành công',
+    DELETE = 'Xóa',
+    ERROR = 'Lỗi',
+    WARNING = 'Cảnh báo',
+    SAVE_SUCC = 'Lưu lại thành công',
+    PICK_SUCC = 'Chọn icon',
+    PICK_ERROR = 'Biểu tượng lỗi',
+    ADD_SUCC = 'Thêm mới thành công!',
+    SAVE_ERR_TIME = 'Save error time',
+    CANT_API = 'Unable to connect to API!',
+    DELETE_SUCC = 'Delete successfully!',
+    DELETE_ERR = 'Delete error !',
+    LOGIN_ERR = 'Login error !',
+    LOGIN_SUCC = 'Login successfully !',
+    REGIS_SUCC = 'Register successfully !',
+    REGIS_ERR = 'Register error !',
+    PARAM_ERR = 'Get param is error',
+    CHANGEPASS_SUCC = 'Change Password successfully !',
+    CANCEL = 'Cancel',
+    CANCELED = 'Canceled',
+    Duplicate = 'Duplicate',
+    EMAIL = 'Duplicate Email !',
+    CONTRACTFROM = 'Contract form is required !',
+    CAN_NOT_FIND_MESSAGE = 'Can not find message !',
+    EDIT = 'Edit',
+    EDIT_SUCC = 'Chỉnh sửa thành công!',
+    EDIT_ERR = 'Chỉnh sửa thất bại!',
+    ADD_NEW_BRANCH_SUCC = 'Add new branch successful',
+    EDIT_BRANCH_SUCC = 'Edit branch successful',
+    ADD_NEW_BRANCH_ERR = 'Add new branch error',
+    EDIT_BRANCH_ERR = 'Edit branch error',
+    CONFIRM_DELETE = 'Are you sure you want to delete customer: ',
+    ADD_NEW_EMPLOYEE = 'Add new successful',
+    RESET_PASS_SUCC = 'Reset password successful',
+    RESET_PASS_ERR = 'Reset password error',
+    LIST_EMPTY = 'Danh sách trống',
+    CHANGE = 'Successfully changed',
+    CONFIRM_DELETE_BOOKING = 'Are you sure delete booking by customer: ',
+}
+
 export enum MESSAGE_ERROR_INPUT {
     VALID = 'Vui lòng nhập các trường chính xác',
     USERNAME_REQUIRED = 'Vui lòng nhập tên tài khoản ',
@@ -57,6 +99,36 @@ export enum MESSAGE_ERROR_INPUT {
     INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
     MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
 }
+
+export enum MESSAGE_ERROR_INPUT_VN {
+    VALID = 'Vui lòng kiểm tra tính hợp lệ của các trường cần nhập!',
+    MIN_LENGTH_NAME = 'Name enter at least 4 characters',
+    MIN_LENGTH_PASSWORD = 'Password enter at least 8 characters',
+    MIN_LENGTH_USERNAME = 'Username enter at least 8 characters',
+    USERNAME_EXISTS = 'Username already exists',
+    PASSWORD_OR_USERNAME_EMPTY = 'username or password not entered',
+    ID_ALREADY_EXISTS = 'Id already exists',
+    ID_DOES_NOT_EXISTS = "Id doesn't exist",
+    EMAIL_ALREADY_EXISTS = 'Email already exists',
+    EMAIL_INVALID = 'Invalid email',
+    INCORRECT_ACCOUNT = 'Incorrect account',
+    MATCH_PASSWORD = 'Password does not match',
+}
+// TODO
+// export enum MESSAGE_ERROR_INPUT {
+//     VALID = 'Vui lòng nhập các trường chính xác',
+//     MIN_LENGTH_NAME = 'Tên nhập ít nhất 4 ký tự',
+//     MIN_LENGTH_PASSWORD = 'Mật khẩu nhập ít nhất 8 ký tự',
+//     MIN_LENGTH_USERNAME = 'Tên tài khoản nhập ít nhất 8 ký tự',
+//     USERNAME_EXISTS = 'Tên tài khoản đã tồn tại',
+//     PASSWORD_OR_USERNAME_EMPTY = 'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu',
+//     ID_ALREADY_EXISTS = 'ID đã tồn tại',
+//     ID_DOES_NOT_EXISTS = 'ID không tồn tại',
+//     EMAIL_ALREADY_EXISTS = 'Email đã tồn tại',
+//     EMAIL_INVALID = 'Email không hợp lệ',
+//     INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
+//     MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
+// }
 
 export const MESSAGE_ERROR = [
     {

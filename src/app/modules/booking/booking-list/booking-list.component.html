@@ -3,18 +3,18 @@
     <form [formGroup]="formFilter">
         <div class="row grid p-fluid">
             <div class="col-12 sm:col-4">
-                <p >{{ 'FIELDS.BOOKING_DATE' | translate }}</p>
-                <input pInputText type="date" formControlName="bookingDate" date="dd/MM/yyyy">
+                <p>{{ "FIELDS.BOOKING_DATE" | translate }}</p>
+                <input pInputText type="date" formControlName="bookingDate" date="dd/MM/yyyy" />
             </div>
 
             <div class="col-12 sm:col-4">
-                <p>{{ 'FIELDS.FROM_TO' | translate }}</p>
-                <input pInputText type="date"  formControlName="fromToTime" date="dd/MM/yyyy hh:mm" />
+                <p>{{ "FIELDS.FROM_TO" | translate }}</p>
+                <input pInputText type="date" formControlName="fromTime" date="dd/MM/yyyy" />
             </div>
             <div class="col-12 sm:col-4">
-               <p>Tình trạng</p>
+                <p>Tình trạng</p>
                 <p-dropdown
-                placeholder="Nhấn để chọn"
+                    placeholder="Nhấn để chọn"
                     formControlName="status"
                     optionLabel="name"
                     optionValue="id"
@@ -63,8 +63,8 @@
         [globalFilterFields]="['status', 'fromToTime', 'status']"
     >
         <ng-template pTemplate="caption">
-            <div class="flex flex-wrap gap-2 align-items-end justify-content-end">
-                <button pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-calendar" label="Lịch"></button>
+            <div class="flex flex-wrap pl-5 gap-2 justify-content-end">
+                <button  (click)="navigateToCalender()" pButton class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1" icon="pi pi-calendar" label="Lịch"></button>
                 <button
                     (click)="navigateToCreateBooking()"
                     pButton
@@ -77,22 +77,20 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" style="width: 10%">
-                    {{ "MANAGE_BRANCH.CODE" | translate }}<p-sortIcon field="id"></p-sortIcon>
-                </th>
+                <th pSortableColumn="id" style="width: 10%">{{ "MANAGE_BRANCH.CODE" | translate }}<p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="customerName" class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.NAME" | translate }}<p-sortIcon field="customerName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="phone_number" class="white-space-nowrap" style="width: 15%">
-                    {{ "FIELDS.PHONE" | translate }}<p-sortIcon field="phone_number"></p-sortIcon>
+                <th class="white-space-nowrap" style="width: 15%">
+                    {{ "FIELDS.PHONE" | translate }}
                 </th>
                 <th pSortableColumn="bookingDate" class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.BOOKING_DATE" | translate }}<p-sortIcon field="bookingDate"></p-sortIcon>
                 </th>
-                <th pSortableColumn="date_of_birth" class="white-space-nowrap" style="width: 20%">
-                    {{ "FIELDS.FROM_TO" | translate }}<p-sortIcon></p-sortIcon>
+                <th class="white-space-nowrap" style="width: 20%">
+                    {{ "FIELDS.FROM_TO" | translate }}
                 </th>
-                <th pSortableColumn="status" class="white-space-nowrap" style="width: 15%"></th>
+                <th class="white-space-nowrap" style="width: 15%"></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -121,13 +119,14 @@
                         {{ booking.toTime | date : "hh:mm aa" }}
                         {{ booking.fromTime | date : "dd/MM/yyyy" }}
                     </td>
-                    <td >
+                    <td style="min-width: 120px">
                         <p-dropdown
                             [(ngModel)]="booking.status"
                             (onChange)="onSelectionChange($event, booking.id)"
                             optionLabel="name"
                             optionValue="id"
-                            [options]="status">
+                            [options]="status"
+                        >
                         </p-dropdown>
                     </td>
                     <td class="text-center">
@@ -180,7 +179,7 @@
                 class="p-button-text"
                 (click)="deleteConfirmed()"
                 label="{{ 'BTN.DELETE' | translate }}"
-        ></button>
+            ></button>
         </ng-template>
     </p-dialog>
 </div>

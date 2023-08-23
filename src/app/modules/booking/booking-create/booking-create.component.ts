@@ -11,6 +11,10 @@ import { Services } from 'src/app/demo/api/booking-detail';
 import { ServicesService } from 'src/app/shared/services/service.service';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { Customer } from 'src/app/demo/api/customer';
+import { Time, TimeActive } from 'src/app/shared/constants/active-time-spa';
+import { BookingCreate } from 'src/app/demo/api/booking-create';
+import { EqualsDateTime } from 'src/app/shared/validator/equal-date';
+import { LayoutService } from 'src/app/layout/service/app.layout.service';
 
 const MESSAGE_WARNING = {
     REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
@@ -26,8 +30,13 @@ export class BookingCreateComponent implements OnInit {
     customer: Customer[] = [];
     selectedCustomer: Customer[] = [];
     name: Services[] = [];
+    submitted: boolean = false;
     form!: FormGroup;
     keyToast: string = 'bc';
+    minDate!: Date;
+    maxDate!: Date;
+    startTime!: Time[];
+    endTime!: Time[];
 
     constructor(
         private _bookingService: BookingService,
@@ -35,23 +44,31 @@ export class BookingCreateComponent implements OnInit {
         private _router: Router,
         private _toastService: ToastService,
         private _fb: FormBuilder,
-        private _customerService: CustomerService
+        private _customerService: CustomerService,
+        private _layoutService: LayoutService
     ) {}
 
     ngOnInit(): void {
         this.initFormAddBooking();
         this.getAllService();
         this.getAllCustomer();
+        this.initMinAndMaxDateBooking();
+        this.initStartTimeAndEndTime();
     }
     initFormAddBooking() {
-        this.form = this._fb.group({
-            customerId: [[], Validators.compose([Validators.required])],
-            bookingDate: ['', Validators.compose([Validators.required])],
-            fromTime: ['', Validators.compose([Validators.required])],
-            totime: ['', Validators.compose([Validators.required])],
-            note: [''],
-            serviceId: [[], Validators.compose([Validators.required])],
-        });
+        this.form = this._fb.group(
+            {
+                customerId: [[], Validators.required],
+                bookingDate: ['', Validators.required],
+                fromTime: ['', Validators.required],
+                toTime: ['', Validators.required],
+                note: [''],
+                serviceId: [[], Validators.required],
+            },
+            {
+                validator: EqualsDateTime.equalTime('fromTime', 'toTime'),
+            }
+        );
     }
     getAllService() {
         this._serviceService.getListServices().subscribe({
@@ -85,14 +102,16 @@ export class BookingCreateComponent implements OnInit {
         });
     }
 
-    createBooking() {
+    createBooking(){
         if (this.form.valid) {
-            const bookingClone = _.cloneDeep(this.form.value);
+            this.convertBookingDate();
+            let bookingClone = _.cloneDeep(this.form.value);
             if (this.form.value.serviceId.length > 0) {
                 for (let i = 0; i < this.form.value.serviceId.length; i++) {
                     bookingClone.serviceId[i] = this.form.value.serviceId[i].id;
                 }
             }
+            bookingClone = this.handleValueDate(bookingClone as BookingCreate);
             this._bookingService.addBooking(bookingClone).subscribe({
                 next: (res) => {
                     this.navigateBackAllBooking();
@@ -110,7 +129,68 @@ export class BookingCreateComponent implements OnInit {
             this._toastService.showError(MESSAGE_WARNING.REQUIRED_VALIDATION, this.keyToast);
         }
     }
+
+    initMinAndMaxDateBooking() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.maxDate.setDate(this.maxDate.getDate() + 30);
+    }
+
+    initStartTimeAndEndTime() {
+        this.endTime = TimeActive.endTime() as Time[];
+        this.startTime = TimeActive.startTime() as Time[];
+    }
     navigateBackAllBooking() {
         this._router.navigate([ROUTER.LIST_BOOKING]);
+    }
+    convertBookingDate() {
+        const bookingPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+        if (!bookingPattern.test(this.form.get('bookingDate')?.value)) this.convertBookingDateFormat();
+    }
+
+    convertBookingDateFormat() {
+        const originalDate = new Date(this.form.get('bookingDate')?.value);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        this.form.patchValue({
+            bookingDate: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
+        });
+    }
+    handleValueDate(booking: BookingCreate) {
+        booking.fromTime = this.convertTime(String(booking.bookingDate), booking.fromTime as Time);
+        booking.toTime = this.convertTime(String(booking.bookingDate), booking.toTime as Time);
+        booking.bookingDate = this.convertDate(booking);
+        return booking;
+    }
+    convertDate(booking: BookingCreate) {
+        const originalDate = new Date(booking.bookingDate + '');
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}T00:00:00`;
+    }
+
+    convertTime(date: string, time: Time): string {
+        const originalDate = new Date(date);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        if (time && time.data) {
+            const hours = String(time.data.getHours()).padStart(2, '0');
+            const minutes = String(time.data.getMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}:00`;
+        }
+        return '';
+    }
+
+    get f() {
+        return this.form.controls;
+    }
+    get filledInput(): boolean {
+        return this._layoutService.config.inputStyle === 'filled';
     }
 }
