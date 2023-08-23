@@ -14,7 +14,7 @@
         <div class="grid formgrid p-fluid">
             <div class="field mb-4 col-12 md:col-6 label-container">
                 <label for="name" class="font-medium text-900 mr-3"> {{ "MANAGE_BRANCH.CODE" | translate }}:</label>
-                <input id="name" type="text" [value]="bookingId" class="w-6" pInputText [disabled]="true" />
+                <input id="name" type="text" [value]="bookingId" class="w-12" pInputText [disabled]="true" />
             </div>
             <div class="field mb-4 col-12 md:col-6 label-container">
                 <label for="customerName" class="font-medium text-900 mr-3">{{ "FIELDS.NAME" | translate }}: </label>
@@ -22,7 +22,7 @@
                     id="customerName"
                     type="text"
                     value="{{ bookingDetail.customerName}}"
-                    class="w-6"
+                    class="w-12"
                     pInputText
                     [disabled]="true"
                 />
@@ -33,7 +33,7 @@
                     id="phoneNumber"
                     type="text"
                     value="{{ bookingDetail.phoneNumber }}"
-                    class="w-6"
+                    class="w-12"
                     pInputText
                     [disabled]="true"
                 />
@@ -44,7 +44,7 @@
                     id="bookingDate"
                     type="text"
                     value="{{ bookingDetail.bookingDate | date : 'dd/MM/yyyy' }}"
-                    class="w-6"
+                    class="w-12"
                     pInputText
                     [disabled]="true"
                 />
@@ -55,7 +55,7 @@
                     id="fromTime"
                     type="text"
                     value="{{ bookingDetail.fromTime | date : 'hh: mm' }}"
-                    class="w-6"
+                    class="w-12"
                     pInputText
                     [disabled]="true"
                 />
@@ -66,18 +66,18 @@
                     id="fromTo"
                     type="text"
                     value="{{ bookingDetail.toTime | date : 'hh: mm' }}"
-                    class="w-6"
+                    class="w-12"
                     pInputText
                     [disabled]="true"
                 />
             </div>
             <div class="field mb-4 col-12 md:col-6 label-container">
                 <label for="note" class="font-medium text-900 mr-3">{{ "FIELDS.NOTE" | translate }}: </label>
-                <input id="note" type="text" [value]="bookingDetail.note" class="w-6" pInputText [disabled]="true" />
+                <input id="note" type="text" [value]="bookingDetail.note" class="w-12" pInputText [disabled]="true" />
             </div>
             <div class="field mb-4 col-12 md:col-6 label-container">
                 <label for="serviceName" class="font-medium text-900 mr-3">{{ "FIELDS.SERVICE" | translate }}: </label>
-                <input id="serviceName" type="text" [value]="serviceName" class="w-6" pInputText [disabled]="true" />
+                <input id="serviceName" type="text" [value]="serviceName" class="w-12" pInputText [disabled]="true" />
             </div>
         </div>
     </div>

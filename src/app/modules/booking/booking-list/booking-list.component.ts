@@ -63,6 +63,7 @@ export class BookingListComponent {
             pageNumber: [1],
             pageSize: [5],
             isExport: false,
+            orderBy: [null]
         });
         this.bookingModel = this._fb.group({
             status: [],
@@ -77,7 +78,6 @@ export class BookingListComponent {
 
     getAllBooking() {
         this._bookingService.getListBooking().subscribe((res) => {
-            console.log(res.data);
             if (res.data && res.data.length) {
                 this.bookings = res.data as Booking[];
             }
@@ -113,6 +113,9 @@ export class BookingListComponent {
     navigateToCreateBooking() {
         this._router.navigate([ROUTER.CREATE_BOOKING]);
     }
+    navigateToCalender() {
+        this._router.navigate([ROUTER.CALENDAR]);
+    }
 
     navigateToEditBooking(booking: Booking) {
         this._router.navigate([ROUTER.EDIT_BOOKING + '/' + booking.id]);
@@ -142,7 +145,6 @@ export class BookingListComponent {
     }
     filterBooking() {
         this.isSkeleton = true;
-        console.log(this.formFilter.value)
         let param = FilterHelper.removeNullValue(this.formFilter.value);
         this._bookingService.filterBooking(param).subscribe({
             next: (res: any) => {

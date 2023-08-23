@@ -7,7 +7,7 @@ export interface Booking {
     toTime?: string;
     status?: number;
     note?: string;
-    services?: Service;
+    services?: Service[];
 }
 
 
