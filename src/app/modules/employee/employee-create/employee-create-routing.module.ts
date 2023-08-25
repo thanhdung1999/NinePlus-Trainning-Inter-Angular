@@ -7,4 +7,4 @@ const routes: Routes = [];
     imports: [RouterModule.forChild([{ path: '', component: EmployeeCreateComponent }])],
     exports: [RouterModule],
 })
-export class EmployeeCreateRoutingModule {}
+export class EmployeeCreateRoutingModule { }

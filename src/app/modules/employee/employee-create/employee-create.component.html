@@ -1,5 +1,6 @@
 <div class="card">
-    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.ADD_NEW"
+    <span class="text-900 text-xl font-bold mb-4 mt-3 block">{{
+        "MANAGE_EMPLOYEE.TITLE_CREATE"
         | translate }}</span>
     <p-toast [key]="keyToast"></p-toast>
     <div class="grid">
@@ -14,9 +15,17 @@
                             <input id="name" type="text" pInputText
                                 formControlName="name" />
                             <p style="color: red"
-                                *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+                                *ngIf="checkValidInput && form.get('name')?.errors?.['required']">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
+                            </p>
+                            <p style="color: red"
+                                *ngIf="form.get('name')?.errors?.['maxlength']">
+                                {{"INVALID.MAX_LENGTH_NAME" | translate}}
+                            </p>
+                            <p style="color: red"
+                                *ngIf="form.get('name')?.errors?.['pattern']">
+                                {{"INVALID.PATTERN_NAME" | translate}}
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
@@ -25,14 +34,16 @@
                             <input id="email" type="text" pInputText
                                 formControlName="email" />
                             <p style="color: red"
-                                *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">
-                                * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
-                                }}
+                                *ngIf="form.get('email')?.errors?.['required'] && checkValidInput">
+                                * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                             </p>
                             <p style="color: red"
-                                *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
-                                * {{ "MANAGE_BRANCH.VALID_EMAIL" | translate
-                                }}
+                                *ngIf="form.get('email')?.errors?.['pattern']">
+                                {{ "MANAGE_BRANCH.VALID_EMAIL" | translate }}
+                            </p>
+                            <p style="color: red"
+                                *ngIf="form.get('email')?.errors?.['maxlength']">
+                                {{"INVALID.MAX_LENGTH_EMAIL" | translate }}
                             </p>
                         </div>
                         <div class="col-12 md:col-6">
@@ -50,7 +61,7 @@
                                         [filter]="true"
                                         filterBy="name"
                                         [showClear]="true"
-                                        placeholder="Select a Gender">
+                                        placeholder="{{'MANAGE_BRANCH.SELECT'| translate}} {{'FIELDS.GENDER'| translate}} ">
                                         <ng-template let-genders
                                             pTemplate="item">
                                             <div
@@ -65,7 +76,8 @@
                                         class="font-medium text-900">{{
                                         "FIELDS.BIRTH_DAY" | translate }}</label>
                                     <p-calendar id="birthday"
-                                        [showTime]="true" [showIcon]="true"
+                                        dateFormat="dd/mm/yy"
+                                        [showTime]="false" [showIcon]="true"
                                         formControlName="birthday"></p-calendar>
                                 </div>
                             </div>
@@ -82,14 +94,13 @@
                                 [autoClear]="false"
                                 [maxlength]="11"></p-inputMask>
                             <p style="color: red"
-                                *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
+                                *ngIf="form.get('phoneNumber')?.errors?.['required'] && checkValidInput">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
                             </p>
                             <p style="color: red"
-                                *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
-                                * {{ "MANAGE_BRANCH.VALID_PHONE" | translate
-                                }}
+                                *ngIf="form.get('phoneNumber')?.errors?.['pattern']">
+                                {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
@@ -101,7 +112,12 @@
                                 formControlName="username"
                                 autocomplete="off" />
                             <p style="color: red"
-                                *ngIf="form.get('username')?.errors?.['required'] && form.get('username')?.touched">
+                                *ngIf="form.get('username')?.errors?.['required'] && checkValidInput">
+                                * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                }}
+                            </p>
+                            <p style="color: red"
+                                *ngIf="form.get('username')?.errors?.['pattern']">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
                             </p>
@@ -117,7 +133,6 @@
                                         (error)="image.src = 'assets/layout/images/blank.png'"
                                         [src]="fileUrl ? fileUrl : 'assets/layout/images/blank.png'"
                                         alt="Trống" />
-                                    <!-- <span *ngIf="fileUrl" class="pi pi-times hoverClick" (click)="setImageDefault()"></span> -->
                                 </div>
                                 <div style="position: relative">
                                     <input
@@ -162,14 +177,13 @@
                                 autocomplete="passNew"
                                 formControlName="password" />
                             <p style="color: red"
-                                *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
+                                *ngIf="form.get('password')?.errors?.['required'] && checkValidInput">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
                             </p>
                             <p style="color: red"
                                 *ngIf="form.get('password')?.errors?.['pattern'] && form.get('password')?.touched">
-                                * {{ "MANAGE_BRANCH.VALID_PASSWORD" |
-                                translate }}
+                                {{ "MANAGE_BRANCH.VALID_PASSWORD" | translate }}
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
@@ -178,6 +192,11 @@
                                 "FIELDS.ADDRESS" | translate }}</label>
                             <input id="address" type="text" pInputText
                                 formControlName="address" />
+                            <p style="color: red"
+                                *ngIf="form.get('address')?.errors?.['maxlength']">
+                                * {{ "INVALID.MAX_LENGTH_ADDRESS" |
+                                translate }}
+                            </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
                             <label for="workshiftId"
@@ -197,7 +216,7 @@
                                 [showClear]="true">
                             </p-dropdown>
                             <p style="color: red"
-                                *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
+                                *ngIf="form.get('workShiftId')?.errors?.['required'] && checkValidInput">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
                             </p>
@@ -207,11 +226,13 @@
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-6">
                                     <button pButton pRipple
+                                        [loading]="loading"
                                         label="{{ 'BTN.SAVE' | translate }}"
                                         icon="pi pi-check" type="submit"></button>
                                 </div>
                                 <div class="col-6 md:col-6 lg:col-6">
                                     <button
+                                        type="button"
                                         pButton
                                         pRipple
                                         label="{{ 'BTN.CANCEL' | translate }}"

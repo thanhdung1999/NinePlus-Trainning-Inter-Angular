@@ -6,7 +6,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Service } from 'src/app/demo/api/service';
-import { MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { MESSAGE_TITLE_VN, ROUTER } from 'src/app/shared';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { SERVICE_TIME } from 'src/app/shared/constants/service-time';
 import { REVIEW } from 'src/app/shared/constants/service-time';
@@ -48,6 +48,7 @@ export class ServiceListComponent {
       pageNumber: [1],
       pageSize: [5],
       isExport: false,
+      orderBy: [null],
     });
   }
 
@@ -68,10 +69,9 @@ export class ServiceListComponent {
     this._serviceService.filterService(param).subscribe({
       next: (res: any) => {
         this.services = res.data as Service[];
-        console.log(this.services)
         this.totalRecords = res.totalCount as number;
         if (this.services.length === 0) {
-          this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+          this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
         }
         this.toastFormAnotherScreen();
         this.loadSkeletonTable();
@@ -97,13 +97,13 @@ export class ServiceListComponent {
     if (this.service.id) {
       this._serviceService.deleteServiceById(this.service.id.toString()).subscribe({
         next: (next) => {
-          this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
+          this._toastService.showSuccessNoKey(MESSAGE_TITLE_VN.DELETE_SUCC);
           this.filterService();
           this.deleteProductsDialog = false;
           this.service = {} as Service;
         },
         error: (error) => {
-          this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
+          this._toastService.showErrorNoKey(MESSAGE_TITLE_VN.DELETE_ERR);
         },
       });
     }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { Workshift } from 'src/app/demo/api/work-shift';
-import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { EmployeeService, MESSAGE_TITLE_VN, ROUTER } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -12,6 +12,7 @@ import { UploadService } from 'src/app/shared/services/upload.service';
 import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 const MESSAGE_WARNING = {
     REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
+    EMAIL_EXISTS: ' đã tồn tại'
 };
 @Component({
     selector: 'app-employee-edit',
@@ -22,7 +23,7 @@ const MESSAGE_WARNING = {
 export class EmployeeEditComponent {
     genders: any[] = Genders;
     form!: FormGroup;
-    birthdayInit!: Date;
+    birthdayInit!: Date | null;
     defaultGender!: boolean;
     imageDisplay: string = '';
     workShifts: Workshift[] = [];
@@ -31,6 +32,8 @@ export class EmployeeEditComponent {
     keyToast = 'bc';
     fileUpload: any;
     resetPassDialog: boolean = false;
+    loading: boolean = false;
+    checkValidInput: boolean = false;
 
     constructor(
         private _router: Router,
@@ -54,7 +57,7 @@ export class EmployeeEditComponent {
             next: (res) => {
                 this.workShifts = res.data as Workshift[];
                 if (this.workShifts.length === 0) {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
                 }
             },
             error: (error) => {
@@ -65,16 +68,17 @@ export class EmployeeEditComponent {
         });
     }
     initFormUpdateEmployee() {
-        const phone = /^(?:\+?84|0)(?:\d{9})$/;
+        const name = /^[A-Za-zÀ-ỹ]+(?: [A-Za-zÀ-ỹ]+)*$/;
+        const phone = /^(03|09)\d{8}$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         this.form = this._fb.group({
             id: [''],
-            name: ['', Validators.compose([Validators.required])],
+            name: ['', Validators.compose([Validators.required, Validators.maxLength(100), Validators.pattern(name)])],
             gender: [null],
-            birthday: [null],
+            birthday: [''],
             phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
-            address: [''],
-            email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
+            address: ['', Validators.maxLength(500)],
+            email: ['', Validators.compose([Validators.required, Validators.pattern(email), Validators.maxLength(100)])],
             image: [''],
             workShiftId: [0, Validators.compose([Validators.required])],
             userName: [''],
@@ -105,6 +109,18 @@ export class EmployeeEditComponent {
             }
         });
     }
+
+    showErrorWhenEdit(error: any) {
+        if (error.error.messages == 'Email already exists in the database.') {
+            this._toastService.showError(this.form.get('email')?.value + MESSAGE_WARNING.EMAIL_EXISTS, this.keyToast);
+        }
+        else if (error.error.messages) {
+            error.error.messages.forEach((item: string) => {
+                this._toastService.showError(item, this.keyToast);
+            });
+        }
+    }
+
     uploadFile(event: any): void {
         this.fileUpload = event.target.files[0];
         this.getBase64(event.target.files[0]);
@@ -130,6 +146,7 @@ export class EmployeeEditComponent {
 
     updateEmployeeById() {
         if (this.form.valid) {
+            this.loading = true;
             if (this.form.get('birthday')?.value) {
                 this.convertDataBeforeUpdate();
             }
@@ -147,26 +164,23 @@ export class EmployeeEditComponent {
                         this.fileUrl = res.data.fileUrl;
                         this._employeeService.updateEmployeeById(param).subscribe({
                             next: (res) => {
-                                this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
-                                this.navigateBackEmployeeList();
+                                this.buttonLoading();
                             },
                             error: (error) => {
-                                this.birthdayInit = new Date(this.birthdayInit);
-                                if (error.error.messages) {
-                                    error.error.messages.forEach((item: string) => {
-                                        this._toastService.showError(item, this.keyToast);
-                                    });
+                                this.loading = false;
+                                if (!this.birthdayInit) {
+                                    this.birthdayInit = null;
                                 } else {
-                                    error.error.Messages.forEach((item: string) => {
-                                        this._toastService.showError(item, this.keyToast);
-                                    });
+                                    this.birthdayInit = new Date(this.birthdayInit);
                                 }
+                                this.showErrorWhenEdit(error);
                             },
                         });
                     },
                     error: (error) => {
+                        this.loading = false;
                         error.error.Messages.forEach((item: string) => {
-                            this._toastService.showErrorNoKey(item);
+                            this._toastService.showError(item, this.keyToast);
                         });
                     },
                 });
@@ -174,21 +188,21 @@ export class EmployeeEditComponent {
             if (!this.fileUpload) {
                 this._employeeService.updateEmployeeById(this.form.value).subscribe({
                     next: (res) => {
-                        this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
-                        this.navigateBackEmployeeList();
+                        this.buttonLoading();
                     },
                     error: (error) => {
-                        this.birthdayInit = new Date(this.birthdayInit);
-                        if (error.error.messages) {
-                            error.error.messages.forEach((item: string) => {
-                                this._toastService.showError(item, this.keyToast);
-                            });
+                        this.loading = false;
+                        if (!this.birthdayInit) {
+                            this.birthdayInit = null;
+                        } else {
+                            this.birthdayInit = new Date(this.birthdayInit);
                         }
+                        this.showErrorWhenEdit(error);
                     },
                 });
             }
         } else {
-            this._toastService.showError(MESSAGE_WARNING.REQUIRED_VALIDATION, this.keyToast);
+            this.checkValidInput = true;
         }
     }
 
@@ -208,7 +222,7 @@ export class EmployeeEditComponent {
                         this._toastService.showError(item, this.keyToast);
                     });
                 } else {
-                    this._toastService.showError(MESSAGE_TITLE.DELETE_SUCC, this.keyToast);
+                    this._toastService.showError(MESSAGE_TITLE_VN.DELETE_SUCC, this.keyToast);
                 }
             },
         });
@@ -218,7 +232,7 @@ export class EmployeeEditComponent {
         if (this.form.get('userName')?.value) {
             this._employeeService.resetPasswordEmployee(this.form.get('userName')?.value).subscribe({
                 next: () => {
-                    this._toastService.showSuccess(MESSAGE_TITLE.RESET_PASS_SUCC, this.keyToast);
+                    this._toastService.showSuccess(MESSAGE_TITLE_VN.RESET_PASS_SUCC, this.keyToast);
                     this.resetPassDialog = false;
                 },
                 error: (error) => {
@@ -228,7 +242,7 @@ export class EmployeeEditComponent {
                         });
                     }
                     else {
-                        this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_ERR);
+                        this._toastService.showErrorNoKey(MESSAGE_TITLE_VN.RESET_PASS_ERR);
                     }
                 },
             });
@@ -269,5 +283,13 @@ export class EmployeeEditComponent {
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
+    }
+
+    buttonLoading() {
+        setTimeout(() => {
+            this._notificationService.addMessage(MESSAGE_TITLE_VN.EDIT_SUCC);
+            this.navigateBackEmployeeList();
+            this.loading = false
+        }, 500);
     }
 }

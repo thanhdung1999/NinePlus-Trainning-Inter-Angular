@@ -1,17 +1,9 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
     <div class="grid">
-        <div class="col-4"> <span class="text-900 text-xl font-bold mb-4 block">{{
-                "TRANSLATOR.EDIT" |
+        <div> <span class="text-900 text-xl font-bold mb-4 mt-3 block">{{
+                "MANAGE_EMPLOYEE.TITLE_EDIT" |
                 translate }}</span></div>
-        <div class="col-4 col-offset-4" style="text-align: center;">
-            <button
-                type="button"
-                pButton
-                pRipple
-                (click)="resetPassDialog=true"
-                label="{{ 'AUTH.RESET_PASSWORD' | translate }}"
-                class="p-button-outlined p-button-warning"></button></div>
     </div>
     <div class="grid">
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
@@ -30,8 +22,16 @@
                         <input id="name" type="text" pInputText
                             formControlName="name" />
                         <p style="color: red"
-                            *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">*
+                            *ngIf="form.get('name')?.errors?.['required'] && checkValidInput">*
                             {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
+                        <p style="color: red"
+                            *ngIf="form.get('name')?.errors?.['maxlength']">
+                            {{"INVALID.MAX_LENGTH_NAME" | translate }}
+                        </p>
+                        <p style="color: red"
+                            *ngIf="form.get('name')?.errors?.['pattern']">
+                            {{"INVALID.PATTERN_NAME" | translate}}
+                        </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="email" class="font-medium text-900">Email<span
@@ -39,11 +39,15 @@
                         <input id="email" type="text" pInputText
                             formControlName="email" />
                         <p style="color: red"
-                            *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">*
+                            *ngIf="form.get('email')?.errors?.['required'] && checkValidInput">*
                             {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                         <p style="color: red"
-                            *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
+                            *ngIf="form.get('email')?.errors?.['pattern']">
                             * {{ "MANAGE_BRANCH.VALID_EMAIL" | translate }}
+                        </p>
+                        <p style="color: red"
+                            *ngIf="form.get('email')?.errors?.['maxlength']">
+                            * {{"INVALID.MAX_LENGTH_EMAIL" | translate }}
                         </p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
@@ -58,12 +62,12 @@
                             [autoClear]="false"
                             [maxlength]="11"></p-inputMask>
                         <p style="color: red"
-                            *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
+                            *ngIf="form.get('phoneNumber')?.errors?.['required'] && checkValidInput">
                             * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                         </p>
                         <p style="color: red"
-                            *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
-                            * {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}
+                            *ngIf="form.get('phoneNumber')?.errors?.['pattern']">
+                            {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}
                         </p>
                     </div>
                     <div class="col-12 md:col-6">
@@ -95,6 +99,7 @@
                                     "FIELDS.BIRTH_DAY" | translate }}</label>
                                 <p-calendar [(ngModel)]="birthdayInit"
                                     id="birthday" [showIcon]="true"
+                                    dateFormat="dd/mm/yy"
                                     formControlName="birthday"></p-calendar>
                             </div>
                         </div>
@@ -157,7 +162,7 @@
                             [showClear]="true">
                         </p-dropdown>
                         <p style="color: red"
-                            *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
+                            *ngIf="form.get('workShiftId')?.errors?.['required'] && checkValidInput">
                             * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                         </p>
                     </div>
@@ -166,12 +171,17 @@
                             "FIELDS.ADDRESS" | translate }}</label>
                         <input id="address" type="text" pInputText
                             formControlName="address" />
+                        <p style="color: red"
+                            *ngIf="form.get('address')?.errors?.['maxlength']">
+                            {{ "INVALID.MAX_LENGTH_ADDRESS" |
+                            translate }}
+                        </p>
                     </div>
                     <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
-                                <button pButton pRipple
-                                    label="{{ 'BTN.SAVE' | translate }}"
+                                <button pButton pRipple [loading]="loading"
+                                    label="{{ 'BTN.SAVE_CHANGE' | translate }}"
                                     icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
@@ -186,6 +196,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-2 md:col-3 lg:col-5"></div>
+                    <div
+                        class="col-8 md:col-5 sm:col-8 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 lg:col-2"
+                        style="text-align: center;">
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            (click)="resetPassDialog=true"
+                            label="{{ 'AUTH.RESET_PASSWORD' | translate }}"
+                            class="p-button-outlined p-button-warning"></button></div>
                 </div>
             </div>
         </form>
@@ -196,7 +217,8 @@
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
             <span *ngIf="form.get('userName')?.value">
-                {{ "TRANSLATOR.CONFIRM_PASSWORD" | translate }} <b>{{form.get('userName')?.value}}</b>
+                {{ "MANAGE_EMPLOYEE.CONFIRM_PASSWORD" | translate }} <b>{{form.get('userName')?.value}}</b>{{
+                "MANAGE_EMPLOYEE.CONFIRM_PASSWORD_AFTER" | translate }}
                 ?</span>
         </div>
         <ng-template pTemplate="footer">

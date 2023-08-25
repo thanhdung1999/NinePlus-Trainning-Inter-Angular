@@ -28,6 +28,6 @@ export enum ROUTER {
     DASHBOARD = 'dashboard',
     LIST_SERVICE = 'service/list',
     CREATE_SERVICE = 'service/create',
-    EDIT_SERVICE = 'service/edit',
+    EDIT_SERVICE = 'service/edit/',
     CALENDAR = 'booking/calendar',
 }
