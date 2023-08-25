@@ -501,16 +501,12 @@ ul li {
     background-color: white;
     padding: 12px;
 }
-.icon-anh{
+.icon-anh {
     margin-left: -5rem;
     margin-top: 4rem;
 }
-.anh-around{
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%)
-}
-.xxx{
+
+.xxx {
     overflow-x: hidden;
 }
 .icon-anh {
@@ -521,57 +517,62 @@ ul li {
     min-width: 100%;
     min-height: 100%;
 }
-@media (min-width: 576px) and (max-width: 768px) {
-    .aaa {
-        display: none;
+.thumnail-img {
+    object-fit: cover;
+}
+.therapy {
+    display: inline-flex;
+}
+@media (max-width: 1200px) {
+    .thumnail-img {
+        object-fit: unset !important;
     }
+    .method {
+        padding-right: 5% !important;
+        padding-left: 15% !important;
+    }
+    .list-icon {
+        transform: translateX(25%);
+    }
+}
+
+@media (max-width: 992px) {
+    .aaa {
+        width: 7rem;
+        height: 7rem;
+    }
+    .list-icon {
+        transform: translateX(50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .list-icon {
+        flex-direction: row;
+        top: 0;
+        width: 100%;
+        height: unset;
+        transform: translatey(-50%);
+    }
+    .method {
+        padding: 0 !important;
+    }
+    .description {
+        padding-top: 5rem !important;
+        padding-bottom: 5rem !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
     .icon-anh {
         margin-top: 4rem;
     }
     .title {
-        top: 30%;
         div {
             h1 {
-                font-size: 1.5rem;
                 h3 {
-                    margin-left: 0.5rem !important;
-                    font-size: 1.5rem;
                 }
             }
         }
     }
-}
-
-// tablet
-@media (min-width: 768px) and (max-width: 992px) {
-    .title {
-        top: 50%;
-    }
-}
-// mobile and tablet
-@media (max-width: 992px) and (max-width: 1200px) {
-    .title {
-        top: 20%;
-        div {
-            h1 {
-                font-size: 2rem !important;
-                h3 {
-                    font-size: 2rem !important;
-                    margin-left: 1rem !important;
-                }
-            }
-            p {
-                line-height: unset;
-                margin: 0;
-                position: relative;
-                top: -0.5rem;
-            }
-        }
-    }
-}
-// pc
-@media (min-width: 1200px) and (max-width: 1450px) {
-}
-
-@media (min-width: 1450px) {
 }

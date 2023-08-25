@@ -6,66 +6,22 @@
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown mx-5">
-                                <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Về chúng tôi
+                            <li *ngFor="let item of listNavbarHeader" class="nav-item dropdown">
+                                <a
+                                    class="px-3 py-2 block text-color font-bold"
+                                    id="navbarDropdownMenuLink"
+                                    role="button"
+                                    p
+                                    data-bs-toggle="drodown"
+                                    aria-expanded="false"
+                                >
+                                    {{ item.label }}
                                 </a>
-                                <ul class="dropdown-menu dropdown">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Về chúng tôi</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Tầm nhìn, sứ mệnh</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Về chủ tịch</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Đội ngũ bác sĩ</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Thành tựu</a>
+                                <ul *ngIf="item.items.length > 0" class="dropdown-menu">
+                                    <li *ngFor="let label of item.items">
+                                        <a class="dropdown-item" href="">{{ label }}</a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class="nav-item dropdown mx-3">
-                                <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dịch vụ
-                                </a>
-                                <ul class="dropdown-menu mx-5">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Chăm sóc điều trị da</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Chăm sóc điều trị cơ thể</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Chăm sóc điều trị mặt</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Chăm sóc tóc</a>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Nail</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown mx-3">
-                                <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Sản phẩm
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="#"> Mỹ phẩm</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Sản phẩm bảo vệ sức khỏe</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Dược liệu tóc</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item mx-3">
-                                <a class="nav-link">Các bài viết</a>
                             </li>
                         </ul>
                     </div>
@@ -84,13 +40,23 @@
             <app-topbar-profile></app-topbar-profile>
         </div>
         <div class="category-mobile-tablet">
-            <div class="relative">
-                <p-button icon="pi pi-list" styleClass="p-button-secondary" tooltipPosition="bottom" class="mr-3" (click)="showListCategory()">
-                </p-button>
-                <span class="btn-tt scalein animation-duration-1000 animation-iteration-infinite">Danh Sách</span>
-            </div>
-            <button *ngIf="!isAuth" (click)="showPopupLogin()" class="btn btn-signin mr-3">Đăng nhập</button>
-
+            <p-button
+                icon="pi pi-list"
+                styleClass="p-button-secondary"
+                tooltipPosition="bottom"
+                pTooltip="{{ 'TOOLTIP.LIST' | translate }}"
+                class="mr-5"
+                (click)="showListCategory()"
+            ></p-button>
+            <p-button
+                *ngIf="!isAuth"
+                icon="pi pi-user"
+                styleClass="p-button-info"
+                tooltipPosition="bottom"
+                pTooltip="{{ 'TOOLTIP.SIGN_IN' | translate }}"
+                class="mr-5"
+                (click)="showPopupLogin()"
+            ></p-button>
             <div class="mr-5 mt-1" *ngIf="isAuth">
                 <app-topbar-profile></app-topbar-profile>
             </div>
@@ -103,8 +69,8 @@
             </label>
             <h5>Danh muc</h5>
             <ul class="header-category-list">
-                <li *ngIf="!isAuth" class="header-category-item" (click)="navigateToRegister()">
-                    <a class="header-category-link"> Đăng ký </a>
+                <li *ngIf="!isAuth" class="header-category-item">
+                    <a href="" class="header-category-link"> Đăng ký </a>
                 </li>
                 <li *ngFor="let item of listNavbarHeader" class="header-category-item">
                     <a href="" class="header-category-link">{{ item.label }}</a>
@@ -113,23 +79,5 @@
         </div>
     </div>
 </nav>
-<div *ngIf="isAuth === false || role !== 'Superadmin'" class="btn-form-popup" (click)="navigateToBooking()">
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        role="img"
-        width="1em"
-        height="1em"
-        viewBox="0 0 24 24"
-        data-icon="material-symbols:edit-calendar"
-        class="iconify-inline iconify iconify--material-symbols"
-        style="vertical-align: -0.125em"
-    >
-        <path
-            fill="currentColor"
-            d="M5 22q-.825 0-1.413-.588T3 20V6q0-.825.588-1.413T5 4h1V2h2v2h8V2h2v2h1q.825 0 1.413.588T21 6v6h-2v-2H5v10h7v2H5Zm17.125-5L20 14.875l.725-.725q.275-.275.7-.275t.7.275l.725.725q.275.275.275.7t-.275.7l-.725.725ZM14 23v-2.125l5.3-5.3l2.125 2.125l-5.3 5.3H14Z"
-        ></path>
-    </svg>
-</div>
 
-<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()" (getRole)="getRole()"></app-login> -->
+<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()" (getRole)="getRole()"></app-login>
