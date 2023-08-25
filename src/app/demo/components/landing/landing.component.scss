@@ -523,7 +523,11 @@ ul li {
 .therapy {
     display: inline-flex;
 }
+
+// Responsive Pc first
 @media (max-width: 1200px) {
+    .title {
+    }
     .thumnail-img {
         object-fit: unset !important;
     }
@@ -544,6 +548,24 @@ ul li {
     .list-icon {
         transform: translateX(50%);
     }
+    .title {
+        top: 35%;
+        div {
+            h1 {
+                font-size: 2rem !important;
+                h3 {
+                    font-size: 2rem !important;
+                    margin-left: 1rem !important;
+                }
+            }
+            p {
+                line-height: unset;
+                margin: 0;
+                position: relative;
+                top: -0.5rem;
+            }
+        }
+    }
 }
 
 @media (max-width: 768px) {
@@ -561,18 +583,29 @@ ul li {
         padding-top: 5rem !important;
         padding-bottom: 5rem !important;
     }
+    .title {
+        top: 30%;
+        width: 80%;
+        left: 40%;
+        div {
+            h1 {
+                font-size: 1.5rem;
+                h3 {
+                    margin-left: 0.5rem !important;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
     .icon-anh {
         margin-top: 4rem;
     }
+}
+@media (max-width: 576px) {
     .title {
-        div {
-            h1 {
-                h3 {
-                }
-            }
-        }
+        display: none;
     }
 }
