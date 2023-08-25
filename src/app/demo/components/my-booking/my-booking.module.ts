@@ -15,9 +15,14 @@ import { MyBookingRoutingModule } from './my-booking-routing.module';
 import { MyBookingComponent } from './my-booking.component';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { DialogModule } from 'primeng/dialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { RatingModule } from 'primeng/rating';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
-    declarations: [MyBookingComponent],
+    declarations: [MyBookingComponent, FeedbackComponent],
     imports: [
         CommonModule,
         MyBookingRoutingModule,
@@ -35,7 +40,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         DropdownModule,
         DividerModule,
         ConfirmDialogModule,
-        AppConfigModule
+        AppConfigModule,
+        DialogModule,
+        RadioButtonModule,
+        RatingModule,
+        InputTextareaModule,
+        ImageModule,
     ],
 })
 export class MyBookingModule {}

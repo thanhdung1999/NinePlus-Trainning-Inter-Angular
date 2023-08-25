@@ -6,30 +6,31 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { SessionService } from 'src/app/core';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { BookingDetailResponses, MyBooking } from '../../api/my-booking';
-import { chain, isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { HttpErrorResponse } from '@angular/common/http';
-
-interface Booking {
-    date: string;
-    history: MyBooking[];
-}
+import { BookingStatusService } from 'src/app/shared/services/booking-status.service';
+import { BookingStatus } from 'src/app/shared/models/bookingStatus';
+import { DialogService } from 'primeng/dynamicdialog';
+import { BOOKINGSTATUS } from 'src/app/shared/constants/status.constant';
 
 @Component({
     selector: 'app-my-booking',
     templateUrl: './my-booking.component.html',
     styleUrls: ['./my-booking.component.scss'],
-    providers: [MessageService, ToastService, ConfirmationService],
+    providers: [MessageService, ToastService, ConfirmationService, DialogService],
 })
 export class MyBookingComponent {
     customerId = '';
-    myBooking: Booking[] = [];
+    myBooking: MyBooking[] = [];
     keyToast = TOAST.KEY_BC;
     formFilter!: FormGroup;
-    statusPage = '4';
-
+    statusPage: number = 0;
+    status!: BookingStatus[];
+    isShowWriteFeedBack: boolean = false;
+    bookingDetail!: BookingDetailResponses;
     constructor(
         private _router: Router,
         private _layoutService: LayoutService,
@@ -38,12 +39,13 @@ export class MyBookingComponent {
         private _toastService: ToastService,
         private _confirmationService: ConfirmationService,
         private _fb: FormBuilder,
+        private _bookingStatusService: BookingStatusService,
         private _detect: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
         this.initForm();
-        this.getCustomerId();
+        this.getListBookingStatus();
         this.getListMyBooking();
     }
 
@@ -54,35 +56,42 @@ export class MyBookingComponent {
         });
     }
 
-    getCustomerId() {
-        this.customerId = this._sessionService.userAuthenticate.userId;
+    getListBookingStatus() {
+        this._bookingStatusService.getListStatusBooking().subscribe((res) => {
+            this.status = res.data?.reverse() as BookingStatus[];
+        });
     }
 
     getListMyBooking() {
+        this.customerId = this._sessionService.userAuthenticate.userId;
         this._bookingService.getListBookingWithIdCustomer(this.customerId).subscribe({
             next: (res) => {
-                const myBooking = this.handleTotalMoneyAndTimeMyBooking(res.data as MyBooking[]);
-                this.groupByDateBooking(myBooking);
-            },
-            error: (error) => {
-                error.error.messages.forEach((item: string) => {
-                    this._toastService.showError(item, this.keyToast);
-                });
+                const result = this.handleBookingStatusDone(res.data as MyBooking[]);
+                this.handleTotalMoneyAndTimeMyBooking(result);
             },
         });
     }
 
-    groupByDateBooking(myBooking: MyBooking[]) {
-        // Group the elements of Array based on `bookingDate` property
-        const result = chain(myBooking)
-            .groupBy('bookingDate')
-            .map((value, key) => ({ date: key, history: value }))
-            .value();
-        result.sort((d1, d2) => new Date(d2.date).getTime() - new Date(d1.date).getTime());
-        this.myBooking = result as Booking[];
+    handleBookingStatusDone(myBooking: MyBooking[]): MyBooking[] {
+        const result: MyBooking[] = [];
+        myBooking.forEach((item, indexBooking) => {
+            const temp: MyBooking = item;
+            if (item.bookingStatus === 3) {
+                item.bookingDetailResponses.length > 0 &&
+                    item.bookingDetailResponses.forEach((bookingDetail, indexBookingDetail) => {
+                        let booking: MyBooking = cloneDeep(item);
+                        booking.bookingDetailResponses = [];
+                        booking.bookingDetailResponses.push(bookingDetail);
+                        result.push(booking);
+                    });
+            } else {
+                result.push(item);
+            }
+        });
+        return result;
     }
 
-    handleTotalMoneyAndTimeMyBooking(data: MyBooking[]): MyBooking[] {
+    handleTotalMoneyAndTimeMyBooking(data: MyBooking[]) {
         data.forEach((booking, index) => {
             if (booking.bookingDetailResponses && booking.bookingDetailResponses.length > 0) {
                 data[index].totalMoney = booking.bookingDetailResponses?.reduce((accumulator: number, currentValue: BookingDetailResponses) => {
@@ -95,16 +104,20 @@ export class MyBookingComponent {
             booking.toTime = this.handleHoursMinutes(booking.toTime + '');
             return booking;
         });
-        return result;
+        result.sort((d1, d2) => new Date(d2.bookingDate + '').getTime() - new Date(d1.bookingDate + '').getTime());
+        this.myBooking = result as MyBooking[];
     }
 
-    getBookingWithStatus(status: string) {
+    getBookingWithStatus(status: number | undefined) {
         this.formFilter.patchValue({
             keyword: '',
         });
-        this.statusPage = status;
-        if (status === '4') {
+        if (status) {
+            this.statusPage = status;
+        }
+        if (status === 0) {
             this.getListMyBooking();
+            this.statusPage = 0;
         } else {
             this.formFilter.patchValue({
                 bookingStatus: status,
@@ -173,13 +186,26 @@ export class MyBookingComponent {
             });
     }
 
+    showDialogWirteFeedBack(bookingDetail: BookingDetailResponses, booking: MyBooking) {
+        const status = this.status.find((item) => {
+            return item.id === booking.bookingStatus;
+        });
+        if (status && status.value === BOOKINGSTATUS.DONE) {
+            this.bookingDetail = bookingDetail;
+            this.isShowWriteFeedBack = true;
+        }
+    }
+    hiddenDialogWirteFeedback() {
+        this.isShowWriteFeedBack = false;
+    }
+
     filterBooking() {
         let param = FilterHelper.removeNullValue(this.formFilter.value);
         this._bookingService.filterMyBooking(param, this.customerId).subscribe({
             next: (res: any) => {
                 if (!isEmpty(res.data)) {
-                    const myBooking = this.handleTotalMoneyAndTimeMyBooking(res.data as MyBooking[]);
-                    this.groupByDateBooking(myBooking);
+                    const result = this.handleBookingStatusDone(res.data as MyBooking[]);
+                    this.handleTotalMoneyAndTimeMyBooking(result);
                     this._detect.detectChanges();
                 } else {
                     this._toastService.showWarning(MESSAGE_TITLE.LIST_EMPTY, this.keyToast);
@@ -206,7 +232,7 @@ export class MyBookingComponent {
         this.formFilter.reset();
         this.initForm();
         this.getListMyBooking();
-        this.statusPage = '4';
+        this.statusPage = 0;
     }
 
     get filledInput(): boolean {

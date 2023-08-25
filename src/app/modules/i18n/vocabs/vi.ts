@@ -217,5 +217,17 @@ export const locale = {
         MANAGE_BOOKING: {
             NAME: 'Chọn khách hàng',
         },
+        FEEDBACK: {
+            TITLE: 'Nhận xét',
+            RATING: 'Chất lượng dịch vụ',
+            ERROR_RATING: 'Vui lòng chọn đánh giá',
+            RATING_GOOD: 'RẤT TỐT',
+            EMPLOYEE: 'Nhân viên',
+            SERVICE: 'Dich vụ',
+            SHARE: 'Chia sẽ thêm ý kiến để giúp dịch vụ được tốt hơn',
+            ADD_IMAGE: "Thêm ảnh",
+            ADD_VIDEO: "Thêm video",
+            CONTENT_EMPLOYEE: "Về khía cạnh"
+        },
     },
 };

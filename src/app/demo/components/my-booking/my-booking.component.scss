@@ -1,6 +1,6 @@
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 1rem;
 }
 
 /* Track */
@@ -13,7 +13,6 @@
     background: #c1c1c1;
 }
 @media (max-width: 992px) {
-    
 }
 
 .active {
@@ -23,4 +22,43 @@
     background-color: var(--pink-50) !important;
     color: #d3d1d1 !important;
     cursor: no-drop !important;
+}
+
+.active {
+    background-color: var(--surface-300);
+}
+.disabled-btn {
+    background-color: var(--pink-50) !important;
+    color: #d3d1d1 !important;
+    cursor: no-drop !important;
+}
+.waiting {
+    background-color: var(--gray-50);
+    .icon-check {
+        background-color: var(--gray-500);
+    }
+    .content {
+        color: var(--gray-500);
+    }
+}
+.inprogress {
+    background-color: var(--orange-50);
+    .icon-check {
+        background-color: var(--orange-500);
+    }
+    .content {
+        color: var(--orange-500);
+    }
+}
+.done {
+    background-color: var(--green-50);
+    .icon-check {
+        background-color: var(--green-500);
+    }
+    .content {
+        color: var(--green-500);
+    }
+}
+.border-bottom {
+    border-bottom: 1px solid var(--gray-50);
 }
