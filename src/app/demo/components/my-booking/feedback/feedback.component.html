@@ -1,0 +1,111 @@
+<p-dialog
+    [(visible)]="isShowWriteFeedBack"
+    (onHide)="hiddenDialog()"
+    [style]="{ width: '500px', overflow: 'hidden' }"
+    [draggable]="false"
+    header="{{ 'FEEDBACK.TITLE' | translate }}"
+    [modal]="true"
+    [breakpoints]="{
+        '576px': '95vw'
+    }"
+    class="p-fluid"
+>
+    <p-confirmDialog
+        header="Confirmation"
+        key="confirm-feedback"
+        icon="pi pi-exclamation-triangle"
+        message="Are you sure you want to proceed?"
+        [style]="{ width: '350px' }"
+        acceptButtonStyleClass="p-button-text"
+        rejectButtonStyleClass="p-button-text"
+    ></p-confirmDialog>
+    <ng-template pTemplate="content">
+        <form [formGroup]="formFeedback">
+            <div class="flex align-items-center">
+                <img
+                    *ngIf="bookingDetail && bookingDetail.serviceImages && bookingDetail.serviceImages.length > 0"
+                    [src]="bookingDetail.serviceImages[0].nameFileLink"
+                    width="150"
+                    class="block shadow-2 w-4rem h-4rem"
+                />
+                <div class="flex flex-column ml-3">
+                    <span *ngIf="bookingDetail" class="font-semibold">{{ bookingDetail.serviceName }}</span>
+                    <span *ngIf="bookingDetail" class="two-row-line-height" x>{{ bookingDetail.serviceDescription }}</span>
+                </div>
+            </div>
+            <div class="flex align-items-center mt-4">
+                <div class="mr-5 font-semibold">{{ "FEEDBACK.RATING" | translate }}</div>
+                <p-rating formControlName="rating" [cancel]="false" [required]="true"></p-rating>
+                <span
+                    *ngIf="f['rating'].invalid && submitted && f['rating'].errors"
+                    class="scalein animation-duration-1000 animation-iteration-infinite ml-2 inline-block text-red-500"
+                    >{{ "FEEDBACK.ERROR_RATING" | translate }}</span
+                >
+                <span *ngIf="valueForm.rating === 5" class="ml-2 inline-block rating-color">{{ "FEEDBACK.RATING_GOOD" | translate }}</span>
+            </div>
+            <div class="mt-4 p-4 bg-gray-100 content-feedback overflow-y-scroll">
+                <div class="flex flex-column bg-white p-3" style="border: 1px solid var(--gray-200)">
+                    <div class="mb-2 font-semibold">{{ "FEEDBACK.EMPLOYEE" | translate }}</div>
+                    <textarea
+                        rows="1"
+                        [autoResize]="true"
+                        cols="10"
+                        formControlName="staffContent"
+                        class="mb-2"
+                        pInputTextarea
+                        placeholder="{{ 'FEEDBACK.CONTENT_EMPLOYEE' | translate }}"
+                    ></textarea>
+                    <div class="pb-6 font-semibold" style="border-bottom: 1px solid var(--gray-300)">{{ "FEEDBACK.SERVICE" | translate }}</div>
+                    <textarea
+                        rows="3"
+                        formControlName="serviceContent"
+                        [autoResize]="true"
+                        cols="10"
+                        class="mb-2 mt-2"
+                        pInputTextarea
+                        placeholder="{{ 'FEEDBACK.SHARE' | translate }}"
+                    ></textarea>
+                </div>
+                <div class="list-preview flex flex-wrap align-items-center mt-4 gap-4">
+                    <div *ngFor="let url of imageUrl; let i = index" class="relative inline-block">
+                        <span class="absolute icon-close" (click)="deletePreviewImage(url, i)">
+                            <i class="pi pi-times" style="font-size: 1.25rem"></i>
+                        </span>
+                        <p-image
+                            [src]="url"
+                            [imageStyle]="{ width: '80px', height: '80px', 'border-radius': '5px' }"
+                            [preview]="true"
+                            alt="Image preview"
+                        >
+                        </p-image>
+                    </div>
+                    <div *ngFor="let url of videoUrl; let i = index" class="relative inline-block">
+                        <span class="absolute icon-close" (click)="deletePreviewVideo(url, i)">
+                            <i class="pi pi-times" style="font-size: 1.25rem"></i>
+                        </span>
+                        <video [style]="{ width: '80px', height: '80px', 'border-radius': '5px' }" [src]="url" controls></video>
+                    </div>
+                </div>
+                <div class="flex mt-4">
+                    <input type="file" id="image" accept="image/*" multiple hidden (change)="previewImage($event)" />
+                    <input type="file" id="video" accept="video/mp4,video/*" multiple hidden (change)="previewVideo($event)" />
+                    <label class="btn btn-file" for="image">
+                        <i class="pi pi-camera" style="font-size: 1.25rem"></i>
+                        <span class="inline-block ml-1">{{ "FEEDBACK.ADD_IMAGE" | translate }}</span>
+                    </label>
+                    <label class="btn btn-file" for="video">
+                        <i class="pi pi-video" style="font-size: 1.25rem"></i>
+                        <span class="inline-block ml-1">{{ "FEEDBACK.ADD_VIDEO" | translate }}</span>
+                    </label>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pRipple icon="pi pi-times" class="btn btn-form-feedback btn-cancel" (click)="hiddenDialog()">{{ "BTN.CANCEL" | translate }}</button>
+        <button pRipple (click)="showConfirmPostFeedback()" icon="pi pi-check" class="btn btn-form-feedback btn-save">
+            {{ "BTN.SAVE" | translate }}
+        </button>
+    </ng-template>
+</p-dialog>

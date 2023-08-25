@@ -209,5 +209,17 @@ export const locale = {
             MINUTES: 'minutes',
             ESTIMATED_TIME: 'Estimated time',
         },
+        FEEDBACK: {
+            TITLE: 'Comments',
+            RATING: 'Quality of service',
+            ERROR_RATING: 'Please select a review',
+            RATING_GOOD: 'VERY GOOD',
+            EMPLOYEE: 'Employees',
+            SERVICE: 'Service',
+            SHARE: 'Share more ideas to make the service better',
+            ADD_IMAGE: 'Add image',
+            ADD_VIDEO: 'Add video',
+            CONTENT_EMPLOYEE: 'Aspects',
+        },
     },
 };

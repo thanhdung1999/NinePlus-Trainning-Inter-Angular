@@ -1,0 +1,67 @@
+@import "../my-booking.component.scss";
+$color-primary-feeeback: #ee4a28;
+
+::-webkit-scrollbar {
+    width: 1rem;
+}
+textarea {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+}
+textarea:focus {
+    outline: none;
+}
+
+:host ::ng-deep .p-rating-icon:not(.p-rating-cancel),
+:host ::ng-deep .p-rating-icon:not(.p-rating-cancel):hover {
+    color: #ffba1e !important;
+}
+.btn-file {
+    background: #fff;
+    color: $color-primary-feeeback;
+    border: 1px solid $color-primary-feeeback;
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+.rating-color {
+    color: #ffba1e
+}
+.content-feedback {
+    max-height: 50vh;
+}
+.btn-save {
+    background: $color-primary-feeeback;
+    color: #fff;
+}
+.btn-cancel {
+    background: var(--gray-300);
+}
+.list-preview {
+    padding-left: 8px;
+}
+.btn-form-feedback {
+    min-width: 5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        filter: brightness(103%);
+    }
+}
+.icon-close {
+    top: 0;
+    right: 0;
+    color: $color-primary-feeeback;
+    z-index: 10;
+    cursor: pointer;
+    border-bottom-left-radius: 5px;
+    background: rgb(255 255 255 / 74%);
+    padding: 2px 2px 0 2px;
+}
