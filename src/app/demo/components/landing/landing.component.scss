@@ -2,8 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Birthstone&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Birthstone&family=Nanum+Gothic+Coding&display=swap");
 
-
-.avt-landing{
+.avt-landing {
     margin-top: $header-height;
 }
 .back-to-top {
@@ -13,7 +12,7 @@
     bottom: 20px;
     z-index: 999;
     background-color: #4c63b6;
-}   
+}
 
 .title {
     position: absolute;
@@ -216,6 +215,15 @@
     border-radius: 50%;
     transform: translateY(30%);
     margin-left: -80px;
+}
+.list-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    top: 0;
+    height: 100%;
+    left: 0;
+    transform: translateX(-50%);
 }
 
 .icon-wrapper img {
@@ -505,7 +513,21 @@ ul li {
 .xxx{
     overflow-x: hidden;
 }
+.icon-anh {
+    margin-left: -5rem;
+    margin-top: 4rem;
+}
+.anh-around {
+    min-width: 100%;
+    min-height: 100%;
+}
 @media (min-width: 576px) and (max-width: 768px) {
+    .aaa {
+        display: none;
+    }
+    .icon-anh {
+        margin-top: 4rem;
+    }
     .title {
         top: 30%;
         div {
@@ -539,7 +561,6 @@ ul li {
                 }
             }
             p {
-
                 line-height: unset;
                 margin: 0;
                 position: relative;
