@@ -105,25 +105,11 @@
     }
 }
 
-@media (max-width: 992px) {
+@media (min-width: 992px) and (max-width: 1200px) {
     .topbar {
-        .header-content {
-            width: 100% !important;
-            .btn-booking {
-                min-width: unset;
-            }
-            .img-logo {
-                padding: 2rem 1rem 2rem 1rem;
-            }
-            .category-mobile-tablet {
-                display: flex;
-            }
+        .img-logo {
+            padding: 1rem !important;
         }
-    }
-}
-@media (max-width: 768px) {
-    .img-logo {
-        padding: 1rem !important;
     }
 }
 @media (min-width: 768px) and (max-width: 992px) {
@@ -135,10 +121,19 @@
         }
     }
 }
-@media (min-width: 992px) and (max-width: 1200px) {
+@media (max-width: 992px) {
     .topbar {
-        .img-logo {
-            padding: 1rem !important;
+        .header-content {
+            width: 100% !important;
+            .btn-booking {
+                min-width: unset;
+            }
+            .img-logo {
+                padding: 1rem !important;
+            }
+            .category-mobile-tablet {
+                display: flex;
+            }
         }
     }
 }
