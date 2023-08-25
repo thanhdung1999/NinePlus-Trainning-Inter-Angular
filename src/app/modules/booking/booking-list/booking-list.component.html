@@ -9,7 +9,7 @@
 
             <div class="col-12 sm:col-4">
                 <p>{{ "FIELDS.FROM_TO" | translate }}</p>
-                <input pInputText type="date" formControlName="fromTime" date="dd/MM/yyyy" />
+                <input pInputText type="date" formControlName="useTime" />
             </div>
             <div class="col-12 sm:col-4">
                 <p>Tình trạng</p>
@@ -60,7 +60,7 @@
         responsiveLayout="scroll"
         currentPageReportTemplate="{{ 'TRANSLATOR.CURRENTPAGE' | translate }}"
         [rowsPerPageOptions]="[5, 15, 25]"
-        [globalFilterFields]="['status', 'fromToTime', 'status']"
+        [globalFilterFields]="['bookingDate', 'useTime', 'status']"
     >
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap pl-5 gap-2 justify-content-end">
