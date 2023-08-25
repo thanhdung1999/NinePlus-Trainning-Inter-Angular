@@ -37,6 +37,7 @@ export class BookingListComponent {
     totalRecords: number = 0;
     firstPaging = 0;
     date: Date | undefined;
+    useTime: Booking[]=[];
 
     constructor(
         private _fb: FormBuilder,
@@ -61,6 +62,7 @@ export class BookingListComponent {
             bookingDate: [''],
             status: [''],
             pageNumber: [1],
+            useTime:[],
             pageSize: [5],
             isExport: false,
             orderBy: [null]

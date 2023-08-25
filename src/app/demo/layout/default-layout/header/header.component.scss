@@ -1,5 +1,10 @@
 @import "../default-layout.component.scss";
 
+a {
+    font-family: "Lato", sans-serif;
+    color: #333333;
+    font-size: 17px;
+}
 .topbar {
     position: fixed;
     top: 0;

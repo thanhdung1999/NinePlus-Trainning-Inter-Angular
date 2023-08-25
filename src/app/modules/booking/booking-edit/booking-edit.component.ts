@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty } from 'lodash';
 import * as _ from 'lodash';
-import { MESSAGE_ERROR_INPUT,MESSAGE_ERROR_INPUT_VN, MESSAGE_TITLE,MESSAGE_TITLE_VN, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, MESSAGE_ERROR_INPUT_VN, MESSAGE_TITLE, MESSAGE_TITLE_VN, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MessageService } from 'primeng/api';
 import { BookingService } from 'src/app/shared/services/booking.service';
@@ -18,6 +18,20 @@ import { EqualsDateTime } from 'src/app/shared/validator/equal-date';
 const MESSAGE_ERROR = {
     CHECK_ID_BOOKING: 'Booking does not exist or recheck internet connection',
 };
+interface UpdateBooking {
+    id?: number;
+    bookingDate?: string;
+    fromTime?: string;
+    toTime?: string;
+    note?: string;
+    services?: ServiceUpdate[];
+}
+interface ServiceUpdate {
+    id: number;
+    name: string;
+    price: number;
+    serviceTime: number;
+}
 
 @Component({
     selector: 'app-booking-edit',
@@ -32,6 +46,7 @@ export class BookingEditComponent implements OnInit {
     keyToast = TOAST.KEY_BC;
     form!: FormGroup;
     service: Services[] = [];
+    serviceId: Services[] = [];
     name: Services[] = [];
     bookingUpdate: BookingUpdate[] = [];
     hourFormat: string = '24';
@@ -39,6 +54,11 @@ export class BookingEditComponent implements OnInit {
     maxDate!: Date;
     startTime!: Time[];
     endTime!: Time[];
+    idBookingInit: number = 0;
+    bookingDateInit!: Date;
+    fromTimeInit!: Date;
+    toTimeInit!: Date;
+    noteInit: string = '';
 
     constructor(
         private _activatedRoute: ActivatedRoute,
@@ -52,7 +72,7 @@ export class BookingEditComponent implements OnInit {
     ngOnInit(): void {
         this.getAllService();
         this.getIdParamRequest();
-        this.initFormUpdateBooking();
+        this.initForm();
         this.initMinAndMaxDateBooking();
         this.initStartTimeAndEndTime();
     }
@@ -63,25 +83,41 @@ export class BookingEditComponent implements OnInit {
         });
     }
 
-    initFormUpdateBooking() {
-        this._bookingService.getBookingById(this.bookingId).subscribe({
-            next: (data) => {
-                if (!isEmpty(data)) {
-                    const booking = data as Booking;
-                    this.form = this._fb.group({
-                        id: [this.bookingId],
-                        bookingDate: [new Date(booking?.bookingDate + ''), [Validators.required]],
-                        fromTime: [new Date(booking?.fromTime + ''), [Validators.required]],
-                        toTime: [new Date(booking?.toTime + ''), [Validators.required]],
-                        note: [booking?.note],
-                        serviceId: [[], Validators.compose([Validators.required])],
-                    }, {
-                        validator: EqualsDateTime.equalTime('fromTime', 'toTime'),
-                    });
-                }
-            },
-            error: (err) => {
-            },
+   
+    initForm(): void {
+        this.form = this._fb.group({
+            id: '',
+            bookingDate: ['', Validators.required],
+            fromTime: ['', Validators.required],
+            toTime: ['', Validators.required],
+            note: [''],
+            serviceId: ['', Validators.required],
+        });
+        if (this.bookingId) {
+            this._bookingService.getBookingById(this.bookingId).subscribe({
+                next: (res) => {
+                    console.log(res);
+                    this._updateFormValue(res as UpdateBooking);
+                },
+            });
+        }
+    }
+
+    private _updateFormValue(data: UpdateBooking): void {
+        let listServiceId: any = [];
+        if (data.services && data.services.length > 0) {
+            data.services?.forEach((element: any) => {
+                listServiceId.push(element.id);
+            });
+        }
+
+        this.form.patchValue({
+            id: data.id,
+            bookingDate:  data.bookingDate ? new Date(data.bookingDate) : '',
+            fromTime:data.fromTime ? new Date(data.fromTime) : '',
+            toTime:  data.toTime ? new Date(data.toTime) : '',
+            note: data?.note,
+            serviceId: listServiceId ? listServiceId : [],
         });
     }
 
@@ -105,7 +141,6 @@ export class BookingEditComponent implements OnInit {
     }
 
     saveBooking(booking: BookingUpdate) {
-        console.log(this.form.value);
         if (this.form.valid) {
             this.convertBookingDateFormat();
             let bookingClone = _.cloneDeep(this.form.value);
@@ -113,7 +148,7 @@ export class BookingEditComponent implements OnInit {
                 for (let i = 0; i < this.form.value.serviceId.length; i++) {
                     bookingClone.serviceId[i] = this.form.value.serviceId[i].id;
                 }
-            } 
+            }
 
             bookingClone = this.handleValueDate(bookingClone as BookingUpdate);
             this._bookingService.updateBooking(booking).subscribe({
@@ -131,7 +166,6 @@ export class BookingEditComponent implements OnInit {
             });
         }
     }
-   
 
     getAllService() {
         this._serviceService.getListServices().subscribe({

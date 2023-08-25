@@ -171,6 +171,7 @@ export class BookingCreateComponent implements OnInit {
         const year = originalDate.getFullYear();
         const month = String(originalDate.getMonth() + 1).padStart(2, '0');
         const day = String(originalDate.getDate()).padStart(2, '0');
+       
         return `${year}-${month}-${day}T00:00:00`;
     }
 
