@@ -1,5 +1,6 @@
 <div class="card">
-    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.ADD_NEW"
+    <span class="text-900 text-xl font-bold mb-4 block">{{
+        "MANAGE_SERVICE.TITLE_CREATE"
         | translate }}</span>
     <p-toast [key]="keyToast"></p-toast>
     <div class="grid">
@@ -18,21 +19,23 @@
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
                                 }}
                             </p>
+                            <p style="color: red"
+                                *ngIf="form.get('name')?.errors?.['maxlength']">
+                                {{"INVALID.MAX_LENGTH_NAME" | translate}}
+                            </p>
+                            <p style="color: red"
+                                *ngIf="form.get('name')?.errors?.['pattern']">
+                                {{"INVALID.PATTERN_NAME" | translate}}
+                            </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-10">
                             <label for="avatar" class="font-medium text-900">{{
-                                "FIELDS.AVATAR" | translate }}<span
+                                "FIELDS.IMAGE" | translate }}<span
                                     style="color: red"> *</span></label>
-                            <div class="flex align-items-center"
+                            <div class="grid"
                                 style="position: relative">
-                                <div class="img-container mr-4">
-                                    <img
-                                        #image
-                                        (error)="image.src = 'assets/layout/images/blank.png'"
-                                        [src]="fileUrl ? fileUrl : 'assets/layout/images/blank.png'"
-                                        alt="Trống" />
-                                </div>
-                                <div style="position: relative">
+                                <div class="lg:col-12 col-12 mt-4"
+                                    style="position: relative">
                                     <input
                                         id="imageUpload"
                                         type="file"
@@ -50,6 +53,7 @@
                                         multiple
                                         (change)="uploadFile($event)" />
                                     <button
+                                        [disabled]="validImageNumber"
                                         class="p-button-primary change-input-image w-10rem"
                                         pButton
                                         pRipple
@@ -65,10 +69,26 @@
                                         </div>
                                     </button>
                                 </div>
+                                <div
+                                    class="col-2 ml-3 lg:col-1 mt-4 image-container"
+                                    *ngFor="let image of imageSelected">
+                                    <img class="shadow-4"
+                                        #image
+                                        (error)="image.src = 'assets/layout/images/blank.png'"
+                                        [src]="image.url ? image.url : 'assets/layout/images/blank.png'"
+                                        alt="Trống" />
+                                    <div class="delete-icon"
+                                        (click)="removeImageSelected(image)">x</div>
+                                </div>
                             </div>
                             <p style="color: red"
                                 *ngIf="checkValidImg">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                }}
+                            </p>
+                            <p style="color: red" class="mt-2"
+                                *ngIf="validImageNumber">
+                                * {{ "INVALID.MAX_LENGTH_IMAGE" | translate
                                 }}
                             </p>
                         </div>
@@ -77,20 +97,25 @@
                                 "EMPLOYEE_FIELDS.DESRIPTION" | translate }}</label>
                             <textarea id="phone" type="text" pInputText
                                 formControlName="description"></textarea>
+                            <p style="color: red"
+                                *ngIf="form.get('description')?.errors?.['maxlength']">
+                                {{"INVALID.MAX_LENGTH_DISCRIPTION" | translate}}
+                            </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-5">
                             <label for="address"
                                 class="font-medium text-900">{{
-                                "FIELDS.PRICE" | translate }}<span
+                                "FIELDS.PRICE" | translate }} (VND)<span
                                     style="color: red"> *</span></label>
-                            <p-inputMask
-                                mask="9999999999"
+                            <p-inputNumber
+                                mask="99999999999999"
                                 slotChar
                                 placeholder="$"
                                 formControlName="price"
                                 [showClear]="true"
-                                [autoClear]="false"
-                                [maxlength]="11"></p-inputMask>
+                                inputId="locale-us" mode="decimal"
+                                locale="en-US"
+                                [maxlength]="15"></p-inputNumber>
                             <p style="color: red"
                                 *ngIf="checkValidInput && form.get('price')?.errors?.['required'] ">
                                 * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
@@ -123,7 +148,8 @@
                         <div class="col-12 md:col-6 lg:col-4 mt-4">
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-6">
-                                    <button pButton pRipple
+                                    <button pButton pRipple [loading]="loading"
+                                        [disabled]="validImageNumber"
                                         label="{{ 'BTN.SAVE' | translate }}"
                                         icon="pi pi-check" type="submit"></button>
                                 </div>

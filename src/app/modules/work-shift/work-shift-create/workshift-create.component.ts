@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WORKDAY } from 'src/app/shared/constants/workday';
 import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
-import { MESSAGE_TITLE } from 'src/app/shared';
+import { MESSAGE_TITLE_VN } from 'src/app/shared';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
@@ -21,6 +21,7 @@ export class WorkshiftCreateComponent {
   workdaySelected: number[] = [];
   submitted: boolean = false;
   keyToast: string = 'bc';
+  loading: boolean = false;
 
   constructor(private _fb: FormBuilder,
     private _router: Router,
@@ -32,8 +33,9 @@ export class WorkshiftCreateComponent {
     this.initFormCreateWorkshift();
   }
   initFormCreateWorkshift() {
+    const name = /^[A-Za-zÀ-ỹ]+(?: [A-Za-zÀ-ỹ]+)*$/;
     this.form = this._fb.group({
-      name: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(100), Validators.pattern(name)])],
       fromTime: ['', Validators.compose([Validators.required])],
       toTime: ['', Validators.compose([Validators.required])],
       isDefault: [false],
@@ -44,13 +46,14 @@ export class WorkshiftCreateComponent {
 
   createWorkshoft() {
     if (this.form.valid) {
+      this.loading = true;
       this.convertDataBeforeCreate();
       this._workShiftService.createWorkshift(this.form.value).subscribe({
         next: (res) => {
-          this._notificationService.addMessage(MESSAGE_TITLE.ADD_SUCC);
-          this.navigateBackToListWorkshift();
+          this.buttonLoading();
         },
         error: (error) => {
+          this.loading = false;
           error.error.messages.forEach((item: string) => {
             this._toastService.showError(item, this.keyToast);
           });
@@ -94,4 +97,11 @@ export class WorkshiftCreateComponent {
     this._router.navigate([ROUTER.LIST_WORK_SHIFT]);
   }
 
+  buttonLoading() {
+    setTimeout(() => {
+      this._notificationService.addMessage(MESSAGE_TITLE_VN.ADD_SUCC);
+      this.navigateBackToListWorkshift();
+      this.loading = false
+    }, 1000);
+  }
 }

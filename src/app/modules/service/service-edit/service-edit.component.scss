@@ -1,0 +1,26 @@
+.hoverClick {
+    cursor: pointer;
+}
+
+img {
+    border-radius: 10%;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    padding: 0.8% 5%;
+    cursor: pointer;
+    border-radius: 5px;
+}

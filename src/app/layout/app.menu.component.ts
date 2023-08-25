@@ -9,7 +9,7 @@ import { ROUTER } from '../shared';
 export class AppMenuComponent implements OnInit {
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(public layoutService: LayoutService) { }
 
     ngOnInit() {
         this.model = [
@@ -59,7 +59,7 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Quản lý dịch vụ',
                 icon: 'pi pi-slack',
-                items: [ {
+                items: [{
                     label: 'Danh sách',
                     icon: 'pi pi-fw pi-list',
                     routerLink: [ROUTER.LIST_SERVICE],
@@ -85,11 +85,6 @@ export class AppMenuComponent implements OnInit {
                         routerLink: [ROUTER.CREATE_CUSTOMER],
                     },
                 ],
-            },
-            {
-                label: 'Dịch vụ',
-                icon: 'pi pi-slack',
-                items: [],
             },
             {
                 label: 'Quản lý đặt lịch',

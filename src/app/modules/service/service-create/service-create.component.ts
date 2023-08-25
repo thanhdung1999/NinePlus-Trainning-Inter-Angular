@@ -8,7 +8,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { UploadService } from 'src/app/shared/services/upload.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
-import { MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { MESSAGE_TITLE_VN, ROUTER } from 'src/app/shared';
 
 @Component({
   selector: 'app-service-create',
@@ -25,8 +25,10 @@ export class ServiceCreateComponent {
   fileUpload: any;
   checkValidImg: boolean = false;
   checkValidInput: boolean = false;
-  files!: FileList;
-  i: number = 0;
+  files!: any;
+  imageSelected: any[] = [];
+  loading: boolean = false;
+  validImageNumber: boolean = false;
   constructor(private _fb: FormBuilder,
     private _router: Router,
     private _serviceService: ServicesService,
@@ -40,44 +42,51 @@ export class ServiceCreateComponent {
   }
 
   initForm() {
+    const name = /^[A-Za-zÀ-ỹ]+(?: [A-Za-zÀ-ỹ]+)*$/;
     this.form = this._fb.group({
       id: [0],
-      name: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(100), Validators.pattern(name)])],
       serviceTime: ['', Validators.compose([Validators.required])],
       price: ['', Validators.compose([Validators.required])],
-      description: [''],
-      servicesImageRequests: this._fb.array([
-        this._fb.group({
-          nameFile: [''],
-          typeFile: ['']
-        })
-      ]),
+      description: ['', Validators.maxLength(500)],
+      servicesImageRequests: this._fb.array([]),
     });
   }
 
-  createService() {
-    if (this.form.valid) {
-      let param = FilterHelper.removeNullValue(this.form.value);
-      const formData = new FormData();
-      formData.append('file', this.fileUpload);
-      formData.append('filePath', this.nameFile);
-      this._uploadService.upLoadFile(formData).subscribe({
-        next: (res: any) => {
-          param.servicesImageRequests[0].nameFile = this.nameFile
-          param.servicesImageRequests[0].typeFile = res.data.filePath
-          this._serviceService.createService(param).subscribe({
-            next: (res) => {
-              this._notificationService.addMessage(MESSAGE_TITLE.ADD_SUCC);
-              this.navigateBackServiceList();
-            },
-            error: (error) => {
-              if (error.error.messages) {
-                error.error.messages.forEach((item: string) => {
-                  this._toastService.showError(item, this.keyToast);
-                });
-              }
-            },
+  async createService() {
+    if (this.form.valid && this.files) {
+      this.loading = true;
+      for (let i = 0; i < this.files.length; i++) {
+        const formData = new FormData();
+        formData.append('file', this.files[i]);
+        formData.append('filePath', this.files[i].name);
+        try {
+          const res: any = await this._uploadService.upLoadFile(formData).toPromise();
+          const newServiceImageRequest = this._fb.group({
+            typeFile: [this.files[i].name],
+            nameFile: [res.data.filePath]
           });
+          const servicesImageRequestsArray = this.form.get('servicesImageRequests') as FormArray;
+          servicesImageRequestsArray.push(newServiceImageRequest);
+        } catch (error: any) {
+          this.loading = false;
+          error.error.messages.forEach((item: string) => {
+            this._toastService.showError(item, this.keyToast);
+          });
+        }
+      }
+      let param = FilterHelper.removeNullValue(this.form.value);
+      this._serviceService.createService(param).subscribe({
+        next: (res) => {
+          this.buttonLoading();
+        },
+        error: (error) => {
+          if (error.error.messages) {
+            this.loading = false;
+            error.error.messages.forEach((item: string) => {
+              this._toastService.showError(item, this.keyToast);
+            });
+          }
         },
       });
     } else {
@@ -86,28 +95,63 @@ export class ServiceCreateComponent {
     }
   }
 
-  uploadFile(event: any): void {
-    this.files = event.target.files;
-    this.fileUpload = event.target.files[0];
-    this.nameFile = event.target.files[0].name;
-    this.getBase64(event.target.files[0]);
-    if (this.fileUpload) {
-      this.checkValidImg = false
+  removeImageSelected(event: any) {
+    this.imageSelected = this.imageSelected.filter(base64 => base64.url != event.url);
+    this.files = Array.from(this.files).filter(f => f != event.file)
+    if (!this.files.length && !this.imageSelected.length) {
+      this.checkValidImg = true
+    } else if (this.files.length <= 5) {
+      this.validImageNumber = false;
     }
   }
-  getBase64(file: any) {
+
+  uploadFile(event: any): void {
+    if (this.files) {
+      this.files = [...this.files, ...event.target.files]
+    } else {
+      this.files = event.target.files;
+    }
+    if (this.files.length && event.target.files.length) {
+      this.imageSelected = [];
+      this.convertToBase64InImageSelected();
+      this.checkValidImg = false
+    }
+    if (this.files.length > 5) {
+      this.validImageNumber = true;
+    }
+  }
+
+  getBase64(file: any, image: any) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.fileUrl = reader.result as string;
-      // this._detect.detectChanges();
+      image = {
+        url: reader.result as string,
+        file: file
+      }
+      this.imageSelected.push(image);
     };
-    reader.onerror = function (error) {
+    reader.onerror = function (error: any) {
       console.log('Error: ', error);
     };
   }
 
+  convertToBase64InImageSelected() {
+    const image = {}
+    for (let i = 0; i < this.files.length; i++) {
+      this.getBase64(this.files[i], image)
+    }
+  }
+
   navigateBackServiceList() {
     this._router.navigate([ROUTER.LIST_SERVICE]);
+  }
+
+  buttonLoading() {
+    setTimeout(() => {
+      this._notificationService.addMessage(MESSAGE_TITLE_VN.ADD_SUCC);
+      this.navigateBackServiceList();
+      this.loading = false
+    }, 1000);
   }
 }

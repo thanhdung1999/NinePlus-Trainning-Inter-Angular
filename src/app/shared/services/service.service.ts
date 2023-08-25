@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
 import { ApiResponse } from 'src/app/core/http/api-response';
-import { Service, ServiceCreateAndEdit } from 'src/app/demo/api/service';
+import { Service } from 'src/app/demo/api/service';
 
 @Injectable({
     providedIn: 'root',
@@ -33,11 +33,10 @@ export class ServicesService extends CrudBaseService {
     createService(service: any): Observable<ApiResponse> {
         return this.create(service);
     }
-    updateService(service: ServiceCreateAndEdit): Observable<ApiResponse> {
+    updateService(service: any): Observable<ApiResponse> {
         return this.updateByPut(service);
     }
     getServiceById(id: string): Observable<any> {
         return this.get(id);
     }
-
 }

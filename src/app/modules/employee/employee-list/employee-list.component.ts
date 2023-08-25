@@ -6,7 +6,7 @@ import { Table } from 'primeng/table';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { Employee } from 'src/app/demo/api/employee';
 import { Workshift } from 'src/app/demo/api/work-shift';
-import { EmployeeService, MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { EmployeeService, MESSAGE_TITLE_VN, ROUTER } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -55,6 +55,7 @@ export class EmployeeListComponent {
             pageNumber: [1],
             pageSize: [5],
             isExport: false,
+            orderBy: [null],
         });
     }
     getListWorkShift() {
@@ -62,7 +63,7 @@ export class EmployeeListComponent {
             next: (res) => {
                 this.workshifts = res.data as Workshift[];
                 if (this.workshifts.length === 0) {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
                 }
                 this.toastFormAnotherScreen();
             },
@@ -92,7 +93,7 @@ export class EmployeeListComponent {
                 this.employees = res.data as Employee[];
                 this.totalRecords = res.totalCount as number;
                 if (this.employees.length === 0) {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
                 }
                 this.loadSkeletonTable();
                 this._detect.detectChanges();
@@ -124,13 +125,13 @@ export class EmployeeListComponent {
         if (this.employee.id) {
             this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
                 next: (next) => {
-                    this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
+                    this._toastService.showSuccessNoKey(MESSAGE_TITLE_VN.DELETE_SUCC);
                     this.filterEmployee();
                     this.deleteProductsDialog = false;
                     this.employee = {};
                 },
                 error: (error) => {
-                    this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
+                    this._toastService.showErrorNoKey(MESSAGE_TITLE_VN.DELETE_ERR);
                 },
             });
         }

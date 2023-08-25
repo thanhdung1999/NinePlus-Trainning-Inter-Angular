@@ -9,11 +9,8 @@ export interface Service {
     review: number,
 }
 
-export interface ServiceCreateAndEdit {
+export interface Image {
     id: number,
-    name: string,
-    serviceTime: number,
-    price: number,
-    description: number,
-    servicesImageRequests: [{}];
+    serviceId: number,
+    nameFile: string,
 }

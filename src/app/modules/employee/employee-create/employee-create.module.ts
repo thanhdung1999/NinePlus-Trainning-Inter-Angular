@@ -9,6 +9,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared';
 import { InputMaskModule } from 'primeng/inputmask';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
     declarations: [EmployeeCreateComponent],
@@ -19,6 +20,7 @@ import { InputMaskModule } from 'primeng/inputmask';
         FileUploadModule,
         SharedModule,
         FormsModule,
-        InputMaskModule],
+        InputMaskModule,
+        GalleriaModule],
 })
 export class EmployeeCreateModule { }

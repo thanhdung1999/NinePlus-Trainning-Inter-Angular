@@ -6,7 +6,7 @@ import { Workshift } from 'src/app/demo/api/work-shift';
 import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 import { ROUTER } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { MESSAGE_TITLE } from 'src/app/shared';
+import { MESSAGE_TITLE_VN } from 'src/app/shared';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
@@ -36,25 +36,7 @@ export class WorkShiftListComponent {
 
   ngOnInit() {
     this.initForm();
-    // this.getListWorkShift();
     this.loadSkeletonTable();
-  }
-
-  getListWorkShift() {
-    this._workShiftService.getListWorkShift().subscribe({
-      next: (res) => {
-        this.workshifts = res.data as Workshift[];
-        if (this.workshifts.length === 0) {
-          this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
-        }
-        this.toastFormAnotherScreen();
-      },
-      error: (error) => {
-        error.error.messages.forEach((item: string) => {
-          this._toastService.showErrorNoKey(item);
-        });
-      },
-    });
   }
 
   initForm(): void {
@@ -63,6 +45,7 @@ export class WorkShiftListComponent {
       pageNumber: [1],
       pageSize: [5],
       isExport: false,
+      orderBy: [null],
     });
   }
 
@@ -85,8 +68,9 @@ export class WorkShiftListComponent {
         this.workshifts = res.data as Workshift[];
         this.totalRecords = res.totalCount as number;
         if (this.workshifts.length === 0) {
-          this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+          this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
         }
+        this.toastFormAnotherScreen();
         this.loadSkeletonTable();
         this._detect.detectChanges();
       },
@@ -139,8 +123,8 @@ export class WorkShiftListComponent {
     if (this.workshift.id) {
       this._workShiftService.deleteWorkShiftById(this.workshift.id.toString()).subscribe({
         next: (res) => {
-          this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
-          this.getListWorkShift();
+          this._toastService.showSuccessNoKey(MESSAGE_TITLE_VN.DELETE_SUCC);
+          this.filterWorkshift();
           this.deleteProductsDialog = false;
           this.workshift = {};
         },

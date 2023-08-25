@@ -7,7 +7,7 @@ import { Employee } from 'src/app/demo/api/employee';
 import { MessageService } from 'primeng/api';
 import { EmployeeService } from 'src/app/shared';
 import { ROUTER } from 'src/app/shared';
-import { MESSAGE_TITLE } from 'src/app/shared';
+import { MESSAGE_TITLE_VN } from 'src/app/shared';
 import { Workshift } from 'src/app/demo/api/work-shift';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/services/notification.service';
@@ -79,7 +79,7 @@ export class WorkshiftDetailComponent {
             next: (res: any) => {
                 this.workshifts = res.data.filter((workshift: Workshift) => workshift.id != this.idParam);
                 if (this.workshifts.length === 0) {
-                    this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
+                    this._toastService.showWarningNoKey(MESSAGE_TITLE_VN.LIST_EMPTY);
                 }
             },
             error: (error) => {
@@ -97,10 +97,10 @@ export class WorkshiftDetailComponent {
         })
         this._employeeService.changeWorkshiftByIdEmployee(this.form.value).subscribe({
             next: (res) => {
-                this._notificationService.addMessage(MESSAGE_TITLE.CHANGE);
+                this._notificationService.addMessage(MESSAGE_TITLE_VN.CHANGE);
                 this.navigateBackToListWorkshift();
             }, error: (error) => {
-                this._notificationService.addMessage(MESSAGE_TITLE.CHANGE);
+                this._notificationService.addMessage(MESSAGE_TITLE_VN.CHANGE);
             }
         })
     }

@@ -61,19 +61,21 @@
                 <th pSortableColumn="id" class="white-space-nowrap"
                     style="width:10%">{{ "TRANSLATOR.NO" | translate }}
                     <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="fromTime" class="white-space-nowrap"
-                    style="width:20%">{{ 'FIELDS.NAME' | translate }}
-                    <p-sortIcon
-                        field="country.name"></p-sortIcon></th>
-                <th pSortableColumn="date" class="white-space-nowrap"
+                <th pSortableColumn="name" class="white-space-nowrap"
+                    style="width:20%">{{ 'FIELDS.NAME' | translate }}<p-sortIcon
+                        field="name"></p-sortIcon></th>
+                <th pSortableColumn="toTime" class="white-space-nowrap"
                     style="width:20%">{{ "EMPLOYEE_FIELDS.TIME_WORK" | translate
-                    }}</th>
-                <th pSortableColumn="timeWord"
+                    }}<p-sortIcon
+                        field="toTime"></p-sortIcon></th>
+                <th pSortableColumn="timeWork"
                     class="white-space-nowrap" style="width:20%">{{
-                    "EMPLOYEE_FIELDS.WORKING_HOURS" | translate }}</th>
+                    "EMPLOYEE_FIELDS.WORKING_HOURS" | translate }}<p-sortIcon
+                        field="timeWork"></p-sortIcon></th>
                 <th pSortableColumn="numberEmployee"
                     class="white-space-nowrap" style="width:20%">{{
-                    "EMPLOYEE_FIELDS.NUMBER_EMPLOYEE" | translate }}
+                    "EMPLOYEE_FIELDS.NUMBER_EMPLOYEE" | translate }}<p-sortIcon
+                        field="numberEmployee"></p-sortIcon>
                 </th>
                 <th pSortableColumn="description"
                     class="white-space-nowrap" style="width:20%">{{
@@ -97,16 +99,17 @@
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
+                    <td><p-skeleton></p-skeleton></td>
                 </tr>
             </ng-container>
             <ng-template #showTable>
                 <tr>
-                    <td>{{ rowIndex + 1 }}</td>
-                    <td>{{workshifts.name}}</td>
+                    <td>{{workshifts.id}}</td>
+                    <td><span class="two-row-line-height">{{workshifts.name}}</span></td>
                     <td>{{workshifts.fromTime}} h - {{workshifts.toTime}} h</td>
                     <td>{{workshifts.timeWork}} h</td>
                     <td>{{workshifts.numberEmployee}}</td>
-                    <td>{{workshifts.description}}</td>
+                    <td><span class="two-row-line-height">{{workshifts.description}}</span></td>
                     <td style="text-align: center;">
                         <p-radioButton [(ngModel)]="workshifts.isDefault"
                             [value]="true" [disabled]="true"></p-radioButton>
@@ -129,7 +132,8 @@
         </ng-template>
     </p-table>
     <p-dialog [(visible)]="deleteProductsDialog"
-        header="{{ 'TRANSLATOR.DETAIL' | translate }}" [modal]="true"
+        header="{{ 'MANAGE_WORKSHIFT.TITLE_DELETE' | translate }}"
+        [modal]="true"
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>

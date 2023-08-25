@@ -4,7 +4,7 @@
         <div class="row grid p-fluid">
             <div class="col-12 sm:col-3">
                 <input pInputText type="text"
-                    placeholder="{{ 'FIELDS.NAME' | translate }}"
+                    placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}"
                     formControlName="keyword" />
             </div>
             <div class="col-12 sm:col-3">
@@ -93,20 +93,19 @@
                     style="width: 25%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="country.name" class="white-space-nowrap"
+                <th class="white-space-nowrap"
                     style="width: 25%">
-                    {{ "FIELDS.GENDER" | translate }} <p-sortIcon
-                        field="country.name"></p-sortIcon>
+                    {{ "FIELDS.GENDER" | translate }}
                 </th>
-                <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width: 25%">
-                    {{ "EMPLOYEE_FIELDS.CREATE_DATE" | translate }} <p-sortIcon
-                        field="date"></p-sortIcon>
-                </th>
-                <th pSortableColumn="representative.name"
+                <th pSortableColumn="phone"
                     class="white-space-nowrap" style="width: 25%">
                     {{ "FIELDS.PHONE" | translate }} <p-sortIcon
-                        field="representative.name"></p-sortIcon>
+                        field="phone"></p-sortIcon>
+                </th>
+                <th pSortableColumn="email" class="white-space-nowrap"
+                    style="width: 25%">
+                    Email <p-sortIcon
+                        field="email"></p-sortIcon>
                 </th>
                 <th style="width: 25%"></th>
             </tr>
@@ -120,23 +119,24 @@
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
+                    <td><p-skeleton></p-skeleton></td>
                 </tr>
             </ng-container>
             <ng-template #showTable>
                 <tr>
                     <td>{{ employees.id }}</td>
-                    <td>{{ employees.name }}</td>
+                    <td><span class="two-row-line-height">{{ employees.name }}</span></td>
                     <td>
                         {{
                         employees.gender
                         ? ("FIELDS.MALE" | translate)
                         : employees.gender === false
                         ? ("FIELDS.FEMALE" | translate)
-                        : "Trống"
+                        : ""
                         }}
                     </td>
-                    <td>{{ employees.createdOn | date : "MM/dd/yyyy" }}</td>
                     <td>{{ employees.phoneNumber }}</td>
+                    <td>{{ employees.email}}</td>
                     <td>
                         <div class="flex">
                             <button
@@ -158,7 +158,7 @@
         </ng-template>
     </p-table>
     <p-dialog [(visible)]="deleteProductsDialog"
-        header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true"
+        header="{{'MANAGE_EMPLOYEE.TITLE_DELETE' | translate}}" [modal]="true"
         [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>

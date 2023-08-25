@@ -4,7 +4,7 @@
         <div class="row grid p-fluid">
             <div class="col-12 sm:col-3">
                 <input pInputText type="text"
-                    placeholder="{{ 'FIELDS.NAME' | translate }}"
+                    placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}"
                     formControlName="keyword" />
             </div>
             <div class="col-12 sm:col-3">
@@ -74,7 +74,7 @@
                 class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div></div>
                 <span>
-                    <button pButton
+                    <button pButton (click)="navigateToCreateService()"
                         class="sm:w-auto flex-order-0 sm:flex-order-1">
                         <i class="pi pi-user-plus"></i><span class="ml-1">{{
                             "TRANSLATOR.ADD_NEW" | translate }}</span>
@@ -92,25 +92,24 @@
                     style="width: 20%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="country.name" class="white-space-nowrap"
+                <th class="white-space-nowrap"
                     style="width: 20%">
-                    {{ "FIELDS.IMAGE" | translate }} <p-sortIcon
-                        field="country.name"></p-sortIcon>
+                    {{ "FIELDS.IMAGE" | translate }}
                 </th>
-                <th pSortableColumn="date" class="white-space-nowrap"
+                <th pSortableColumn="price" class="white-space-nowrap"
                     style="width: 20%">
                     {{ "FIELDS.PRICE" | translate }} <p-sortIcon
-                        field="date"></p-sortIcon>
+                        field="price"></p-sortIcon>
                 </th>
-                <th pSortableColumn="representative.name"
+                <th pSortableColumn="time"
                     class="white-space-nowrap" style="width: 15%">
                     {{ "FIELDS.TIME" | translate }} <p-sortIcon
-                        field="representative.name"></p-sortIcon>
+                        field="time"></p-sortIcon>
                 </th>
-                <th pSortableColumn="representative.name"
+                <th pSortableColumn="review"
                     class="white-space-nowrap" style="width: 20%">
                     {{ "FIELDS.REVIEW" | translate }} <p-sortIcon
-                        field="representative.name"></p-sortIcon>
+                        field="review"></p-sortIcon>
                 </th>
                 <th style="width: 20%"></th>
             </tr>
@@ -130,7 +129,7 @@
             <ng-template #showTable>
                 <tr>
                     <td>{{ services.id }}</td>
-                    <td>{{ services.name }}</td>
+                    <td><span class="two-row-line-height">{{ services.name }}</span></td>
                     <td class="image-container">
                         <img #image
                             (error)="image.src = 'assets/layout/images/empty-default.png'"
@@ -147,6 +146,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-pencil"
+                                (click)="navigateToEditService(services.id)"
                                 class="p-button-rounded p-button-success mr-2"></button>
                             <button
                                 pButton
@@ -161,11 +161,11 @@
         </ng-template>
     </p-table>
     <p-dialog [(visible)]="deleteProductsDialog"
-        header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true"
+        header="{{'MANAGE_SERVICE.TITLE_DELETE' | translate}}" [modal]="true"
         [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="service">
+            <span *ngIf="service" class="two-row-line-height">
                 {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{
                     service.name }}</b>?</span>
         </div>
