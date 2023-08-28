@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthenticateService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { MESSAGE_ERROR_INPUT, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, ROUTER, TOAST, TYPE } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { environment } from 'src/environments/environment';
 
@@ -71,7 +71,7 @@ export class ForgotPasswordComponent {
     }
 
     navigateToLanding() {
-        this._router.navigate([ROUTER.LANDING]);
+        this._router.navigate([ROUTER.LANDING], { queryParams: { type: TYPE.LOGIN } });
     }
     navigateToSignup() {
         this._router.navigate([ROUTER.SIGNUP]);

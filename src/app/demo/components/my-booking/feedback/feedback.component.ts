@@ -35,6 +35,7 @@ export class FeedbackComponent {
     fileUploadVideo: File[] = [];
     fileUploads: File[] = [];
     submitted: boolean = false;
+    isLoadingSubmit = false;
     constructor(
         private _router: Router,
         private _fb: FormBuilder,
@@ -76,6 +77,8 @@ export class FeedbackComponent {
 
     async createFeedback() {
         this.submitted = true;
+        this.isLoadingSubmit = true;
+        console.log(this.valueForm.bookingDetailId);
         if (this.formFeedback.valid) {
             if (this.fileUploadImage.length > 0 || this.fileUploadVideo.length > 0) {
                 this.fileUploads = this.fileUploadImage.concat(this.fileUploadVideo);
@@ -99,11 +102,12 @@ export class FeedbackComponent {
                     } catch (error) {}
                 }
             }
-
             this._feedbackService.postFeedbackMyBooking(this.formFeedback.value as FeedBack).subscribe({
                 next: (res) => {
                     this._toastService.showSuccess(MESSAGE_TITLE.SAVE_SUCC, this.keyToast);
-                    this.hiddenDialog();
+                    setTimeout(() => {
+                        this.hiddenDialog();
+                    }, 1000);
                 },
                 error: (err) => {
                     this.showErrorResponse(err);
@@ -114,6 +118,9 @@ export class FeedbackComponent {
                 this._toastService.showError(MESSAGE_ERROR_FEEDBACK.RATING, this.keyToast);
             }
         }
+        setTimeout(() => {
+            this.isLoadingSubmit = false;
+        });
     }
 
     previewImage(event: any): void {
@@ -195,7 +202,6 @@ export class FeedbackComponent {
     resetValue() {
         this.formFeedback.patchValue({
             rating: '',
-            bookingDetailId: '',
             staffContent: '',
             serviceContent: '',
             feedbackImageRequests: null,

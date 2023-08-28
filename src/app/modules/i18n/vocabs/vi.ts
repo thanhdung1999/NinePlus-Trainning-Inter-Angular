@@ -162,10 +162,11 @@ export const locale = {
             TIME: 'Vui lòng chọn giờ',
             EQUAL_TIME: 'Vui lòng kiểm tra lại thời gian đặt lịch',
             SERVICE: 'Vui lòng chọn dịch vụ',
+            USERNAME_MATCH_PASSWORD: 'Mật khẩu không được giống tên người dùng',
         },
         AUTH: {
             PROFILE: 'Hồ sơ',
-            CREATE_ACCOUNT: 'Tạo tại khoản',
+            CREATE_ACCOUNT: 'Tạo tài khoản',
             RESET_PASSWORD: 'Đặt lại mật khẩu',
             FORGOT_PASSWORD: 'Quên mật khẩu?',
             CHANGE_PASSWORD: 'Thay đổi mật khẩu',
@@ -225,9 +226,9 @@ export const locale = {
             EMPLOYEE: 'Nhân viên',
             SERVICE: 'Dich vụ',
             SHARE: 'Chia sẽ thêm ý kiến để giúp dịch vụ được tốt hơn',
-            ADD_IMAGE: "Thêm ảnh",
-            ADD_VIDEO: "Thêm video",
-            CONTENT_EMPLOYEE: "Về khía cạnh"
+            ADD_IMAGE: 'Thêm ảnh',
+            ADD_VIDEO: 'Thêm video',
+            CONTENT_EMPLOYEE: 'Về khía cạnh',
         },
     },
 };

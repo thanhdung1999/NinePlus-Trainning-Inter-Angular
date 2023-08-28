@@ -67,17 +67,11 @@
                     <div *ngIf="f['password'].errors['required']">{{ "INVALID.PASSWORD" | translate }}</div>
                     <div *ngIf="f['password'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PASSWORD" | translate }}</div>
                 </div>
+                <div *ngIf="f['password'].hasError('passwordUsernameMatch')">{{ "INVALID.USERNAME_MATCH_PASSWORD" | translate }}.</div>
             </div>
             <div class="field mb-5">
                 <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
-                <textarea
-                    id="address"
-                    [pKeyFilter]="rgAddress"
-                    formControlName="address"
-                    pInputTextarea
-                    rows="2"
-                    [autoResize]="true"
-                ></textarea>
+                <textarea id="address" [pKeyFilter]="rgAddress" formControlName="address" pInputTextarea rows="2" [autoResize]="true"></textarea>
             </div>
         </div>
         <div>
@@ -85,7 +79,6 @@
                 <button
                     type="submit"
                     [loading]="isLoadingSubmit"
-                    [disabled]="formCreateCustomer.invalid"
                     pButton
                     pRipple
                     label="{{ 'AUTH.CREATE_ACCOUNT' | translate }}"

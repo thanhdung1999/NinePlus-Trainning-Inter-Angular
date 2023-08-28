@@ -72,11 +72,12 @@
 
                     <div class="field mb-4 col-12">
                         <label for="username" class="font-medium text-900">{{ "FIELDS.USERNAME" | translate }} </label>
-                        <input pInputText pKeyFilter="alphanum" formControlName="username"  />
+                        <input pInputText pKeyFilter="alphanum" formControlName="username" />
                     </div>
                     <div class="field mb-4 col-12">
                         <label for="password" class="font-medium text-900">{{ "FIELDS.PASSWORD" | translate }} </label>
                         <p-password formControlName="password" [toggleMask]="true" [feedback]="false" [pKeyFilter]="rgPassword"></p-password>
+                        <div *ngIf="f['password'].hasError('passwordUsernameMatch')">{{ "INVALID.USERNAME_MATCH_PASSWORD" | translate }}.</div>
                     </div>
 
                     <div class="col-12 flex">

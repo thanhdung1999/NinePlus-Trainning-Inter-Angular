@@ -13,39 +13,41 @@
         <div class="w-full mb-8">
             <img class="img-logo w-full" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
         </div>
-
-        <span class="p-input-icon-left mb-4">
-            <i class="pi pi-user" [ngClass]="{ 'top-icon': f['employeeNo'].invalid && f['employeeNo'].errors }"></i>
-            <input
-                type="text"
-                class="w-full border-round-2xl"
-                pInputText
-                pKeyFilter="alphanum"
-                placeholder="{{ 'FIELDS.USERNAME' | translate }}"
-                formControlName="employeeNo"
-                required
-            />
+        <div class="mb-4">
+            <span class="p-input-icon-left block">
+                <i class="pi pi-user"></i>
+                <input
+                    type="text"
+                    class="w-full border-round-2xl"
+                    pInputText
+                    pKeyFilter="alphanum"
+                    placeholder="{{ 'FIELDS.USERNAME' | translate }}"
+                    formControlName="employeeNo"
+                    required
+                />
+            </span>
             <div *ngIf="f['employeeNo'].invalid && f['employeeNo'].touched && f['employeeNo'].errors" class="text-red-500 mt-2 block">
                 <div *ngIf="f['employeeNo'].errors['required']">{{ "INVALID.USERNAME" | translate }}</div>
             </div>
-        </span>
-
-        <span class="p-input-icon-left mb-1">
-            <i class="pi pi-key" [ngClass]="{ 'top-icon': f['password'].invalid && f['password'].errors }"></i>
-            <input
-                type="password"
-                class="w-full border-round-2xl"
-                pInputText
-                [pKeyFilter]="rgPassword"
-                placeholder="{{ 'FIELDS.PASSWORD' | translate }}"
-                formControlName="password"
-                required
-            />
+        </div>
+        <div class="mb-1">
+            <span class="p-input-icon-left block">
+                <i class="pi pi-key"></i>
+                <input
+                    type="password"
+                    class="w-full border-round-2xl"
+                    pInputText
+                    [pKeyFilter]="rgPassword"
+                    placeholder="{{ 'FIELDS.PASSWORD' | translate }}"
+                    formControlName="password"
+                    required
+                />
+            </span>
             <div *ngIf="f['password'].invalid && f['password'].touched && f['password'].errors" class="text-red-500 mt-2 block">
                 <div *ngIf="f['password'].errors['required']">{{ "INVALID.PASSWORD" | translate }}</div>
                 <div *ngIf="f['password'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PASSWORD" | translate }}</div>
             </div>
-        </span>
+        </div>
         <div class="text-right mt-1">
             <span class="cursor-pointer forgot-password underline text-blue-600 text-xl" (click)="navigateToForgotPassword()">{{
                 "AUTH.FORGOT_PASSWORD" | translate
