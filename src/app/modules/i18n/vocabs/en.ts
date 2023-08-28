@@ -158,6 +158,7 @@ export const locale = {
             TIME: 'Time is required',
             EQUAL_TIME: 'Please double check your booking time',
             SERVICE: 'Service is required',
+            USERNAME_MATCH_PASSWORD: 'Password cannot be the same as the username',
         },
         AUTH: {
             PROFILE: 'Profile',

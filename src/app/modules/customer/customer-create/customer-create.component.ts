@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE,  REGIX, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE,  MatchPassword,  REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -40,15 +40,20 @@ export class CustomerCreateComponent implements OnInit {
     }
 
     initFormAddNewCustomer() {
-        this.formAddNewCustomer = this._fb.group({
-            customerName: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-            address: [''],
-            dateOfBirth: [''],
-            username: [''],
-            password: [''],
-            totalMoney: [0],
-        });
+        this.formAddNewCustomer = this._fb.group(
+            {
+                customerName: ['', [Validators.required]],
+                phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+                address: [''],
+                dateOfBirth: [''],
+                username: [''],
+                password: [''],
+                totalMoney: [0],
+            },
+            {
+                validator: [MatchPassword.UsernamePasswordValidator('username', 'password')],
+            }
+        );
     }
 
     initMinAndMaxDateOfBirth () {

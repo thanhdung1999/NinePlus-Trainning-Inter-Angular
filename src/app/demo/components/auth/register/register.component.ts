@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, MatchPassword, REGIX, ROUTER, TOAST, TYPE } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -50,14 +50,19 @@ export class RegisterComponent {
     }
 
     initFormCreateCustomer() {
-        this.formCreateCustomer = this._fb.group({
-            customerName: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-            address: [''],
-            dateOfBirth: [''],
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
-        });
+        this.formCreateCustomer = this._fb.group(
+            {
+                customerName: ['', [Validators.required]],
+                phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+                address: [''],
+                dateOfBirth: [''],
+                username: ['', [Validators.required]],
+                password: ['', [Validators.required, Validators.minLength(8)]],
+            },
+            {
+                validator: [MatchPassword.UsernamePasswordValidator('username', 'password')],
+            }
+        );
     }
 
     onSubmit() {
@@ -126,8 +131,7 @@ export class RegisterComponent {
                 this.submitted = false;
                 this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
                 setTimeout(() => {
-                    this.initFormCreateCustomer();
-                    this.showPopupLogin();
+                    this.navigateToLanding();
                 }, 1000);
             },
             error: (err) => {
@@ -148,7 +152,9 @@ export class RegisterComponent {
     }
 
     navigateToLanding() {
-        this._router.navigate([ROUTER.LANDING]);
+        setTimeout(() => {
+            this._router.navigate([ROUTER.LANDING], { queryParams: { type: TYPE.LOGIN } });
+        }, 1000);
     }
 
     convertDateOfBirth(customer: Customer) {

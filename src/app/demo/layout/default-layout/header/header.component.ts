@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty, isNil } from 'lodash';
 import { AuthenticateService, SessionService } from 'src/app/core';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { ROUTER } from 'src/app/shared';
+import { ROUTER, TYPE } from 'src/app/shared';
 import { listNavbar } from 'src/app/shared/constants/list-navbar';
 import { ROLE } from 'src/app/shared/constants/role';
 
@@ -27,10 +27,12 @@ export class HeaderComponent {
         private _layoutService: LayoutService,
         private _sessionService: SessionService,
         private _authenticateService: AuthenticateService,
-        private _router: Router
+        private _router: Router,
+        private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
+        this.checkEventHiddenPopupLogin();
         this.getRole();
     }
 
@@ -39,6 +41,15 @@ export class HeaderComponent {
             this.isAuth = true;
             this.role = this._sessionService.userAuthenticate.role;
         }
+    }
+
+    checkEventHiddenPopupLogin() {
+        this.route.queryParams.subscribe((params) => {
+            const type = params['type'];
+            if (type === TYPE.LOGIN) {
+                this.showPopupLogin();
+            }
+        });
     }
 
     get colorScheme(): string {

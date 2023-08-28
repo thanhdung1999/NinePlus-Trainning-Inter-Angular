@@ -10,6 +10,9 @@
     }"
     class="p-fluid"
 >
+    <div *ngIf="isLoadingSubmit === true" class="progress w-full">
+        <p-progressBar class="w-full" mode="indeterminate" [style]="{ width: '100%' }"></p-progressBar>
+    </div>
     <p-confirmDialog
         header="Confirmation"
         key="confirm-feedback"
@@ -103,8 +106,10 @@
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pRipple icon="pi pi-times" class="btn btn-form-feedback btn-cancel" (click)="hiddenDialog()">{{ "BTN.CANCEL" | translate }}</button>
-        <button pRipple (click)="showConfirmPostFeedback()" icon="pi pi-check" class="btn btn-form-feedback btn-save">
+        <button pRipple [disabled]="isLoadingSubmit" icon="pi pi-times" class="btn btn-form-feedback btn-cancel" (click)="hiddenDialog()">
+            {{ "BTN.CANCEL" | translate }}
+        </button>
+        <button pRipple [disabled]="isLoadingSubmit" (click)="showConfirmPostFeedback()" icon="pi pi-check" class="btn btn-form-feedback btn-save">
             {{ "BTN.SAVE" | translate }}
         </button>
     </ng-template>

@@ -5,3 +5,4 @@ export * from './status.constants';
 export * from './router.contanst';
 export * from './toast.contanst';
 export * from './regix.constant';
+export * from './type.constant';

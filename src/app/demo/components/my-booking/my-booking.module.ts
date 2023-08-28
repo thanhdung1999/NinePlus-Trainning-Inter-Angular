@@ -20,9 +20,11 @@ import { DialogModule } from 'primeng/dialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { ImageModule } from 'primeng/image';
+import { FeedbackListComponent } from './feedback-list/feedback-list.component';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
-    declarations: [MyBookingComponent, FeedbackComponent],
+    declarations: [MyBookingComponent, FeedbackComponent, FeedbackListComponent ],
     imports: [
         CommonModule,
         MyBookingRoutingModule,
@@ -46,6 +48,7 @@ import { ImageModule } from 'primeng/image';
         RatingModule,
         InputTextareaModule,
         ImageModule,
+        ProgressBarModule
     ],
 })
 export class MyBookingModule {}
