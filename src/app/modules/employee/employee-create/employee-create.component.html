@@ -221,11 +221,12 @@
                                 }}
                             </p>
                         </div>
+
                         <div class="field mb-4 col-12 md:col-6"></div>
                         <div class="col-12 md:col-6 lg:col-5 mt-3">
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-6">
-                                    <button pButton pRipple
+                                    <button pButton pRipple class="lg-button"
                                         [loading]="loading"
                                         label="{{ 'BTN.SAVE' | translate }}"
                                         icon="pi pi-check" type="submit"></button>
@@ -238,7 +239,7 @@
                                         label="{{ 'BTN.CANCEL' | translate }}"
                                         icon="pi pi-times"
                                         (click)="navigateBackEmployeeList()"
-                                        class="p-button-outlined"></button>
+                                        class="p-button-outlined lg-button lg-button-2"></button>
                                 </div>
                             </div>
                         </div>

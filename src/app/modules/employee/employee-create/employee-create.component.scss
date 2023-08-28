@@ -25,3 +25,14 @@ img {
     height: 70px;
     object-fit: cover;
 }
+
+@media (min-width: 1190px) {
+    .lg-button {
+        width: 160px;
+        height: 45px;
+    }
+
+    .lg-button-2 {
+        margin-left: -30px;
+    }
+}

@@ -10,10 +10,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UploadService } from 'src/app/shared/services/upload.service';
 import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
-const MESSAGE_WARNING = {
-    REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
-    EMAIL_EXISTS: ' đã tồn tại'
-};
+
 @Component({
     selector: 'app-employee-edit',
     templateUrl: './employee-edit.component.html',
@@ -69,7 +66,7 @@ export class EmployeeEditComponent {
     }
     initFormUpdateEmployee() {
         const name = /^[A-Za-zÀ-ỹ]+(?: [A-Za-zÀ-ỹ]+)*$/;
-        const phone = /^(03|09)\d{8}$/;
+        const phone = /^(84|08|05|07|03|09)\d{8}$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         this.form = this._fb.group({
             id: [''],
@@ -111,10 +108,7 @@ export class EmployeeEditComponent {
     }
 
     showErrorWhenEdit(error: any) {
-        if (error.error.messages == 'Email already exists in the database.') {
-            this._toastService.showError(this.form.get('email')?.value + MESSAGE_WARNING.EMAIL_EXISTS, this.keyToast);
-        }
-        else if (error.error.messages) {
+        if (error.error.messages) {
             error.error.messages.forEach((item: string) => {
                 this._toastService.showError(item, this.keyToast);
             });

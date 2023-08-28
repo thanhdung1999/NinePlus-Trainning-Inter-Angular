@@ -53,7 +53,7 @@
                                         multiple
                                         (change)="uploadFile($event)" />
                                     <button
-                                        [disabled]="validImageNumber"
+                                        [disabled]="imageSelected.length > 5"
                                         class="p-button-primary change-input-image w-10rem"
                                         pButton
                                         pRipple
@@ -87,7 +87,7 @@
                                 }}
                             </p>
                             <p style="color: red" class="mt-2"
-                                *ngIf="validImageNumber">
+                                *ngIf="imageSelected.length > 5">
                                 * {{ "INVALID.MAX_LENGTH_IMAGE" | translate
                                 }}
                             </p>
@@ -149,7 +149,7 @@
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-6">
                                     <button pButton pRipple [loading]="loading"
-                                        [disabled]="validImageNumber"
+                                        [disabled]="validImageNumber || checkValidImg"
                                         label="{{ 'BTN.SAVE' | translate }}"
                                         icon="pi pi-check" type="submit"></button>
                                 </div>
