@@ -90,7 +90,7 @@ export class ServiceCreateComponent {
         },
       });
     } else {
-      this.checkValidImg = true;
+      this.checkValidImg = !this.files;
       this.checkValidInput = true;
     }
   }

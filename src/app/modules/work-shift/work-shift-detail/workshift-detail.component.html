@@ -4,7 +4,7 @@
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="{{ 'TRANSLATOR.CURRENTPAGE' | translate }}"
         [rowsPerPageOptions]="[5,15,25]"
-        [globalFilterFields]="['id','name','phoneNumber']">
+        [globalFilterFields]="['id','name','phoneNumber', 'email']">
         <ng-template pTemplate="caption">
             <div
                 class="flex flex-wrap gap-2 align-items-center justify-content-end">
@@ -46,7 +46,7 @@
                     style="width:20%">{{ 'FIELDS.NAME' | translate }}
                     <p-sortIcon
                         field="country.name"></p-sortIcon></th>
-                <th pSortableColumn="date" class="white-space-nowrap"
+                <th pSortableColumn="email" class="white-space-nowrap"
                     style="width:25%">Email </th>
                 <th pSortableColumn="timeWord"
                     class="white-space-nowrap" style="width:20%">{{

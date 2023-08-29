@@ -1,9 +1,19 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
     <div class="grid">
-        <div> <span class="text-900 text-xl font-bold mb-4 mt-3 block">{{
+        <div class="col-5"><span
+                class="text-900 text-xl font-bold mb-4 mt-3 block">{{
                 "MANAGE_EMPLOYEE.TITLE_EDIT" |
                 translate }}</span></div>
+        <div class="col-3 col-offset-3 mt-3" style="text-align: right;">
+            <button style="width: 140px; height: 44px;"
+                type="button"
+                pButton
+                pRipple
+                (click)="resetPassDialog=true"
+                label="{{ 'AUTH.RESET_PASSWORD' | translate }}"
+                class="p-button-outlined p-button-warning"></button>
+        </div>
     </div>
     <div class="grid">
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
@@ -181,7 +191,8 @@
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
                                 <button pButton pRipple [loading]="loading"
-                                    label="{{ 'BTN.SAVE_CHANGE' | translate }}"
+                                    label="{{ 'BTN.SAVE' | translate }}"
+                                    class="lg-button"
                                     icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
@@ -192,21 +203,10 @@
                                     label="{{ 'BTN.CANCEL' | translate }}"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"
-                                    class="p-button-outlined"></button>
+                                    class="p-button-outlined lg-button lg-button-2"></button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 md:col-3 lg:col-5"></div>
-                    <div
-                        class="col-8 md:col-5 sm:col-8 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 lg:col-2"
-                        style="text-align: center;">
-                        <button
-                            type="button"
-                            pButton
-                            pRipple
-                            (click)="resetPassDialog=true"
-                            label="{{ 'AUTH.RESET_PASSWORD' | translate }}"
-                            class="p-button-outlined p-button-warning"></button></div>
                 </div>
             </div>
         </form>
